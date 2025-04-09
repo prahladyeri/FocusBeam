@@ -1,13 +1,11 @@
 ![license](https://img.shields.io/github/license/prahladyeri/focusbeam.svg)
-[![paypal](https://img.shields.io/badge/PayPal-blue.svg?logo=paypal)](https://paypal.me/prahladyeri)
-[![follow](https://img.shields.io/twitter/follow/prahladyeri.svg?style=social)](https://twitter.com/prahladyeri)
-# 🎯 FocusBeam  
-*Beam in on your tasks and projects with precision.*
-
-![License](https://img.shields.io/github/license/prahladyeri/focusbeam)
 ![Platform](https://img.shields.io/badge/platform-windows-blue)
 ![Built With](https://img.shields.io/badge/.NET-Framework%204.6+-blueviolet)
+[![paypal](https://img.shields.io/badge/PayPal-blue.svg?logo=paypal)](https://paypal.me/prahladyeri)
+[![follow](https://img.shields.io/twitter/follow/prahladyeri.svg?style=social)](https://twitter.com/prahladyeri)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
+# 🎯 FocusBeam  
+*Beam in on your tasks and projects with precision.*
 
 **FocusBeam** is a desktop project management app for freelancers, students, hobbyists, researchers, and other power users who still believe in the PC desktop paradigm.
 
