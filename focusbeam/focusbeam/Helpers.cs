@@ -20,6 +20,55 @@ using System.Xml;
 
 namespace focusbeam.Util
 {
+    public static class EmojiConstants
+    {
+        public const string BRAIN = "🧠";
+        public const string WEB = "🌐"; // Suggests web-like structure
+        public const string QUESTION = "❓";
+
+
+        // Time / Scheduling
+        public const string CLOCK_ANALOG = "🕒";
+        public const string CALENDAR = "📅";
+        public const string ALARM_CLOCK = "⏰";
+        public const string HOURGLASS = "⏳";
+
+        // Project and Task
+        public const string PROJECT = "📁";
+        public const string TASK = "📝";
+        public const string CHECKLIST = "✅";
+        public const string BULLET = "•";  // For lists
+
+        // Status and Progress
+        public const string DONE = "✔️";
+        public const string PENDING = "🕐";
+        public const string ERROR = "❌";
+        public const string WARNING = "⚠️";
+        public const string INFO = "ℹ️";
+        public const string IN_PROGRESS = "🔄";
+
+        // UI / Actions
+        public const string START = "▶️";
+        public const string STOP = "⏹️";
+        public const string PAUSE = "⏸️";
+        public const string REFRESH = "🔄";
+        public const string SAVE = "💾";
+        public const string SETTINGS = "⚙️";
+
+        // Communication
+        public const string COMMENT = "💬";
+        public const string NOTIFICATION = "🔔";
+        public const string ATTACHMENT = "📎";
+
+        // Misc / Flair
+        public const string ROCKET = "🚀";
+        public const string STAR = "⭐";
+        public const string FIRE = "🔥";
+        public const string LIGHTBULB = "💡";
+        public const string LOCK = "🔒";
+        public const string UNLOCK = "🔓";
+    }
+
     public static class Core
     {
         public static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
