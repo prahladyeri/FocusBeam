@@ -28,7 +28,7 @@ create table tasks (
 	title text not null,
 	priority text check (priority in ('Low', 'Medium', 'High')),
 	status text not null check (status in ('Pending', 'Completed')),
-	kanban_status text default 'To Do' check (kanban_status in ('To Do', 'In Progress', 'Review', 'Done'));
+	kanban_status text default 'To Do' check (kanban_status in ('To Do', 'In Progress', 'Review', 'Done')),
 	start_date datetime,
 	end_date datetime,
 	tags text not null,
