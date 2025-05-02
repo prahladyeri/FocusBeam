@@ -1,5 +1,5 @@
 /*
-init.sql
+init.sql - Build the schema and populate default records
 
 @author Prahlad Yeri <prahladyeri@yahoo.com>
 @license MIT
@@ -14,7 +14,7 @@ drop table if exists mcq;
 create table projects (
 	id integer primary key,
 	title text not null,
-	category text not null check (category in ('Work', 'Study', 'Home', 'Other')),
+	category int not null, -- enum
 	tags text not null, -- (vim/php/python/python-mysql)
 	start_date datetime not null,
 	end_date datetime not null,
@@ -26,16 +26,16 @@ create table tasks (
 	project_id int not null,
 	parent_task_id int, -- nullable
 	title text not null,
-	priority text check (priority in ('Low', 'Medium', 'High')),
-	status text not null check (status in ('Pending', 'Completed')),
-	kanban_status text default 'To Do' check (kanban_status in ('To Do', 'In Progress', 'Review', 'Done')),
+	priority int not null, -- enum
+	status int not null, -- enum
+	kanban_status int not null, -- enum
 	start_date datetime,
 	end_date datetime,
 	tags text not null,
 	planned_hours int, -- no. of hours to be spend on this task each day.
 	notes text,
 	foreign key (project_id) references projects(id),
-	foreign key (parent_task_id) int references tasks (id)
+	foreign key (parent_task_id) references tasks (id)
 );
 
 create table timesheet (
@@ -44,7 +44,7 @@ create table timesheet (
 	start_time datetime,
 	end_time datetime,
 	duration int not null,-- Duration in minutes (e.g., 25 for a standard Pomodoro),
-	status text default 'Paused' check (status in ('Running', 'Paused', 'Completed')),
+	status int not null, -- enum
 	notes text,
 	foreign key (task_id) references tasks (id)
 );

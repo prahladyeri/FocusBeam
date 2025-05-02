@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * MainForm.cs - The main form
+ * 
+ * @author Prahlad Yeri <prahladyeri@yahoo.com>
+ * @license MIT
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +25,7 @@ namespace focusbeam
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            DBAL.init();
         }
     }
 }

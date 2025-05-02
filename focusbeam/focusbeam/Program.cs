@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * Program.cs - Main entry point and other utilities
+ * 
+ * @author Prahlad Yeri <prahladyeri@yahoo.com>
+ * @license MIT
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
