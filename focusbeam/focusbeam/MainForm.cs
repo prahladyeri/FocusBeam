@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,8 @@ namespace focusbeam
 {
     public partial class MainForm : Form
     {
+        List<Project> projects = null;
+
         public MainForm()
         {
             InitializeComponent();
@@ -25,7 +28,18 @@ namespace focusbeam
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            DBAL.init();
+            //DBAL.Init();
+            //projects = DBAL.GetAllProjects();
+            projects = new List<Project>();
+            projects.Add(new Project {
+                Id = 1,
+                Title = "Default Project",
+                Category = CategoryLevel.Work,
+                Tags = "",
+                StartDate = new DateTime(2025, 05, 04),
+                EndDate = new DateTime(2025, 05, 31),
+                Notes = ""
+            });
         }
     }
 }

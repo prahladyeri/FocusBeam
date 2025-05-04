@@ -21,6 +21,10 @@ namespace focusbeam.Util
 {
     public static class EmojiConstants
     {
+        public const string PLUS = "➕";
+        public const string PENCIL = "✏️";
+        public const string PEN = "🖊";
+        public const string TOOLS = "🛠";
         public const string BRAIN = "🧠";
         public const string WEB = "🌐"; // Suggests web-like structure
         public const string QUESTION = "❓";
