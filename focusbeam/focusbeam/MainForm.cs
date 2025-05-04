@@ -20,6 +20,7 @@ namespace focusbeam
     public partial class MainForm : Form
     {
         List<Project> projects = null;
+        Project currentProject = null;
 
         public MainForm()
         {
@@ -40,6 +41,22 @@ namespace focusbeam
                 EndDate = new DateTime(2025, 05, 31),
                 Notes = ""
             });
+
+            // TODO: update this:
+            refPicker1.cmbMain.SelectedIndexChanged += CmbMain_SelectedIndexChanged;
+
+            foreach (Project proj in projects) {
+                this.refPicker1.cmbMain.Items.Add(proj.Title);
+            }
+
+            refPicker1.cmbMain.SelectedIndex = 0;
+        }
+
+        private void CmbMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string title = refPicker1.cmbMain.SelectedItem.ToString();
+            currentProject = projects.FirstOrDefault(p => p.Title == title);
+            lblStatus.Text = $"{title} loaded";
         }
     }
 }

@@ -12,6 +12,10 @@ namespace focusbeam.Controls
 {
     public partial class RefPicker : UserControl
     {
+        public ComboBox cmbMain {
+            get { return this.comboBox1; }
+        }
+
         public RefPicker()
         {
             InitializeComponent();

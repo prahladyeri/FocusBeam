@@ -13,7 +13,7 @@ drop table if exists mcq;
 
 create table projects (
 	id integer primary key,
-	title text not null,
+	title text not null unique,
 	category int not null, -- enum
 	tags text not null, -- (vim/php/python/python-mysql)
 	start_date datetime not null,

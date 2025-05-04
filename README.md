@@ -69,7 +69,7 @@ Example project structure for building FocusBeam itself:
 
 ## 🛠️ Build Instructions
 
-You can open and build the solution using any recent version of **Visual Studio** (e.g., VS2019 Community Edition).
+You can open and build the solution using any recent version of Visual Studio.
 
 ### 📌 Dependencies
 
