@@ -204,6 +204,12 @@ namespace focusbeam.Util
                 .GetCustomAttribute<AssemblyDescriptionAttribute>();
             return attr?.Description ?? "No description available.";
         }
+
+        public static string GetVersion()
+        {
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            return version != null ? $"{version.Major}.{version.Minor}" : "0.0";
+        }
     }
 
 

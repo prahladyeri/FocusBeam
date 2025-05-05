@@ -19,8 +19,9 @@ namespace focusbeam
 {
     public partial class MainForm : Form
     {
-        List<Project> projects = null;
-        Project currentProject = null;
+        private List<Project> projects = null;
+        private Project currentProject = null;
+        private Task currentTask = null;
 
         public MainForm()
         {
@@ -36,34 +37,49 @@ namespace focusbeam
             notifyIcon1.Text = Util.AssemblyInfoHelper.GetTitle();
             notifyIcon1.Visible = true;
             //notifyIcon1.Text = AppDomain.CurrentDomain.app
+            //this.Text += " " + Util.AssemblyInfoHelper.GetVersion();
 
-            projects = new List<Project>();
-            projects.Add(new Project {
+            var project = new Project {
                 Id = 1,
                 Title = "Default Project",
                 Category = CategoryLevel.Work,
                 Tags = "",
                 StartDate = new DateTime(2025, 05, 04),
                 EndDate = new DateTime(2025, 05, 31),
-                Notes = ""
-            });
+                Notes = "",
+            };
+            project.Tasks = new List<TaskItem> {
+                new TaskItem {
+                    ProjectId = project.Id,
+                    Title = "Default Task",
+                    Priority = PriorityLevel.High,
+                    Status = StatusLevel.Pending,
+                    Tags = new List<string>{ "Tango", "Charlie" },
+                }
+            };
+            projects = new List<Project> { project};
 
-            // TODO: update this:
-            refPicker1.cmbMain.SelectedIndexChanged += CmbMain_SelectedIndexChanged;
+            rpkProject.cmbMain.SelectedIndexChanged += CmbMain_SelectedIndexChanged;
 
             foreach (Project proj in projects) {
-                this.refPicker1.cmbMain.Items.Add(proj.Title);
+                this.rpkProject.cmbMain.Items.Add(proj.Title);
             }
 
-            refPicker1.cmbMain.SelectedIndex = 0;
+            rpkProject.cmbMain.SelectedIndex = 0;
 
             
         }
 
         private void CmbMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string title = refPicker1.cmbMain.SelectedItem.ToString();
+            string title = rpkProject.cmbMain.SelectedItem.ToString();
             currentProject = projects.FirstOrDefault(p => p.Title == title);
+            rpkTaskItem.cmbMain.Items.Clear();
+            foreach (TaskItem task in currentProject.Tasks) {
+                rpkTaskItem.cmbMain.Items.Add(task.Title);
+            }
+            rpkTaskItem.cmbMain.SelectedIndex = 0;
+            // TODO: update the view
             lblStatus.Text = $"{title} loaded";
         }
     }

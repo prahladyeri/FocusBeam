@@ -34,17 +34,18 @@ namespace focusbeam
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTracker = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAbout = new System.Windows.Forms.Button();
+            this.btnMCQ = new System.Windows.Forms.Button();
+            this.btnMindMaps = new System.Windows.Forms.Button();
+            this.btnNotes = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.refPicker1 = new focusbeam.Controls.RefPicker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.rpkProject = new focusbeam.Controls.RefPicker();
+            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,12 +61,13 @@ namespace focusbeam
             this.tableLayoutPanel1.Controls.Add(this.btnSettings, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnStart, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblTracker, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button5, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button3, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnAbout, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnMCQ, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnMindMaps, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnNotes, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnDashboard, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.refPicker1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.rpkProject, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.rpkTaskItem, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -73,7 +75,7 @@ namespace focusbeam
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(794, 61);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(926, 61);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // btnSettings
@@ -83,7 +85,7 @@ namespace focusbeam
             this.btnSettings.Location = new System.Drawing.Point(0, 30);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(0);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(158, 31);
+            this.btnSettings.Size = new System.Drawing.Size(185, 31);
             this.btnSettings.TabIndex = 5;
             this.btnSettings.Text = "⚙️ Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -92,11 +94,10 @@ namespace focusbeam
             // 
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(474, 30);
+            this.btnStart.Location = new System.Drawing.Point(555, 30);
             this.btnStart.Margin = new System.Windows.Forms.Padding(0);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(158, 31);
+            this.btnStart.Size = new System.Drawing.Size(185, 31);
             this.btnStart.TabIndex = 6;
             this.btnStart.Text = "▶️ Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -105,61 +106,61 @@ namespace focusbeam
             // 
             this.lblTracker.AutoSize = true;
             this.lblTracker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTracker.Location = new System.Drawing.Point(632, 30);
+            this.lblTracker.Location = new System.Drawing.Point(740, 30);
             this.lblTracker.Margin = new System.Windows.Forms.Padding(0);
             this.lblTracker.Name = "lblTracker";
-            this.lblTracker.Size = new System.Drawing.Size(162, 31);
+            this.lblTracker.Size = new System.Drawing.Size(186, 31);
             this.lblTracker.TabIndex = 11;
             this.lblTracker.Text = "🕒 00:00:00";
             this.lblTracker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button5
+            // btnAbout
             // 
-            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(632, 0);
-            this.button5.Margin = new System.Windows.Forms.Padding(0);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(162, 30);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "❓ About";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnAbout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAbout.Location = new System.Drawing.Point(740, 0);
+            this.btnAbout.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(186, 30);
+            this.btnAbout.TabIndex = 4;
+            this.btnAbout.Text = "❓ About";
+            this.btnAbout.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnMCQ
             // 
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(474, 0);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(158, 30);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "💡 MCQ";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnMCQ.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMCQ.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMCQ.Location = new System.Drawing.Point(555, 0);
+            this.btnMCQ.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMCQ.Name = "btnMCQ";
+            this.btnMCQ.Size = new System.Drawing.Size(185, 30);
+            this.btnMCQ.TabIndex = 3;
+            this.btnMCQ.Text = "💡 MCQ";
+            this.btnMCQ.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnMindMaps
             // 
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(316, 0);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(158, 30);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "🧠 Mind Maps";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnMindMaps.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMindMaps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMindMaps.Location = new System.Drawing.Point(370, 0);
+            this.btnMindMaps.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMindMaps.Name = "btnMindMaps";
+            this.btnMindMaps.Size = new System.Drawing.Size(185, 30);
+            this.btnMindMaps.TabIndex = 2;
+            this.btnMindMaps.Text = "🧠 Mind Maps";
+            this.btnMindMaps.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnNotes
             // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(158, 0);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 30);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "💬 Notes";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnNotes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnNotes.Location = new System.Drawing.Point(185, 0);
+            this.btnNotes.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNotes.Name = "btnNotes";
+            this.btnNotes.Size = new System.Drawing.Size(185, 30);
+            this.btnNotes.TabIndex = 1;
+            this.btnNotes.Text = "💬 Notes";
+            this.btnNotes.UseVisualStyleBackColor = true;
             // 
             // btnDashboard
             // 
@@ -168,7 +169,7 @@ namespace focusbeam
             this.btnDashboard.Location = new System.Drawing.Point(0, 0);
             this.btnDashboard.Margin = new System.Windows.Forms.Padding(0);
             this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(158, 30);
+            this.btnDashboard.Size = new System.Drawing.Size(185, 30);
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.Text = "🚀 Dashboard";
             this.btnDashboard.UseVisualStyleBackColor = true;
@@ -182,7 +183,7 @@ namespace focusbeam
             this.statusStrip1.Location = new System.Drawing.Point(0, 645);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(794, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(926, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -195,7 +196,7 @@ namespace focusbeam
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(640, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(772, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // progressBar1
@@ -203,32 +204,41 @@ namespace focusbeam
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(100, 16);
             // 
-            // refPicker1
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.refPicker1, 2);
-            this.refPicker1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.refPicker1.Location = new System.Drawing.Point(158, 30);
-            this.refPicker1.Margin = new System.Windows.Forms.Padding(0);
-            this.refPicker1.MaximumSize = new System.Drawing.Size(583, 35);
-            this.refPicker1.Name = "refPicker1";
-            this.refPicker1.Size = new System.Drawing.Size(316, 31);
-            this.refPicker1.TabIndex = 12;
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             // 
+            // rpkProject
+            // 
+            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkProject.Location = new System.Drawing.Point(185, 30);
+            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 35);
+            this.rpkProject.Name = "rpkProject";
+            this.rpkProject.Size = new System.Drawing.Size(185, 31);
+            this.rpkProject.TabIndex = 12;
+            // 
+            // rpkTaskItem
+            // 
+            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkTaskItem.Location = new System.Drawing.Point(370, 30);
+            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 35);
+            this.rpkTaskItem.Name = "rpkTaskItem";
+            this.rpkTaskItem.Size = new System.Drawing.Size(185, 31);
+            this.rpkTaskItem.TabIndex = 13;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(794, 667);
+            this.ClientSize = new System.Drawing.Size(926, 667);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(702, 706);
+            this.MinimumSize = new System.Drawing.Size(942, 706);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Focus Beam";
@@ -245,11 +255,11 @@ namespace focusbeam
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnMCQ;
+        private System.Windows.Forms.Button btnMindMaps;
+        private System.Windows.Forms.Button btnNotes;
         private System.Windows.Forms.Button btnDashboard;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.Label lblTracker;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnSettings;
@@ -257,8 +267,9 @@ namespace focusbeam
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar progressBar1;
-        private Controls.RefPicker refPicker1;
+        private Controls.RefPicker rpkProject;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private Controls.RefPicker rpkTaskItem;
     }
 }
 

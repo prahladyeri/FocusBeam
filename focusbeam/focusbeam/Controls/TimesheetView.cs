@@ -1,5 +1,5 @@
 ﻿/**
- * RefPicker.cs - Class Definition
+ * TimesheetView.cs - Class Definition
  * 
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
@@ -16,13 +16,9 @@ using System.Windows.Forms;
 
 namespace focusbeam.Controls
 {
-    public partial class RefPicker : UserControl
+    public partial class TimesheetView : UserControl
     {
-        public ComboBox cmbMain {
-            get { return this.comboBox1; }
-        }
-
-        public RefPicker()
+        public TimesheetView()
         {
             InitializeComponent();
         }

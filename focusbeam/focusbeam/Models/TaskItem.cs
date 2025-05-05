@@ -14,7 +14,6 @@ namespace focusbeam.Models
 {
     public enum PriorityLevel { Low, Medium, High, Critical }
     public enum StatusLevel { Pending, Completed}
-    public enum KanbanStatusLevel { ToDo, InProgress, Review, Done}
 
     public class TaskItem
     {
@@ -29,7 +28,6 @@ namespace focusbeam.Models
         public string Title { get; set; }
         public PriorityLevel Priority { get; set; }
         public StatusLevel Status { get; set; }
-        public KanbanStatusLevel KanbanStatus { get; set; }
         public List<string> Tags { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }

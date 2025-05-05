@@ -60,6 +60,12 @@
     <Compile Include="Controls\RefPicker.Designer.cs">
       <DependentUpon>RefPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TimesheetView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimesheetView.Designer.cs">
+      <DependentUpon>TimesheetView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBAL.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -75,6 +81,9 @@
     <Compile Include="Helpers.cs" />
     <EmbeddedResource Include="Controls\RefPicker.resx">
       <DependentUpon>RefPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TimesheetView.resx">
+      <DependentUpon>TimesheetView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -106,10 +115,15 @@
     <EmbeddedResource Include="files\init.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="files\licenses\" />
+    <EmbeddedResource Include="files\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="files\logo.png" />
+    <Content Include="licenses\newtonsoft.json.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="licenses\sqlite.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
