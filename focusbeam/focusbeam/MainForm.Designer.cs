@@ -29,6 +29,7 @@ namespace focusbeam
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@ namespace focusbeam
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.refPicker1 = new focusbeam.Controls.RefPicker();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -212,6 +214,11 @@ namespace focusbeam
             this.refPicker1.Size = new System.Drawing.Size(316, 31);
             this.refPicker1.TabIndex = 12;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -251,6 +258,7 @@ namespace focusbeam
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar progressBar1;
         private Controls.RefPicker refPicker1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

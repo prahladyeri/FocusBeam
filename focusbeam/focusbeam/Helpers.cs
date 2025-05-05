@@ -174,7 +174,38 @@ namespace focusbeam.Util
             }
         }
 
+
+        public static Icon GetEmbeddedIcon(string resourceName, int size = 32)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (Bitmap bitmap = new Bitmap(stream))
+            {
+                Bitmap resized = new Bitmap(bitmap, new Size(size, size));
+                return Icon.FromHandle(resized.GetHicon());
+            }
+        }
+
     }
+
+
+    public static class AssemblyInfoHelper
+    {
+        public static string GetTitle()
+        {
+            var attr = Assembly.GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyTitleAttribute>();
+            return attr?.Title ?? "Untitled";
+        }
+
+        public static string GetDescription()
+        {
+            var attr = Assembly.GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyDescriptionAttribute>();
+            return attr?.Description ?? "No description available.";
+        }
+    }
+
 
     public static class Logger
     {

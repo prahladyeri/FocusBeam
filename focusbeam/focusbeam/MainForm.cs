@@ -31,6 +31,12 @@ namespace focusbeam
         {
             //DBAL.Init();
             //projects = DBAL.GetAllProjects();
+            this.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png");
+            notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
+            notifyIcon1.Text = Util.AssemblyInfoHelper.GetTitle();
+            notifyIcon1.Visible = true;
+            //notifyIcon1.Text = AppDomain.CurrentDomain.app
+
             projects = new List<Project>();
             projects.Add(new Project {
                 Id = 1,
@@ -50,6 +56,8 @@ namespace focusbeam
             }
 
             refPicker1.cmbMain.SelectedIndex = 0;
+
+            
         }
 
         private void CmbMain_SelectedIndexChanged(object sender, EventArgs e)
