@@ -44,10 +44,13 @@ namespace focusbeam
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rpkProject = new focusbeam.Controls.RefPicker();
             this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -206,8 +209,23 @@ namespace focusbeam
             // 
             // notifyIcon1
             // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(94, 26);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // rpkProject
             // 
@@ -218,6 +236,7 @@ namespace focusbeam
             this.rpkProject.Name = "rpkProject";
             this.rpkProject.Size = new System.Drawing.Size(185, 31);
             this.rpkProject.TabIndex = 12;
+            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
             // 
             // rpkTaskItem
             // 
@@ -228,6 +247,7 @@ namespace focusbeam
             this.rpkTaskItem.Name = "rpkTaskItem";
             this.rpkTaskItem.Size = new System.Drawing.Size(185, 31);
             this.rpkTaskItem.TabIndex = 13;
+            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -242,11 +262,13 @@ namespace focusbeam
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Focus Beam";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,6 +292,8 @@ namespace focusbeam
         private Controls.RefPicker rpkProject;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private Controls.RefPicker rpkTaskItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

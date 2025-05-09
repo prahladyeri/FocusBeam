@@ -19,9 +19,10 @@ namespace focusbeam
 {
     public partial class MainForm : Form
     {
-        private List<Project> projects = null;
-        private Project currentProject = null;
-        private Task currentTask = null;
+        private List<Project> _projects = null;
+        private Project _currentProject = null;
+        private TaskItem _currentTask = null;
+        private bool _isExiting = false;
 
         public MainForm()
         {
@@ -34,7 +35,7 @@ namespace focusbeam
             //projects = DBAL.GetAllProjects();
             this.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png");
             notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
-            notifyIcon1.Text = Util.AssemblyInfoHelper.GetTitle();
+            notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
             //notifyIcon1.Text = AppDomain.CurrentDomain.app
             //this.Text += " " + Util.AssemblyInfoHelper.GetVersion();
@@ -51,36 +52,80 @@ namespace focusbeam
             project.Tasks = new List<TaskItem> {
                 new TaskItem {
                     ProjectId = project.Id,
-                    Title = "Default Task",
+                    Title = "Apar QRLabel",
                     Priority = PriorityLevel.High,
                     Status = StatusLevel.Pending,
                     Tags = new List<string>{ "Tango", "Charlie" },
-                }
+                },
+                new TaskItem {
+                    ProjectId = project.Id,
+                    Title = "Wave PHP",
+                    Priority = PriorityLevel.High,
+                    Status = StatusLevel.Pending,
+                    Tags = new List<string>{ "Tango", "Charlie" },
+                },
+                new TaskItem {
+                    ProjectId = project.Id,
+                    Title = "Focus Beam",
+                    Priority = PriorityLevel.High,
+                    Status = StatusLevel.Pending,
+                    Tags = new List<string>{ "Tango", "Charlie" },
+                },
+
             };
-            projects = new List<Project> { project};
+            _projects = new List<Project> { project};
 
-            rpkProject.cmbMain.SelectedIndexChanged += CmbMain_SelectedIndexChanged;
+                        
 
-            foreach (Project proj in projects) {
+            foreach (Project proj in _projects) {
                 this.rpkProject.cmbMain.Items.Add(proj.Title);
             }
 
             rpkProject.cmbMain.SelectedIndex = 0;
-
-            
         }
 
-        private void CmbMain_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             string title = rpkProject.cmbMain.SelectedItem.ToString();
-            currentProject = projects.FirstOrDefault(p => p.Title == title);
+            _currentProject = _projects.FirstOrDefault(p => p.Title == title);
             rpkTaskItem.cmbMain.Items.Clear();
-            foreach (TaskItem task in currentProject.Tasks) {
+            foreach (TaskItem task in _currentProject.Tasks)
+            {
                 rpkTaskItem.cmbMain.Items.Add(task.Title);
             }
             rpkTaskItem.cmbMain.SelectedIndex = 0;
+        }
+
+
+        private void rpkTaskItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string title = rpkTaskItem.cmbMain.SelectedItem.ToString();
+            //currentProject = projects.FirstOrDefault(p => p.Title == title);
+            _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
+            lblStatus.Text = $"Current task set to {title}";
             // TODO: update the view
-            lblStatus.Text = $"{title} loaded";
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _isExiting = true;
+            this.Close();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!_isExiting) {
+                e.Cancel = true;
+                MinimizeToTray();
+            }
+        }
+
+        private void MinimizeToTray() {
+            this.Hide();
+            notifyIcon1.BalloonTipTitle = Util.AssemblyInfoHelper.Title;
+            notifyIcon1.BalloonTipText = $"{Util.AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
+            notifyIcon1.ShowBalloonTip(3000); // duration in milliseconds
         }
     }
 }

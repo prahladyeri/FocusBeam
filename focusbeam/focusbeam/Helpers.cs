@@ -191,11 +191,12 @@ namespace focusbeam.Util
 
     public static class AssemblyInfoHelper
     {
-        public static string GetTitle()
-        {
-            var attr = Assembly.GetExecutingAssembly()
-                .GetCustomAttribute<AssemblyTitleAttribute>();
-            return attr?.Title ?? "Untitled";
+        public static string Title { 
+            get {
+                var attr = Assembly.GetExecutingAssembly()
+                    .GetCustomAttribute<AssemblyTitleAttribute>();
+                return attr?.Title ?? "Untitled";
+            }
         }
 
         public static string GetDescription()

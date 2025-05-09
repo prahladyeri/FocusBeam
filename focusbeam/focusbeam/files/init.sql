@@ -15,7 +15,7 @@ create table projects (
 	id integer primary key,
 	title text not null unique,
 	category int not null, -- enum
-	tags text not null, -- (vim/php/python/python-mysql)
+	tags text, -- "vim,php,python,python-mysql"
 	start_date datetime not null,
 	end_date datetime not null,
 	notes text
@@ -30,9 +30,10 @@ create table tasks (
 	status int not null, -- enum
 	start_date datetime,
 	end_date datetime,
-	tags text not null,
+	tags text,
 	planned_hours int, -- no. of hours to be spend on this task each day.
 	notes text,
+	unique(project_id, title),
 	foreign key (project_id) references projects(id),
 	foreign key (parent_task_id) references tasks (id)
 );
