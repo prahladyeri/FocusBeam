@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace focusbeam
         private Project _currentProject = null;
         private TaskItem _currentTask = null;
         private bool _isExiting = false;
+        private bool _isTracking = false;
+        private DateTime _trackingStartedAt;
 
         public MainForm()
         {
@@ -115,9 +118,15 @@ namespace focusbeam
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!_isExiting) {
+            if (!_isExiting)
+            {
                 e.Cancel = true;
                 MinimizeToTray();
+            }
+            else if (_isTracking)
+            {
+                e.Cancel = true;
+                MessageBox.Show("Tracking is still in progress.");
             }
         }
 
@@ -126,6 +135,56 @@ namespace focusbeam
             notifyIcon1.BalloonTipTitle = Util.AssemblyInfoHelper.Title;
             notifyIcon1.BalloonTipText = $"{Util.AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
             notifyIcon1.ShowBalloonTip(3000); // duration in milliseconds
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            if (!_isTracking) {
+                //Start logic
+                notifyIcon1.ShowBalloonTip(3000, Util.AssemblyInfoHelper.Title, "Started Tracking Time", ToolTipIcon.Info);
+                btnStart.Text = "⏸️ Stop";
+                _isTracking = true;
+                _trackingStartedAt = DateTime.Now;
+                timer1.Enabled = true;
+            }
+            else
+            {
+                //Stop logic
+                notifyIcon1.ShowBalloonTip(3000, Util.AssemblyInfoHelper.Title, "Stopped Tracking Time", ToolTipIcon.Info);
+                btnStart.Text = "▶️ Start" ;
+                _isTracking = false;
+                timer1.Enabled = false;
+                var endTime = DateTime.Now;
+                TimeSpan ts = endTime - _trackingStartedAt;
+                var te = new TimeEntry
+                {
+                    TaskId = _currentTask.Id,
+                    StartTime = _trackingStartedAt,
+                    EndTime =endTime,
+                    Duration = (int)Math.Ceiling(ts.TotalMinutes),
+                    Status = TimeEntryStatusLevel.Completed,
+                };
+                //TODO: Add te to database
+                _currentTask.TimeEntries.Add(te);
+                timesheetView1.dgv.Rows.Add(
+                    te.StartTime,
+                    te.EndTime,
+                    te.Duration,
+                    te.Status
+                );
+            }
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //🕒 00:00:00
+            TimeSpan ts = DateTime.Now.Subtract(_trackingStartedAt);
+            lblTracker.Text = "🕒" + ts.ToString(@"hh\:mm\:ss");
         }
     }
 }
