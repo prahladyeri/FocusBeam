@@ -16,6 +16,7 @@ using System.Windows.Forms;
 
 namespace focusbeam.Controls
 {
+    [DefaultEvent("SelectedIndexChanged")]
     public partial class RefPicker : UserControl
     {
         public ComboBox cmbMain {

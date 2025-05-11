@@ -27,11 +27,48 @@ namespace focusbeam
             conn = new SQLiteConnection($"Data Source={dbPath};Version=3;");
             conn.Open();
             if (isNew) {
-                //TODO Create new schema if empty
                 string sql = Util.FileHelper.ReadEmbeddedResource("focusbeam.files.init.sql");
-                var cmd = new SQLiteCommand(sql);
+                var cmd = new SQLiteCommand(sql, conn);
                 cmd.ExecuteNonQuery(); // a bunch of DDL/DML statements.
+                //TODO: Create default project, task.
+                Project project = new Project { 
+                    Title = "Default Project",
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddDays(90),
+                    Tags = "Alpha,Beta,Epsilon",
+                };
+                project.Tasks = new List<TaskItem> {
+                    new TaskItem {
+                        ProjectId = project.Id,
+                        Title = "Default Task",
+                        Priority = PriorityLevel.High,
+                        Status = StatusLevel.Pending,
+                        StartDate = project.StartDate,
+                        EndDate = project.EndDate,
+                        Tags = new List<string>{ "Tango", "Charlie" },
+                    },
+                };
+                project.Save();
             }
+        }
+
+        public static SQLiteDataReader Execute(string sql, object[] args = null) {
+            args = (args == null ? Array.Empty<object>() : args);
+            var cmd = new SQLiteCommand(sql, conn);
+            //cmd.Parameters.AddRange(args);
+            // Convert args to SQLiteParameter array
+            for (int i = 0; i < args.Length; i++)
+            {
+                cmd.Parameters.AddWithValue($"@param{i}", args[i]);
+            }
+            return cmd.ExecuteReader();
+        }
+
+        public static object ExecuteScalar(string sql) {
+            //args = (args == null ? Array.Empty<object>() : args);
+            var cmd = new SQLiteCommand(sql, conn);
+            //cmd.Parameters.AddRange(args);
+            return cmd.ExecuteScalar();
         }
 
         public static List<Project> GetAllProjects() {

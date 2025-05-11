@@ -40,6 +40,7 @@ namespace focusbeam.Controls
             // 
             // dgvTimesheet
             // 
+            this.dgvTimesheet.AllowUserToAddRows = false;
             this.dgvTimesheet.AllowUserToDeleteRows = false;
             this.dgvTimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTimesheet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -71,7 +72,7 @@ namespace focusbeam.Controls
             // 
             // duration
             // 
-            this.duration.HeaderText = "Duration";
+            this.duration.HeaderText = "Duration (Mins)";
             this.duration.Name = "duration";
             this.duration.ReadOnly = true;
             this.duration.Width = 150;

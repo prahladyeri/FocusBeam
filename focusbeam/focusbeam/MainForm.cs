@@ -34,51 +34,14 @@ namespace focusbeam
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //DBAL.Init();
-            //projects = DBAL.GetAllProjects();
             this.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png");
             notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
             //notifyIcon1.Text = AppDomain.CurrentDomain.app
             //this.Text += " " + Util.AssemblyInfoHelper.GetVersion();
-
-            var project = new Project {
-                Id = 1,
-                Title = "Default Project",
-                Category = CategoryLevel.Work,
-                Tags = "",
-                StartDate = new DateTime(2025, 05, 04),
-                EndDate = new DateTime(2025, 05, 31),
-                Notes = "",
-            };
-            project.Tasks = new List<TaskItem> {
-                new TaskItem {
-                    ProjectId = project.Id,
-                    Title = "Apar QRLabel",
-                    Priority = PriorityLevel.High,
-                    Status = StatusLevel.Pending,
-                    Tags = new List<string>{ "Tango", "Charlie" },
-                },
-                new TaskItem {
-                    ProjectId = project.Id,
-                    Title = "Wave PHP",
-                    Priority = PriorityLevel.High,
-                    Status = StatusLevel.Pending,
-                    Tags = new List<string>{ "Tango", "Charlie" },
-                },
-                new TaskItem {
-                    ProjectId = project.Id,
-                    Title = "Focus Beam",
-                    Priority = PriorityLevel.High,
-                    Status = StatusLevel.Pending,
-                    Tags = new List<string>{ "Tango", "Charlie" },
-                },
-
-            };
-            _projects = new List<Project> { project};
-
-                        
+            DBAL.Init();
+            _projects = DBAL.GetAllProjects();
 
             foreach (Project proj in _projects) {
                 this.rpkProject.cmbMain.Items.Add(proj.Title);
@@ -108,6 +71,15 @@ namespace focusbeam
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
             lblStatus.Text = $"Current task set to {title}";
             // TODO: update the view
+            timesheetView1.dgv.Rows.Clear();
+            _currentTask.TimeEntries.ForEach(te => {
+                timesheetView1.dgv.Rows.Add(
+                    te.StartTime,
+                    te.EndTime,
+                    te.Duration,
+                    te.Status
+                );
+            });
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,13 +138,17 @@ namespace focusbeam
                 };
                 //TODO: Add te to database
                 _currentTask.TimeEntries.Add(te);
-                timesheetView1.dgv.Rows.Add(
-                    te.StartTime,
-                    te.EndTime,
-                    te.Duration,
-                    te.Status
-                );
+                addToTimesheet(te);
             }
+        }
+
+        private void addToTimesheet(TimeEntry te) {
+            timesheetView1.dgv.Rows.Insert(0,
+                te.StartTime,
+                te.EndTime,
+                te.Duration.ToString("D2"),
+                te.Status
+            );
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -185,6 +161,11 @@ namespace focusbeam
             //🕒 00:00:00
             TimeSpan ts = DateTime.Now.Subtract(_trackingStartedAt);
             lblTracker.Text = "🕒" + ts.ToString(@"hh\:mm\:ss");
+        }
+
+        private void rpkTaskItem_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
