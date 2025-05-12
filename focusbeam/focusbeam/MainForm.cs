@@ -100,6 +100,9 @@ namespace focusbeam
                 e.Cancel = true;
                 MessageBox.Show("Tracking is still in progress.");
             }
+            else {
+                DBAL.Dispose();
+            }
         }
 
         private void MinimizeToTray() {

@@ -14,13 +14,15 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace focusbeam.Models
 {
-    public enum CategoryLevel { Work, Study, Home, Other }
+    public enum CategoryLevel { 
+        Work = 0, Study = 1, Home = 2, Other = 3
+    }
     public class Project
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public CategoryLevel Category { get; set; }
-        public string Tags { get; set; }
+        public string[] Tags { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
