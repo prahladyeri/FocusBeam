@@ -39,8 +39,6 @@ namespace focusbeam
             this.btnMindMaps = new System.Windows.Forms.Button();
             this.btnNotes = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
-            this.rpkProject = new focusbeam.Controls.RefPicker();
-            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -48,11 +46,15 @@ namespace focusbeam
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timesheetView1 = new focusbeam.Controls.TimesheetView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.rpkProject = new focusbeam.Controls.RefPicker();
+            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
+            this.panelMain = new System.Windows.Forms.Panel();
+            this.timesheetView1 = new focusbeam.Controls.TimesheetView();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -180,29 +182,6 @@ namespace focusbeam
             this.btnDashboard.Text = "🚀 Dashboard";
             this.btnDashboard.UseVisualStyleBackColor = true;
             // 
-            // rpkProject
-            // 
-            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkProject.Location = new System.Drawing.Point(185, 30);
-            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 35);
-            this.rpkProject.Name = "rpkProject";
-            this.rpkProject.Size = new System.Drawing.Size(185, 31);
-            this.rpkProject.TabIndex = 12;
-            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
-            // 
-            // rpkTaskItem
-            // 
-            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkTaskItem.Location = new System.Drawing.Point(370, 30);
-            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 35);
-            this.rpkTaskItem.Name = "rpkTaskItem";
-            this.rpkTaskItem.Size = new System.Drawing.Size(185, 31);
-            this.rpkTaskItem.TabIndex = 13;
-            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
-            this.rpkTaskItem.Load += new System.EventHandler(this.rpkTaskItem_Load);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -254,25 +233,57 @@ namespace focusbeam
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // timesheetView1
-            // 
-            this.timesheetView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timesheetView1.Location = new System.Drawing.Point(0, 61);
-            this.timesheetView1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.timesheetView1.Name = "timesheetView1";
-            this.timesheetView1.Size = new System.Drawing.Size(926, 584);
-            this.timesheetView1.TabIndex = 2;
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // rpkProject
+            // 
+            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkProject.Location = new System.Drawing.Point(185, 30);
+            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 35);
+            this.rpkProject.Name = "rpkProject";
+            this.rpkProject.Size = new System.Drawing.Size(185, 31);
+            this.rpkProject.TabIndex = 12;
+            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
+            // 
+            // rpkTaskItem
+            // 
+            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkTaskItem.Location = new System.Drawing.Point(370, 30);
+            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 35);
+            this.rpkTaskItem.Name = "rpkTaskItem";
+            this.rpkTaskItem.Size = new System.Drawing.Size(185, 31);
+            this.rpkTaskItem.TabIndex = 13;
+            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
+            this.rpkTaskItem.Load += new System.EventHandler(this.rpkTaskItem_Load);
+            // 
+            // panelMain
+            // 
+            this.panelMain.Controls.Add(this.timesheetView1);
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(0, 61);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(926, 584);
+            this.panelMain.TabIndex = 2;
+            // 
+            // timesheetView1
+            // 
+            this.timesheetView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timesheetView1.Location = new System.Drawing.Point(0, 0);
+            this.timesheetView1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.timesheetView1.Name = "timesheetView1";
+            this.timesheetView1.Size = new System.Drawing.Size(926, 584);
+            this.timesheetView1.TabIndex = 3;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(926, 667);
-            this.Controls.Add(this.timesheetView1);
+            this.Controls.Add(this.panelMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -288,6 +299,7 @@ namespace focusbeam
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,8 +325,9 @@ namespace focusbeam
         private Controls.RefPicker rpkTaskItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private Controls.TimesheetView timesheetView1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Panel panelMain;
+        private Controls.TimesheetView timesheetView1;
     }
 }
 

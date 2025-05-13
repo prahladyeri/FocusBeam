@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,68 @@ namespace focusbeam.Models
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
         public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
+
+        public static List<Project> GetAll()
+        {
+            var projects = new List<Project>();
+            foreach (DataRow row in DBAL.FetchResult("select * from projects order by id desc;").Rows)
+            {
+                var project = new Project
+                {
+                    Id = Convert.ToInt32(row["id"]),
+                    Title = row.Field<string>("title"),
+                    Category = (CategoryLevel)row.Field<int>("category"),
+                    //Tags = row.IsNull("tags") ? "" : row.Field<string>("tags"),
+                    StartDate = row.Field<DateTime>("start_date"),
+                    EndDate = row.Field<DateTime>("end_date"),
+                    Notes = row.IsNull("notes") ? "" : row.Field<string>("notes")
+                };
+                if (!row.IsNull("tags"))
+                {
+                    project.Tags = row.Field<string>("tags").Split(',');
+                }
+                var items = DBAL.FetchResult($"select * from tasks where project_id={project.Id}");
+                foreach (DataRow taskRow in items.Rows)
+                {
+                    TaskItem taskItem = new TaskItem
+                    {
+                        Id = Convert.ToInt32(taskRow["id"]),
+                        ProjectId = project.Id,
+                        Title = taskRow.Field<string>("title"),
+                        Priority = (PriorityLevel)taskRow.Field<int>("priority"),
+                        Status = (StatusLevel)taskRow.Field<int>("status"),
+                        StartDate = taskRow.Field<DateTime>("start_date"),
+                        EndDate = taskRow.Field<DateTime>("end_date"),
+                        PlannedHours = taskRow.Field<int>("planned_hours"),
+                        Notes = taskRow.Field<string>("notes"),
+                    };
+                    if (!taskRow.IsNull("tags"))
+                    {
+                        taskItem.Tags = taskRow.Field<string>("tags").Split(',');
+                    }
+
+                    var titems = DBAL.FetchResult($"select * from timesheet where task_id={taskItem.Id} order by id;");
+                    foreach (DataRow teRow in titems.Rows)
+                    {
+                        TimeEntry te = new TimeEntry
+                        {
+                            Id = Convert.ToInt32(teRow["id"]),
+                            TaskId = taskItem.Id,
+                            StartTime = teRow.Field<DateTime>("start_time"),
+                            EndTime = teRow.Field<DateTime>("end_time"),
+                            Duration = teRow.Field<int>("duration"),
+                            Status = (TimeEntryStatusLevel)teRow.Field<int>("status"),
+                            Notes = teRow.Field<string>("notes"),
+                        };
+                        taskItem.TimeEntries.Add(te);
+                    }
+                    project.Tasks.Add(taskItem);
+                }
+                projects.Add(project);
+            }
+            return projects;
+        }
+
 
         public void Save()
         {

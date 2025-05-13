@@ -66,7 +66,7 @@ namespace focusbeam
                 {
                     cmd.Parameters.AddWithValue($"@param{i}", args[i]);
                 }
-                if (!sql.ToUpperInvariant().StartsWith("SELECT"))
+                if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
                 {
                     cmd.ExecuteNonQuery();
                     return null;
@@ -88,70 +88,12 @@ namespace focusbeam
             }
         }
 
-        private static DataTable FetchResult(string sql) {
-            //string sql = $"select * from {tableName}";
-            DataSet ds;
+        public static DataTable FetchResult(string sql) {
+            var dt = new DataTable();
             using (var da = new SQLiteDataAdapter(sql, conn)) {
-                ds = new DataSet();
-                da.Fill(ds, "table1");
+                da.Fill(dt);
             }
-            return ds.Tables["table1"];
+            return dt;
         }
-
-        public static List<Project> GetAllProjects() {
-            var projects = new List<Project>();
-            foreach (DataRow row in FetchResult("select * from projects order by id desc;").Rows) {
-                var project = new Project
-                {
-                    Id = Convert.ToInt32(row["id"]),
-                    Title = row.Field<string>("title"),
-                    Category = (CategoryLevel)row.Field<int>("category"),
-                    //Tags = row.IsNull("tags") ? "" : row.Field<string>("tags"),
-                    StartDate = row.Field<DateTime>("start_date"),
-                    EndDate = row.Field<DateTime>("end_date"),
-                    Notes = row.IsNull("notes") ? "" : row.Field<string>("notes")
-                };
-                if (!row.IsNull("tags")) {
-                    project.Tags = row.Field<string>("tags").Split(',');
-                }
-                var items = FetchResult($"select * from tasks where project_id={project.Id}");
-                foreach (DataRow taskRow in items.Rows) {
-                    TaskItem taskItem = new TaskItem
-                    {
-                        Id = Convert.ToInt32(taskRow["id"]),
-                        ProjectId = project.Id,
-                        Title = taskRow.Field<string>("title"),
-                        Priority = (PriorityLevel)taskRow.Field<int>("priority"),
-                        Status = (StatusLevel)taskRow.Field<int>("status"),
-                        StartDate = taskRow.Field<DateTime>("start_date"),
-                        EndDate = taskRow.Field<DateTime>("end_date"),
-                        PlannedHours = taskRow.Field<int>("planned_hours"),
-                        Notes = taskRow.Field<string>("notes"),
-                    };
-                    if (!taskRow.IsNull("tags"))
-                    {
-                        taskItem.Tags = taskRow.Field<string>("tags").Split(',');
-                    }
-
-                    var titems = FetchResult($"select * from timesheet where task_id={taskItem.Id} order by id;");
-                    foreach (DataRow teRow in titems.Rows) {
-                        TimeEntry te = new TimeEntry {
-                            Id = Convert.ToInt32(teRow["id"]),
-                            TaskId = taskItem.Id,
-                            StartTime = teRow.Field<DateTime>("start_time"),
-                            EndTime = teRow.Field<DateTime>("end_time"),
-                            Duration = teRow.Field<int>("duration"),
-                            Status = (TimeEntryStatusLevel)teRow.Field<int>("status"),
-                            Notes = teRow.Field<string>("notes"),
-                        };
-                        taskItem.TimeEntries.Add(te);
-                    }
-                    project.Tasks.Add(taskItem);
-                } 
-                projects.Add(project);
-            }
-            return projects;
-        }
-
     }
 }

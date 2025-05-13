@@ -126,7 +126,7 @@ namespace focusbeam.Util
                 .Replace("{{subject}}", subject)
                 .Replace("{{regards}}", $"{Core.AppName} Support")
                 ;
-            var fromAddress = new MailAddress("appsdepot@outlook.com", $"{Core.AppName} Support");
+            var fromAddress = new MailAddress("support@example.com", $"{Core.AppName} Support");
 
             var smtp = new SmtpClient
             {
@@ -222,7 +222,7 @@ namespace focusbeam.Util
         public static void CleanUp()
         {
             // TODO Check if log size is greater than 100MB
-            // TODO If so, rename it to something else, also warn user to delete or take backup.
+            // If so, rename it to something else, also warn user to delete or take backup.
             const long MaxSize = 100 * 1024 * 1024; // 100 MB
             if (File.Exists(Path))
             {

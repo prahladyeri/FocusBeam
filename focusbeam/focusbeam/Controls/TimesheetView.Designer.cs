@@ -42,6 +42,7 @@ namespace focusbeam.Controls
             // 
             this.dgvTimesheet.AllowUserToAddRows = false;
             this.dgvTimesheet.AllowUserToDeleteRows = false;
+            this.dgvTimesheet.AllowUserToResizeRows = false;
             this.dgvTimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTimesheet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.start_time,

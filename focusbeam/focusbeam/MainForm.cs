@@ -25,6 +25,7 @@ namespace focusbeam
         private TaskItem _currentTask = null;
         private bool _isExiting = false;
         private bool _isTracking = false;
+        private bool _isMinimizedTrayWarningShown = false;
         private DateTime _trackingStartedAt;
 
         public MainForm()
@@ -38,10 +39,8 @@ namespace focusbeam
             notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
-            //notifyIcon1.Text = AppDomain.CurrentDomain.app
-            //this.Text += " " + Util.AssemblyInfoHelper.GetVersion();
             DBAL.Init();
-            _projects = DBAL.GetAllProjects();
+            _projects = Project.GetAll();
 
             foreach (Project proj in _projects) {
                 this.rpkProject.cmbMain.Items.Add(proj.Title);
@@ -69,16 +68,12 @@ namespace focusbeam
             string title = rpkTaskItem.cmbMain.SelectedItem.ToString();
             //currentProject = projects.FirstOrDefault(p => p.Title == title);
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
-            lblStatus.Text = $"Current task set to {title}";
+            lblStatus.Text = $"Current task set to {_currentProject.Title}=>{title}";
             // TODO: update the view
             timesheetView1.dgv.Rows.Clear();
             _currentTask.TimeEntries.ForEach(te => {
-                timesheetView1.dgv.Rows.Add(
-                    te.StartTime,
-                    te.EndTime,
-                    te.Duration,
-                    te.Status
-                );
+                addTimeEntryToGrid(te);
+
             });
         }
 
@@ -107,9 +102,12 @@ namespace focusbeam
 
         private void MinimizeToTray() {
             this.Hide();
-            notifyIcon1.BalloonTipTitle = Util.AssemblyInfoHelper.Title;
-            notifyIcon1.BalloonTipText = $"{Util.AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
-            notifyIcon1.ShowBalloonTip(3000); // duration in milliseconds
+            if (!_isMinimizedTrayWarningShown) { 
+                notifyIcon1.BalloonTipTitle = Util.AssemblyInfoHelper.Title;
+                notifyIcon1.BalloonTipText = $"{Util.AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
+                notifyIcon1.ShowBalloonTip(3000); // duration in milliseconds
+                _isMinimizedTrayWarningShown = true;
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -140,12 +138,13 @@ namespace focusbeam
                     Status = TimeEntryStatusLevel.Completed,
                 };
                 //TODO: Add te to database
+                te.Save();
                 _currentTask.TimeEntries.Add(te);
-                addToTimesheet(te);
+                addTimeEntryToGrid(te);
             }
         }
 
-        private void addToTimesheet(TimeEntry te) {
+        private void addTimeEntryToGrid(TimeEntry te) {
             timesheetView1.dgv.Rows.Insert(0,
                 te.StartTime,
                 te.EndTime,
