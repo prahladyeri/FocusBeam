@@ -1,5 +1,5 @@
 ﻿/*
-init.sql - Build the schema and populate default records
+init.sql - Build the schema
 
 @author Prahlad Yeri <prahladyeri@yahoo.com>
 @license MIT
