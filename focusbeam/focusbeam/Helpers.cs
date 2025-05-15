@@ -16,10 +16,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Web.Script.Serialization;
+
 
 namespace focusbeam.Util
 {
-    public static class EmojiConstants
+    internal static class EmojiConstants
     {
         public const string PLUS = "➕";
         public const string PENCIL = "✏️";
@@ -72,12 +74,32 @@ namespace focusbeam.Util
         public const string UNLOCK = "🔓";
     }
 
-    public static class Core
+    internal static class Core
     {
         public static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
     }
 
-    public static class XmlConfig
+    internal static class SettingsManager {
+        private static string _filePath = "settings.json";
+        private static JavaScriptSerializer _serializer = new JavaScriptSerializer();
+
+        internal static Dictionary<string, object> LoadSettings()
+        {
+            if (!File.Exists(_filePath))
+                return new Dictionary<string, object>();
+
+            string json = File.ReadAllText(_filePath);
+            return _serializer.Deserialize<Dictionary<string, object>>(json);
+        }
+
+        internal static void SaveSettings(Dictionary<string, object> settings)
+        {
+            string json = _serializer.Serialize(settings);
+            File.WriteAllText(_filePath, json);
+        }
+    }
+
+    internal static class XmlConfig
     {
 
         public static string Get(string key)
