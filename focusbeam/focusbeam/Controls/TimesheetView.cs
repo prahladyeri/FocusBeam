@@ -19,7 +19,7 @@ namespace focusbeam.Controls
     public partial class TimesheetView : UserControl
     {
         public DataGridView dgv { 
-            get { return this.dgvTimesheet; }
+            get { return this.dgvTasks; }
         }
         public TimesheetView()
         {

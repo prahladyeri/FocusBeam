@@ -37,6 +37,10 @@ namespace focusbeam.Models
 
         public List<TimeEntry> TimeEntries { get; set; } = new List<TimeEntry>();
 
+        public int GetTotalLogged() {
+            return this.TimeEntries.Sum(te => te.Duration);
+        }
+
         public void Save()
         {
             var tags = string.Join(",", Tags);

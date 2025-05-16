@@ -40,6 +40,14 @@ namespace focusbeam
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
             DBAL.Init();
+            timesheetView1.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
+                if (ev.RowIndex >= 0 && timesheetView1.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
+                {
+                    string taskTitle = timesheetView1.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
+                    MessageBox.Show($"Timesheet for task: {taskTitle}");
+                }
+            };
+
             _projects = Project.GetAll();
 
             foreach (Project proj in _projects) {
@@ -60,6 +68,11 @@ namespace focusbeam
                 rpkTaskItem.cmbMain.Items.Add(task.Title);
             }
             rpkTaskItem.cmbMain.SelectedIndex = 0;
+            // update the view
+            timesheetView1.dgv.Rows.Clear();
+            _currentProject.Tasks.ForEach(task => {
+                addTaskToGrid(task);
+            });
         }
 
 
@@ -68,13 +81,7 @@ namespace focusbeam
             string title = rpkTaskItem.cmbMain.SelectedItem.ToString();
             //currentProject = projects.FirstOrDefault(p => p.Title == title);
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
-            lblStatus.Text = $"Current task set to {_currentProject.Title}=>{title}";
-            // TODO: update the view
-            timesheetView1.dgv.Rows.Clear();
-            _currentTask.TimeEntries.ForEach(te => {
-                addTimeEntryToGrid(te);
-
-            });
+            lblStatus.Text = $"Current task set to {_currentProject.Title} => {title}";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -137,19 +144,17 @@ namespace focusbeam
                     Duration = (int)Math.Ceiling(ts.TotalMinutes),
                     Status = TimeEntryStatusLevel.Completed,
                 };
-                //TODO: Add te to database
                 te.Save();
                 _currentTask.TimeEntries.Add(te);
-                addTimeEntryToGrid(te);
             }
         }
 
-        private void addTimeEntryToGrid(TimeEntry te) {
+        private void addTaskToGrid(TaskItem task) {
             timesheetView1.dgv.Rows.Insert(0,
-                te.StartTime,
-                te.EndTime,
-                te.Duration.ToString("D2"),
-                te.Status
+                task.Title,
+                task.Priority,
+                task.Status,
+                ((double)task.GetTotalLogged() / 60).ToString("0.00")
             );
         }
 

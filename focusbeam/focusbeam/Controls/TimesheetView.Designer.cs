@@ -29,87 +29,89 @@ namespace focusbeam.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvTimesheet = new System.Windows.Forms.DataGridView();
-            this.start_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.end_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.dgvTasks = new System.Windows.Forms.DataGridView();
+            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priority = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTimesheet)).BeginInit();
+            this.total_logged = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timesheet = new System.Windows.Forms.DataGridViewButtonColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).BeginInit();
             this.SuspendLayout();
             // 
-            // dgvTimesheet
+            // dgvTasks
             // 
-            this.dgvTimesheet.AllowUserToAddRows = false;
-            this.dgvTimesheet.AllowUserToDeleteRows = false;
-            this.dgvTimesheet.AllowUserToResizeRows = false;
-            this.dgvTimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTimesheet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.start_time,
-            this.end_time,
-            this.duration,
+            this.dgvTasks.AllowUserToAddRows = false;
+            this.dgvTasks.AllowUserToDeleteRows = false;
+            this.dgvTasks.AllowUserToResizeRows = false;
+            this.dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTasks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.title,
+            this.priority,
             this.status,
-            this.notes});
-            this.dgvTimesheet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTimesheet.Location = new System.Drawing.Point(0, 0);
-            this.dgvTimesheet.Name = "dgvTimesheet";
-            this.dgvTimesheet.RowHeadersVisible = false;
-            this.dgvTimesheet.Size = new System.Drawing.Size(576, 390);
-            this.dgvTimesheet.TabIndex = 1;
+            this.total_logged,
+            this.timesheet});
+            this.dgvTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTasks.Location = new System.Drawing.Point(0, 0);
+            this.dgvTasks.Name = "dgvTasks";
+            this.dgvTasks.RowHeadersVisible = false;
+            this.dgvTasks.Size = new System.Drawing.Size(576, 390);
+            this.dgvTasks.TabIndex = 1;
             // 
-            // start_time
+            // title
             // 
-            this.start_time.HeaderText = "Start Time";
-            this.start_time.Name = "start_time";
-            this.start_time.ReadOnly = true;
-            this.start_time.Width = 150;
+            this.title.HeaderText = "Title";
+            this.title.Name = "title";
+            this.title.ReadOnly = true;
+            this.title.Width = 200;
             // 
-            // end_time
+            // priority
             // 
-            this.end_time.HeaderText = "End Time";
-            this.end_time.Name = "end_time";
-            this.end_time.ReadOnly = true;
-            this.end_time.Width = 150;
-            // 
-            // duration
-            // 
-            this.duration.HeaderText = "Duration (Mins)";
-            this.duration.Name = "duration";
-            this.duration.ReadOnly = true;
-            this.duration.Width = 150;
+            this.priority.HeaderText = "Priority";
+            this.priority.Name = "priority";
+            this.priority.ReadOnly = true;
             // 
             // status
             // 
             this.status.HeaderText = "Status";
             this.status.Name = "status";
             this.status.ReadOnly = true;
-            this.status.Width = 150;
             // 
-            // notes
+            // total_logged
             // 
-            this.notes.HeaderText = "Notes";
-            this.notes.Name = "notes";
-            this.notes.ReadOnly = true;
-            this.notes.Width = 150;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.total_logged.DefaultCellStyle = dataGridViewCellStyle1;
+            this.total_logged.HeaderText = "Logged Hours";
+            this.total_logged.Name = "total_logged";
+            this.total_logged.ReadOnly = true;
+            this.total_logged.Width = 120;
+            // 
+            // timesheet
+            // 
+            this.timesheet.HeaderText = "Timesheet";
+            this.timesheet.Name = "timesheet";
+            this.timesheet.ReadOnly = true;
+            this.timesheet.Text = "Timesheet";
+            this.timesheet.UseColumnTextForButtonValue = true;
             // 
             // TimesheetView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dgvTimesheet);
+            this.Controls.Add(this.dgvTasks);
             this.Name = "TimesheetView";
             this.Size = new System.Drawing.Size(576, 390);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTimesheet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dgvTimesheet;
-        private System.Windows.Forms.DataGridViewTextBoxColumn start_time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn end_time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn duration;
+        private System.Windows.Forms.DataGridView dgvTasks;
+        private System.Windows.Forms.DataGridViewTextBoxColumn title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priority;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn notes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total_logged;
+        private System.Windows.Forms.DataGridViewButtonColumn timesheet;
     }
 }
