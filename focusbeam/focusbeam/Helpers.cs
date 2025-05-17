@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,11 +13,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.Web.Script.Serialization;
 
 
 namespace focusbeam.Util
@@ -79,22 +80,67 @@ namespace focusbeam.Util
         public static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
     }
 
-    internal static class SettingsManager {
-        private static string _filePath = "settings.json";
-        private static JavaScriptSerializer _serializer = new JavaScriptSerializer();
+    internal static class Crypto {
+        internal static string Encrypt(string plainText, string password, string salt)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+                var key = new Rfc2898DeriveBytes(password, saltBytes, 10000);
+                aes.Key = key.GetBytes(32);
+                aes.IV = key.GetBytes(16);
+                
+                var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                using (var ms = new MemoryStream()) 
+                { 
+                    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    using (var sw = new StreamWriter(cs))
+                        sw.Write(plainText);
+                    return Convert.ToBase64String(ms.ToArray());
+                }
+            }
+        }
 
-        internal static Dictionary<string, object> LoadSettings()
+        internal static string Decrypt(string cipherText, string password, string salt)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+                var key = new Rfc2898DeriveBytes(password, saltBytes, 10000);
+                aes.Key = key.GetBytes(32);
+                aes.IV = key.GetBytes(16);
+
+                byte[] buffer = Convert.FromBase64String(cipherText);
+
+                var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+                using (var ms = new MemoryStream(buffer))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs)) {
+                    return sr.ReadToEnd();
+                }
+            }
+        }
+    }
+
+    internal static class SettingsManager {
+        private static string _filePath = "settings.dat";
+
+        internal static Dictionary<string, object> LoadSettings(string secretKey = null)
         {
             if (!File.Exists(_filePath))
                 return new Dictionary<string, object>();
 
-            string json = File.ReadAllText(_filePath);
-            return _serializer.Deserialize<Dictionary<string, object>>(json);
+            string content = File.ReadAllText(_filePath);
+            if (!string.IsNullOrEmpty(secretKey))
+                content = Crypto.Decrypt(content, secretKey, "fUvcePiyrdLkj");
+            return JsonConvert.DeserializeObject<Dictionary<string, object>>(content);
         }
 
-        internal static void SaveSettings(Dictionary<string, object> settings)
+        internal static void SaveSettings(Dictionary<string, object> settings, string secretKey = null)
         {
-            string json = _serializer.Serialize(settings);
+            string json = JsonConvert.SerializeObject(settings);
+            if (!string.IsNullOrEmpty(secretKey))
+                json = Crypto.Encrypt(json, secretKey, "fUvcePiyrdLkj");
             File.WriteAllText(_filePath, json);
         }
     }
