@@ -60,6 +60,12 @@
     <Compile Include="Controls\RefPicker.Designer.cs">
       <DependentUpon>RefPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SettingsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SettingsView.Designer.cs">
+      <DependentUpon>SettingsView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TimesheetView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     <Compile Include="Helpers.cs" />
     <EmbeddedResource Include="Controls\RefPicker.resx">
       <DependentUpon>RefPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SettingsView.resx">
+      <DependentUpon>SettingsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TimesheetView.resx">
       <DependentUpon>TimesheetView.cs</DependentUpon>
