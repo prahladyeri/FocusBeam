@@ -17,7 +17,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 
 
 namespace focusbeam.Util
@@ -122,65 +121,37 @@ namespace focusbeam.Util
         }
     }
 
-    internal static class SettingsManager {
+    internal class AppSettings {
         private static string _filePath = "settings.dat";
+        private static string _salt = "fUvcePiyrdLkj";
 
-        internal static Dictionary<string, object> LoadSettings(string secretKey = null)
+        internal bool ShowPomodoroAlerts { get; set; } = true;
+        internal int PomodoroInterval { get; set; } = 25; // minutes
+        internal bool AutoStartNextSession { get; set; } = false;
+        internal int PomodoroShortBreakInterval { get; set; } = 5; // minutes
+        internal int PomodoroLongBreakFrequency { get; set; } = 4; // pomodoros
+        internal int PomodoroLongBreakInterval { get; set; } = 15; // minutes
+        internal bool ShowStoicTipsOnBreaks { get; set; } = false; 
+        internal bool ShowWaterRemindersOnBreaks { get; set; } = true; 
+
+        internal static AppSettings Load(string secretKey = null)
         {
             if (!File.Exists(_filePath))
-                return new Dictionary<string, object>();
+                return new AppSettings();
 
             string content = File.ReadAllText(_filePath);
             if (!string.IsNullOrEmpty(secretKey))
-                content = Crypto.Decrypt(content, secretKey, "fUvcePiyrdLkj");
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(content);
+                content = Crypto.Decrypt(content, secretKey, _salt);
+            return JsonConvert.DeserializeObject<AppSettings>(content);
         }
 
-        internal static void SaveSettings(Dictionary<string, object> settings, string secretKey = null)
+        internal static void Save(AppSettings settings, string secretKey = null)
         {
-            string json = JsonConvert.SerializeObject(settings);
+            string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             if (!string.IsNullOrEmpty(secretKey))
-                json = Crypto.Encrypt(json, secretKey, "fUvcePiyrdLkj");
+                json = Crypto.Encrypt(json, secretKey, _salt);
             File.WriteAllText(_filePath, json);
         }
-    }
-
-    internal static class XmlConfig
-    {
-
-        public static string Get(string key)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("config.xml");
-            return doc.SelectSingleNode($"/config/{key}").InnerText;
-        }
-
-        public static void Set(string key, string value)
-        {
-            string configPath = "config.xml";
-            XmlDocument doc = new XmlDocument();
-            doc.Load(configPath);
-
-            // Find the node
-            XmlNode node = doc.SelectSingleNode($"/config/{key}");
-
-            if (node != null)
-            {
-                node.InnerText = value;
-            }
-            else
-            {
-                // If key doesn't exist, create it
-                XmlNode root = doc.DocumentElement;
-                XmlElement newElem = doc.CreateElement(key);
-                newElem.InnerText = value;
-                root.AppendChild(newElem);
-            }
-
-            // Save back to file
-            doc.Save(configPath);
-        }
-
     }
 
     public static class Mailer
