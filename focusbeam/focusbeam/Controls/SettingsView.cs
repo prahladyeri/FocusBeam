@@ -1,9 +1,11 @@
-﻿using System;
+﻿using focusbeam.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,9 +14,128 @@ namespace focusbeam.Controls
 {
     public partial class SettingsView : UserControl
     {
+        private void LoadSettingsToGrid(DataGridView dgv, AppSettings settings)
+        {
+            dgv.Rows.Clear();
+            dgv.Columns.Clear();
+
+            dgv.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Property",
+                ReadOnly = true,
+                Width = 250
+            });
+
+            dgv.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Value",
+                Width = 250
+            });
+
+            var props = typeof(AppSettings).GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (var prop in props)
+            {
+                if (!prop.CanRead || !prop.CanWrite) continue;
+
+                DataGridViewCell valueCell;
+                var rowIndex = dgv.Rows.Add();
+                var row = dgv.Rows[rowIndex];
+                row.Cells["Property"].Value = prop.Name;
+                object value = prop.GetValue(settings);
+
+                if (prop.PropertyType == typeof(bool))
+                {
+                    valueCell = new DataGridViewComboBoxCell
+                    {
+                        DataSource = new[] { "True", "False" },
+                        Value = value.ToString()
+                    };
+                }
+                else if (prop.PropertyType.IsEnum)
+                {
+                    valueCell = new DataGridViewComboBoxCell
+                    {
+                        DataSource = Enum.GetNames(prop.PropertyType),
+                        Value = value.ToString()
+                    };
+                }
+                else
+                {
+                    valueCell = new DataGridViewTextBoxCell
+                    {
+                        Value = value?.ToString()
+                    };
+                }
+                row.Cells["Value"] = valueCell;
+            }
+        }
+
+        private void SaveSettingsFromGrid(DataGridView dgv, AppSettings settings)
+        {
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow) continue; // Skip new/empty row
+
+                var propName = row.Cells["Property"].Value?.ToString();
+                var valueCell = row.Cells["Value"];
+
+                if (string.IsNullOrEmpty(propName))
+                    continue;
+
+                var propInfo = typeof(AppSettings).GetProperty(propName);
+                if (propInfo == null || !propInfo.CanWrite)
+                    continue;
+
+                try
+                {
+                    var targetType = propInfo.PropertyType;
+                    var cellValue = valueCell.Value;
+
+                    object convertedValue;
+
+                    if (targetType == typeof(bool))
+                    {
+                        // Handles "True"/"False" strings or checkboxes
+                        convertedValue = Convert.ToBoolean(cellValue);
+                    }
+                    else if (targetType.IsEnum)
+                    {
+                        convertedValue = Enum.Parse(targetType, cellValue.ToString());
+                    }
+                    else
+                    {
+                        convertedValue = Convert.ChangeType(cellValue, targetType);
+                    }
+
+                    propInfo.SetValue(settings, convertedValue);
+                }
+                catch (Exception ex)
+                {
+                    // Optional: log or report conversion error
+                    MessageBox.Show($"Error saving setting '{propName}': {ex.Message}");
+                }
+            }
+            AppSettings.Save(settings);
+        }
+
+
+
         public SettingsView()
         {
             InitializeComponent();
+        }
+
+        private void SettingsView_Load(object sender, EventArgs e)
+        {
+            if (!DesignMode) {
+                LoadSettingsToGrid(this.dataGridView1, Program.Settings);
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveSettingsFromGrid(this.dataGridView1, Program.Settings);
+            MessageBox.Show("Settings are saved.\nSome changes may require application restart to take effect.");
         }
     }
 }

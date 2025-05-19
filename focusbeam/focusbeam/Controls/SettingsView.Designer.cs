@@ -53,6 +53,7 @@
             this.btnSave.TabIndex = 1;
             this.btnSave.Text = "Save Settings";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // SettingsView
             // 
@@ -62,6 +63,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "SettingsView";
             this.Size = new System.Drawing.Size(483, 228);
+            this.Load += new System.EventHandler(this.SettingsView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

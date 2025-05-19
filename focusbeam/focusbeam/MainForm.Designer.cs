@@ -47,14 +47,12 @@ namespace focusbeam
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.panelMain = new System.Windows.Forms.Panel();
             this.rpkProject = new focusbeam.Controls.RefPicker();
             this.rpkTaskItem = new focusbeam.Controls.RefPicker();
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.timesheetView1 = new focusbeam.Controls.TimesheetView();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
-            this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -96,6 +94,7 @@ namespace focusbeam
             this.btnSettings.TabIndex = 5;
             this.btnSettings.Text = "⚙️ Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnStart
             // 
@@ -181,6 +180,7 @@ namespace focusbeam
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.Text = "🚀 Dashboard";
             this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // statusStrip1
             // 
@@ -237,6 +237,14 @@ namespace focusbeam
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // panelMain
+            // 
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(0, 61);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(926, 584);
+            this.panelMain.TabIndex = 2;
+            // 
             // rpkProject
             // 
             this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -260,24 +268,6 @@ namespace focusbeam
             this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
             this.rpkTaskItem.Load += new System.EventHandler(this.rpkTaskItem_Load);
             // 
-            // panelMain
-            // 
-            this.panelMain.Controls.Add(this.timesheetView1);
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 61);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(926, 584);
-            this.panelMain.TabIndex = 2;
-            // 
-            // timesheetView1
-            // 
-            this.timesheetView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timesheetView1.Location = new System.Drawing.Point(0, 0);
-            this.timesheetView1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.timesheetView1.Name = "timesheetView1";
-            this.timesheetView1.Size = new System.Drawing.Size(926, 584);
-            this.timesheetView1.TabIndex = 3;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -299,7 +289,6 @@ namespace focusbeam
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
-            this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,7 +316,6 @@ namespace focusbeam
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panelMain;
-        private Controls.TimesheetView timesheetView1;
     }
 }
 

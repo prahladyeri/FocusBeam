@@ -121,20 +121,20 @@ namespace focusbeam.Util
         }
     }
 
-    internal class AppSettings {
-        private static string _filePath = "settings.dat";
+    public class AppSettings {
+        private static string _filePath = "settings.json";
         private static string _salt = "fUvcePiyrdLkj";
 
-        internal bool ShowPomodoroAlerts { get; set; } = true;
-        internal int PomodoroInterval { get; set; } = 25; // minutes
-        internal bool AutoStartNextSession { get; set; } = false;
-        internal int PomodoroShortBreakInterval { get; set; } = 5; // minutes
-        internal int PomodoroLongBreakFrequency { get; set; } = 4; // pomodoros
-        internal int PomodoroLongBreakInterval { get; set; } = 15; // minutes
-        internal bool ShowStoicTipsOnBreaks { get; set; } = false; 
-        internal bool ShowWaterRemindersOnBreaks { get; set; } = true; 
+        public bool ShowPomodoroAlerts { get; set; } = true;
+        public int PomodoroInterval { get; set; } = 25; // minutes
+        public bool AutoStartNextSession { get; set; } = false;
+        public int PomodoroShortBreakInterval { get; set; } = 5; // minutes
+        public int PomodoroLongBreakFrequency { get; set; } = 4; // pomodoros
+        public int PomodoroLongBreakInterval { get; set; } = 15; // minutes
+        public bool ShowStoicTipsOnBreaks { get; set; } = false;
+        public bool ShowWaterRemindersOnBreaks { get; set; } = true;
 
-        internal static AppSettings Load(string secretKey = null)
+        public static AppSettings Load(string secretKey = null)
         {
             if (!File.Exists(_filePath))
                 return new AppSettings();
@@ -145,8 +145,9 @@ namespace focusbeam.Util
             return JsonConvert.DeserializeObject<AppSettings>(content);
         }
 
-        internal static void Save(AppSettings settings, string secretKey = null)
+        public static void Save(AppSettings settings, string secretKey = null)
         {
+            //JsonSerializerSettings ss = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All };
             string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             if (!string.IsNullOrEmpty(secretKey))
                 json = Crypto.Encrypt(json, secretKey, _salt);

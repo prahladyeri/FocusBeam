@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Controls;
 using focusbeam.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +29,7 @@ namespace focusbeam
         private bool _isTracking = false;
         private bool _isMinimizedTrayWarningShown = false;
         private DateTime _trackingStartedAt;
+        private Control _view = new Control(); //current view
 
         public MainForm()
         {
@@ -40,20 +43,11 @@ namespace focusbeam
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
             DBAL.Init();
-            timesheetView1.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
-                if (ev.RowIndex >= 0 && timesheetView1.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
-                {
-                    string taskTitle = timesheetView1.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
-                    MessageBox.Show($"Timesheet for task: {taskTitle}");
-                }
-            };
-
             _projects = Project.GetAll();
-
             foreach (Project proj in _projects) {
                 this.rpkProject.cmbMain.Items.Add(proj.Title);
             }
-
+            btnDashboard_Click(this, new EventArgs());
             rpkProject.cmbMain.SelectedIndex = 0;
         }
 
@@ -69,12 +63,19 @@ namespace focusbeam
             }
             rpkTaskItem.cmbMain.SelectedIndex = 0;
             // update the view
-            timesheetView1.dgv.Rows.Clear();
+            
+            if (_view.GetType() == typeof(TimesheetView)) {
+                RefreshTimesheetGrid();
+            }
+        }
+
+        private void RefreshTimesheetGrid() {
+            var timesheetView = (TimesheetView)_view;
+            timesheetView.dgv.Rows.Clear();
             _currentProject.Tasks.ForEach(task => {
                 addTaskToGrid(task);
             });
         }
-
 
         private void rpkTaskItem_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -150,7 +151,8 @@ namespace focusbeam
         }
 
         private void addTaskToGrid(TaskItem task) {
-            timesheetView1.dgv.Rows.Insert(0,
+            var timesheetView = (TimesheetView)_view;
+            timesheetView.dgv.Rows.Insert(0,
                 task.Title,
                 task.Priority,
                 task.Status,
@@ -173,6 +175,33 @@ namespace focusbeam
         private void rpkTaskItem_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            this.panelMain.Controls.Clear();
+            SettingsView theView = new SettingsView();
+            theView.Dock = DockStyle.Fill;
+            this.panelMain.Controls.Add(theView);
+            _view = theView;
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            this.panelMain.Controls.Clear();
+            TimesheetView theView = new TimesheetView();
+            theView.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
+                if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
+                {
+                    string taskTitle = theView.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
+                    MessageBox.Show($"Timesheet for task: {taskTitle}");
+                }
+            };
+            theView.Dock = DockStyle.Fill;
+            this.panelMain.Controls.Add(theView);
+            _view = theView;
+            rpkProject.cmbMain.SelectedIndex = 0;
+            RefreshTimesheetGrid();
         }
     }
 }
