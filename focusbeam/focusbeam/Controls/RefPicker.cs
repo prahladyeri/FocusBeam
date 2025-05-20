@@ -24,6 +24,9 @@ namespace focusbeam.Controls
         }
 
         public event EventHandler SelectedIndexChanged;
+        public event EventHandler AddButtonClicked;
+        public event EventHandler EditButtonClicked;
+        public event EventHandler DeleteButtonClicked;
 
         public RefPicker()
         {
@@ -34,6 +37,16 @@ namespace focusbeam.Controls
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedIndexChanged?.Invoke(this, e);
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditButtonClicked?.Invoke(this, e);
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            AddButtonClicked?.Invoke(this, e);
         }
     }
 }

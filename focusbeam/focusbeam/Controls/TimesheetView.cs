@@ -25,5 +25,10 @@ namespace focusbeam.Controls
         {
             InitializeComponent();
         }
+
+        private void TimesheetView_Load(object sender, EventArgs e)
+        {
+            Program.StyleGrid(this.dgv);
+        }
     }
 }

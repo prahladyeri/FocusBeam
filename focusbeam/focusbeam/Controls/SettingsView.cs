@@ -118,17 +118,31 @@ namespace focusbeam.Controls
             AppSettings.Save(settings);
         }
 
-
-
         public SettingsView()
         {
             InitializeComponent();
+            //this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+            //              ControlStyles.AllPaintingInWmPaint |
+            //              ControlStyles.UserPaint, true);
+            //this.UpdateStyles();
+            //typeof(DataGridView)
+            //    .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            //    .SetValue(dataGridView1, true, null);
+
+
         }
 
         private void SettingsView_Load(object sender, EventArgs e)
         {
             if (!DesignMode) {
+                Program.StyleGrid(dataGridView1);
+                //dataGridView1.AllowUserToResizeColumns = false;
+                dataGridView1.AllowUserToResizeRows = false;
                 LoadSettingsToGrid(this.dataGridView1, Program.Settings);
+                dataGridView1.ColumnWidthChanged += (s, ev) =>
+                {
+                    btnSave.Invalidate();
+                };
             }
         }
 

@@ -255,6 +255,7 @@ namespace focusbeam
             this.rpkProject.Size = new System.Drawing.Size(185, 31);
             this.rpkProject.TabIndex = 12;
             this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
+            this.rpkProject.AddButtonClicked += new System.EventHandler(this.rpkProject_AddButtonClicked);
             // 
             // rpkTaskItem
             // 

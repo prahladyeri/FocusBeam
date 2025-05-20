@@ -101,6 +101,7 @@ namespace focusbeam.Controls
             this.Controls.Add(this.dgvTasks);
             this.Name = "TimesheetView";
             this.Size = new System.Drawing.Size(576, 390);
+            this.Load += new System.EventHandler(this.TimesheetView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).EndInit();
             this.ResumeLayout(false);
 

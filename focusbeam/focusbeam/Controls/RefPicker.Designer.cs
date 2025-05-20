@@ -64,6 +64,7 @@ namespace focusbeam.Controls
             this.btnNew.TabIndex = 3;
             this.btnNew.Text = "➕";
             this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // btnEdit
             // 
@@ -75,13 +76,14 @@ namespace focusbeam.Controls
             this.btnEdit.TabIndex = 2;
             this.btnEdit.Text = "🖊";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // comboBox1
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(0, 1);
+            this.comboBox1.Location = new System.Drawing.Point(0, 4);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(0);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(312, 21);

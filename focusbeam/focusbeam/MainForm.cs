@@ -101,6 +101,7 @@ namespace focusbeam
             else if (_isTracking)
             {
                 e.Cancel = true;
+                _isExiting = false;
                 MessageBox.Show("Tracking is still in progress.");
             }
             else {
@@ -202,6 +203,26 @@ namespace focusbeam
             _view = theView;
             rpkProject.cmbMain.SelectedIndex = 0;
             RefreshTimesheetGrid();
+        }
+
+        private void rpkProject_AddButtonClicked(object sender, EventArgs e)
+        {
+            AddRecordForm dialog = new AddRecordForm();
+            dialog.AddField("Title", "");
+            dialog.AddField("Category", CategoryLevel.Home);
+            dialog.AddField("Tags", "");
+    
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                MessageBox.Show("Save button clicked.");
+            }
+            else if (result == DialogResult.Abort) {
+                MessageBox.Show("Delete button clicked.");
+            }
+            else if (result == DialogResult.Cancel) {
+                MessageBox.Show("Cancel button clicked.");
+            }
         }
     }
 }

@@ -76,10 +76,64 @@ namespace focusbeam.Util
 
     internal static class Core
     {
-        public static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
+        internal static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
+
+        internal static bool IsNumericType(Type type)
+        {
+            return type == typeof(byte) ||
+                   type == typeof(sbyte) ||
+                   type == typeof(short) ||
+                   type == typeof(ushort) ||
+                   type == typeof(int) ||
+                   type == typeof(uint) ||
+                   type == typeof(long) ||
+                   type == typeof(ulong) ||
+                   type == typeof(float) ||
+                   type == typeof(double) ||
+                   type == typeof(decimal);
+        }
     }
 
-    internal static class Crypto {
+    internal static class FormHelper {
+
+        internal static void SetFocusToFirstEditableControl(TableLayoutPanel tlp)
+        {
+            // Get all controls on the form and order them by TabIndex
+            // Filtering for controls that are visible, enabled, and can receive focus.
+            var editableControls = tlp.Controls.Cast<Control>()
+                .Where(c => c.Visible && c.Enabled && c.CanSelect)
+                .OrderBy(c => c.TabIndex) // Order by TabIndex for logical flow
+                .ToList(); // Convert to list to iterate
+
+            foreach (Control control in editableControls)
+            {
+                // Check common editable control types
+                if (control is TextBox ||
+                    control is ComboBox ||
+                    control is NumericUpDown ||
+                    control is DateTimePicker ||
+                    control is MaskedTextBox)
+                {
+                    control.Select(); // Give focus to this control
+                    return; // Exit after finding and focusing the first one
+                }
+                // If the control is a container (like GroupBox or Panel),
+                // you might want to recursively check its children.
+                // For simplicity, this example only checks top-level controls.
+                // If you need recursive checking, it gets more complex.
+            }
+
+            // Fallback: If no specific editable control is found, try to focus the first selectable one.
+            var firstSelectableControl = tlp.Controls.Cast<Control>()
+                .Where(c => c.Visible && c.Enabled && c.CanSelect)
+                .OrderBy(c => c.TabIndex)
+                .FirstOrDefault();
+
+            firstSelectableControl?.Select();
+        }
+    }
+
+    internal static class CryptoHelper {
         internal static string Encrypt(string plainText, string password, string salt)
         {
             using (Aes aes = Aes.Create())
@@ -141,7 +195,7 @@ namespace focusbeam.Util
 
             string content = File.ReadAllText(_filePath);
             if (!string.IsNullOrEmpty(secretKey))
-                content = Crypto.Decrypt(content, secretKey, _salt);
+                content = CryptoHelper.Decrypt(content, secretKey, _salt);
             return JsonConvert.DeserializeObject<AppSettings>(content);
         }
 
@@ -150,7 +204,7 @@ namespace focusbeam.Util
             //JsonSerializerSettings ss = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All };
             string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             if (!string.IsNullOrEmpty(secretKey))
-                json = Crypto.Encrypt(json, secretKey, _salt);
+                json = CryptoHelper.Encrypt(json, secretKey, _salt);
             File.WriteAllText(_filePath, json);
         }
     }
