@@ -185,7 +185,7 @@ namespace focusbeam.Util
         public int PomodoroShortBreakInterval { get; set; } = 5; // minutes
         public int PomodoroLongBreakFrequency { get; set; } = 4; // pomodoros
         public int PomodoroLongBreakInterval { get; set; } = 15; // minutes
-        public bool ShowStoicTipsOnBreaks { get; set; } = false;
+        public bool ShowMotivationTipsOnBreaks { get; set; } = false;
         public bool ShowWaterRemindersOnBreaks { get; set; } = true;
 
         public static AppSettings Load(string secretKey = null)

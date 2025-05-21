@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.tlpButtons = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpButtons.SuspendLayout();
             this.SuspendLayout();
@@ -42,9 +42,9 @@
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpButtons.Controls.Add(this.button3, 2, 0);
-            this.tlpButtons.Controls.Add(this.button2, 1, 0);
-            this.tlpButtons.Controls.Add(this.button1, 0, 0);
+            this.tlpButtons.Controls.Add(this.btnDelete, 2, 0);
+            this.tlpButtons.Controls.Add(this.btnCancel, 1, 0);
+            this.tlpButtons.Controls.Add(this.btnSave, 0, 0);
             this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlpButtons.Location = new System.Drawing.Point(5, 230);
             this.tlpButtons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -54,41 +54,41 @@
             this.tlpButtons.Size = new System.Drawing.Size(479, 32);
             this.tlpButtons.TabIndex = 0;
             // 
-            // button1
+            // btnDelete
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(4, 3);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 26);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "💾 Save";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDelete.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.btnDelete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDelete.Location = new System.Drawing.Point(322, 3);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(153, 26);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "❌ Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnCancel
             // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(163, 3);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(151, 26);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "⚠️ Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCancel.Location = new System.Drawing.Point(163, 3);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(151, 26);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "⚠️ Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnSave
             // 
-            this.button3.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(322, 3);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(153, 26);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "❌ Delete";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSave.Location = new System.Drawing.Point(4, 3);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(151, 26);
+            this.btnSave.TabIndex = 0;
+            this.btnSave.Text = "💾 Save";
+            this.btnSave.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
@@ -110,6 +110,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(489, 267);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tlpButtons);
@@ -117,7 +118,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "AddRecordForm";
-            this.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Record";
             this.Load += new System.EventHandler(this.AddRecordForm_Load);
@@ -131,9 +132,9 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tlpButtons;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

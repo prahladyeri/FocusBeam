@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using Newtonsoft.Json.Linq;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,6 +23,22 @@ namespace focusbeam
 
     public partial class AddRecordForm : Form
     {
+        internal enum FieldControlType
+        {
+            TextBox,
+            NumericUpDown,
+            CheckBox,
+            ComboBox,
+            // Add more as needed
+        }
+        internal class Field { 
+            internal string Name { get; set; }
+            internal object Value { get; set; }
+            internal Dictionary<string, object> Properties { get; set; }
+            // Optional: A property to indicate the intended control type
+            internal FieldControlType ControlType { get; set; }
+        }
+
         public AddRecordForm()
         {
             InitializeComponent();
@@ -43,7 +61,7 @@ namespace focusbeam
             tableLayoutPanel1.ColumnCount = 2;
         }
 
-        public Control AddField(string fieldName, object fieldValue) {
+        public Control AddField(string fieldName, object fieldValue, Dictionary<string, object> properties =null) {
             Label label = new Label
             {
                 Text = fieldName + ":",
@@ -102,6 +120,7 @@ namespace focusbeam
                     //}
                 }
                 control = numericUpDown;
+                //numericUpDown.Minimum
             }
             else
             {
@@ -115,6 +134,25 @@ namespace focusbeam
                 };
             }
             // Add a new row to the table layout
+            if (properties!=null) {
+                Type theType = control.GetType();
+                foreach (var key in properties.Keys) {
+                    PropertyInfo property = theType.GetProperty(key);
+                    object value = properties[key];
+                    if (property != null && property.CanWrite) {
+                        // Handle type conversion if necessary (e.g., value is string, property is int)
+                        try
+                        {
+                            // For properties like 'Location' (Point struct), you'd need to cast 'value' accordingly
+                            // or create a new Point based on the value type.
+                            // For simple types, direct conversion might work.
+                            object convertedValue = Convert.ChangeType(value, property.PropertyType);
+                            property.SetValue(control, convertedValue, null);
+                        }
+                        catch {}
+                    }
+                }
+            }
             int newRowIndex = tableLayoutPanel1.RowCount;
             tableLayoutPanel1.RowCount += 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));

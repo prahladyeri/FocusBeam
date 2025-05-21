@@ -211,7 +211,14 @@ namespace focusbeam
             dialog.AddField("Title", "");
             dialog.AddField("Category", CategoryLevel.Home);
             dialog.AddField("Tags", "");
-    
+            dialog.AddField("Price", 0.00, new Dictionary<string, object> {
+                { "Minimum", 1 },
+            });
+            dialog.AddField("Notes", "", new Dictionary<string, object> {
+                { "Multiline", true },
+                { "Height", 60}
+            });
+
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
