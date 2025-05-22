@@ -1,6 +1,6 @@
 ﻿namespace focusbeam
 {
-    partial class AddRecordForm
+    partial class DynamicFormBuilder
     {
         /// <summary>
         /// Required designer variable.

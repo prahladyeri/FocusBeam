@@ -207,7 +207,7 @@ namespace focusbeam
 
         private void rpkProject_AddButtonClicked(object sender, EventArgs e)
         {
-            AddRecordForm dialog = new AddRecordForm();
+            DynamicFormBuilder dialog = new DynamicFormBuilder();
             dialog.AddField("Title", "");
             dialog.AddField("Category", CategoryLevel.Home);
             dialog.AddField("Tags", "");

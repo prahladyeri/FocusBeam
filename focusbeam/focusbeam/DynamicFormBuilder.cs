@@ -20,26 +20,35 @@ using System.Windows.Forms;
 
 namespace focusbeam
 {
-
-    public partial class AddRecordForm : Form
+    internal enum FieldControlType
     {
-        internal enum FieldControlType
-        {
-            TextBox,
-            NumericUpDown,
-            CheckBox,
-            ComboBox,
-            // Add more as needed
-        }
+        TextBox,
+        NumericUpDown,
+        CheckBox,
+        ComboBox,
+        // Add more as needed
+    }
+
+    internal partial class DynamicFormBuilder : Form
+    {
+        private List<Field> fieldsToGenerate;
+        private int yOffset = 20;
+        private const int controlHeight = 25;
+        private const int labelWidth = 100;
+        private const int controlWidth = 200;
+        private const int padding = 10;
+
         internal class Field { 
             internal string Name { get; set; }
             internal object Value { get; set; }
             internal Dictionary<string, object> Properties { get; set; }
             // Optional: A property to indicate the intended control type
             internal FieldControlType ControlType { get; set; }
+            internal bool Required { get; set; } = false;
+            internal Control CustomControl { get; set; }
         }
 
-        public AddRecordForm()
+        public DynamicFormBuilder()
         {
             InitializeComponent();
             InitializeTableLayoutPanelColumns();
