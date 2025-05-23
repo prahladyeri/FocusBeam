@@ -1,5 +1,5 @@
 ﻿/**
- * AddRecordForm.cs - The main form
+ * DynamicFormBuilder.cs - The main form
  * 
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
