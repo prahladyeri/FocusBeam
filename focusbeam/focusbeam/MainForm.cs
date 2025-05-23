@@ -207,18 +207,31 @@ namespace focusbeam
 
         private void rpkProject_AddButtonClicked(object sender, EventArgs e)
         {
-            DynamicFormBuilder dialog = new DynamicFormBuilder();
-            dialog.AddField("Title", "");
-            dialog.AddField("Category", CategoryLevel.Home);
-            dialog.AddField("Tags", "");
-            dialog.AddField("Price", 0.00, new Dictionary<string, object> {
-                { "Minimum", 1 },
+            DynamicFormBuilder dialog = new DynamicFormBuilder(new List<Field> {
+                new Field{Name = "Title", ControlType=FieldControlType.TextBox,  Value = "", Required = true},
+                new Field{Name = "Category", 
+                    ControlType=FieldControlType.Auto , 
+                    Value = CategoryLevel.Home, 
+                    Required = true},
+                new Field{
+                    Name = "Price", 
+                    Value = 0.00, 
+                    ControlType=FieldControlType.NumericUpDown,
+                    Required = true,
+                    Properties = new Dictionary<string, object>{
+                        { "Minimum", 1 },
+                    }
+                },
+                new Field { 
+                    Name = "Notes", 
+                    Value = "",
+                    ControlType=FieldControlType.TextBox,
+                    Properties = new Dictionary<string, object> {
+                        { "Multiline", true },
+                        { "Height", 60}
+                    }
+                }
             });
-            dialog.AddField("Notes", "", new Dictionary<string, object> {
-                { "Multiline", true },
-                { "Height", 60}
-            });
-
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {

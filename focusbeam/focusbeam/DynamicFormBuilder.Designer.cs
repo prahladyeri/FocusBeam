@@ -121,8 +121,8 @@
             this.Padding = new System.Windows.Forms.Padding(5);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Record";
-            this.Load += new System.EventHandler(this.AddRecordForm_Load);
-            this.Shown += new System.EventHandler(this.AddRecordForm_Shown);
+            this.Load += new System.EventHandler(this.DynamicFormBuilder_Load);
+            this.Shown += new System.EventHandler(this.DynamicFormBuilder_Shown);
             this.tlpButtons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

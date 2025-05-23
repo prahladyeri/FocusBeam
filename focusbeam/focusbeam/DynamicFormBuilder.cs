@@ -22,11 +22,24 @@ namespace focusbeam
 {
     internal enum FieldControlType
     {
+        Auto, // New value to indicate auto-deduction
         TextBox,
         NumericUpDown,
-        CheckBox,
         ComboBox,
-        // Add more as needed
+        CheckBox,
+        DateTimePicker,
+        Custom // For when CustomControl is explicitly set
+    }
+
+    internal class Field
+    {
+        internal string Name { get; set; }
+        internal object Value { get; set; }
+        internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+        internal FieldControlType ControlType { get; set; }
+        internal bool Required { get; set; } = false;
+        internal Control CustomControl { get; set; }
+        internal string[] Items { get; set; } = new string[] { }; // for combo box
     }
 
     internal partial class DynamicFormBuilder : Form
@@ -38,147 +51,158 @@ namespace focusbeam
         private const int controlWidth = 200;
         private const int padding = 10;
 
-        internal class Field { 
-            internal string Name { get; set; }
-            internal object Value { get; set; }
-            internal Dictionary<string, object> Properties { get; set; }
-            // Optional: A property to indicate the intended control type
-            internal FieldControlType ControlType { get; set; }
-            internal bool Required { get; set; } = false;
-            internal Control CustomControl { get; set; }
-        }
 
-        public DynamicFormBuilder()
+        public DynamicFormBuilder(List<Field> fieldsToGenerate)
         {
             InitializeComponent();
-            InitializeTableLayoutPanelColumns();
+            this.AutoScroll = true; // Enable scrolling if many fields
+            this.fieldsToGenerate = fieldsToGenerate;
+            GenerateFormControls();
         }
 
-        private void InitializeTableLayoutPanelColumns()
+        private void GenerateFormControls()
         {
             // Clear existing styles if any, or ensure it's empty
             tableLayoutPanel1.ColumnStyles.Clear();
-
             // Column 0: Fixed width for Labels (e.g., 120 pixels)
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F)); // 120 pixels wide
-
             // Column 1: Fills the remaining space
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); // Take 100% of remaining space
-
             // Ensure the TableLayoutPanel has 2 columns defined.
             // If you add more columns dynamically, adjust this.
             tableLayoutPanel1.ColumnCount = 2;
-        }
-
-        public Control AddField(string fieldName, object fieldValue, Dictionary<string, object> properties =null) {
-            Label label = new Label
+            
+            foreach (Field field in fieldsToGenerate) 
             {
-                Text = fieldName + ":",
-                Dock = DockStyle.Fill,
-                Width = 100,
-                TextAlign = ContentAlignment.MiddleRight
-            };
-            //label.Font = new Font(label.Font, FontStyle.Bold);
-            Control control = null ;
-            if (fieldValue.GetType() == typeof(string))
-            {
-                control = new TextBox
+                Label label = new Label
                 {
-                    Text = fieldValue.ToString(),
+                    Text = field.Name + ":",
                     Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleRight
                 };
-            }
-            else if (fieldValue != null && fieldValue.GetType().IsEnum)
-            {
-                var enumType = fieldValue.GetType();
-                //var enumNames = Enum.GetNames(enumType);
-                var combo = new ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList };
-                foreach (string name in Enum.GetNames(enumType))
+                Control control = null;
+                if (field.ControlType == FieldControlType.TextBox)
                 {
-                    combo.Items.Add(name);
-                    //Console.WriteLine($"{enumNames[i]} = {(int)enumValues.GetValue(i)}");
+                    control = new TextBox
+                    {
+                        Text = field.Value.ToString(),
+                    };
                 }
-                combo.Text = fieldValue.ToString();
-                control = combo;
-            }
-            else if (Util.Core.IsNumericType(fieldValue.GetType())) // Helper method to check for numeric types
-            {
-                var numericUpDown = new NumericUpDown
+                else if (field.ControlType== FieldControlType.ComboBox) 
                 {
-                    Dock = DockStyle.Fill,
-                    Minimum = decimal.MinValue, // Set appropriate min/max for your data
-                    Maximum = decimal.MaxValue,
-                    Increment = 1m // Default increment
-                };
-                numericUpDown.Value = Convert.ToDecimal(fieldValue, CultureInfo.InvariantCulture);
-                // Adjust DecimalPlaces if it's a floating-point number
-                if (fieldValue is float || fieldValue is double || fieldValue is decimal)
-                {
-                    numericUpDown.DecimalPlaces = 2;
-                    // This is a simple heuristic; you might need a more robust way
-                    // to determine appropriate decimal places, e.g., from property attributes.
-                    //string valueAsString = fieldValue.ToString();
-                    //int decimalPointIndex = valueAsString.IndexOf(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
-                    //if (decimalPointIndex > -1)
-                    //{
-                    //    numericUpDown.DecimalPlaces = valueAsString.Length - 1 - decimalPointIndex;
-                    //}
-                    //else
-                    //{
-                    //    numericUpDown.DecimalPlaces = 0;
-                    //}
+                    var combo = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList };
+                    foreach (string name in field.Items)
+                    {
+                        combo.Items.Add(name);
+                    }
+                    combo.Text = field.Value.ToString();
+                    control = combo;
                 }
-                control = numericUpDown;
-                //numericUpDown.Minimum
-            }
-            else
-            {
-                // Fallback for unhandled types
-                control = new Label
+                else if (field.ControlType == FieldControlType.NumericUpDown)
                 {
-                    Text = fieldValue.ToString(), // Just display as a label if unhandled
-                    Dock = DockStyle.Fill,
-                    BorderStyle = BorderStyle.FixedSingle, // Make it look distinct
-                    BackColor = System.Drawing.SystemColors.ControlLight // A light background
-                };
-            }
-            // Add a new row to the table layout
-            if (properties!=null) {
-                Type theType = control.GetType();
-                foreach (var key in properties.Keys) {
-                    PropertyInfo property = theType.GetProperty(key);
-                    object value = properties[key];
-                    if (property != null && property.CanWrite) {
-                        // Handle type conversion if necessary (e.g., value is string, property is int)
-                        try
+                    var numericUpDown = new NumericUpDown
+                    {
+                        Minimum = decimal.MinValue, // Set appropriate min/max for your data
+                        Maximum = decimal.MaxValue,
+                        Increment = 1m // Default increment
+                    };
+                    numericUpDown.Value = Convert.ToDecimal(field.Value, CultureInfo.InvariantCulture);
+                    if (field.Value is float || field.Value is double || field.Value is decimal)
+                    {
+                        numericUpDown.DecimalPlaces = 2;
+                    }
+                    control = numericUpDown;
+                }
+                else if (field.Value != null) //Fallback to auto-deduction 
+                {
+                    if (field.Value.GetType() == typeof(string))
+                    {
+                        control = new TextBox
                         {
-                            // For properties like 'Location' (Point struct), you'd need to cast 'value' accordingly
-                            // or create a new Point based on the value type.
-                            // For simple types, direct conversion might work.
-                            object convertedValue = Convert.ChangeType(value, property.PropertyType);
-                            property.SetValue(control, convertedValue, null);
+                            Text = field.Value.ToString(),
+                        };
+                    }
+                    else if (field.Value != null && field.Value.GetType().IsEnum)
+                    {
+                        var enumType = field.Value.GetType();
+                        var combo = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList };
+                        foreach (string name in Enum.GetNames(enumType))
+                        {
+                            combo.Items.Add(name);
+                            //Console.WriteLine($"{enumNames[i]} = {(int)enumValues.GetValue(i)}");
                         }
-                        catch {}
+                        combo.Text = field.Value.ToString();
+                        control = combo;
+                    }
+                    else if (Util.Core.IsNumericType(field.Value.GetType())) // Helper method to check for numeric types
+                    {
+                        var numericUpDown = new NumericUpDown
+                        {
+                            Minimum = decimal.MinValue, // Set appropriate min/max for your data
+                            Maximum = decimal.MaxValue,
+                            Increment = 1m // Default increment
+                        };
+                        numericUpDown.Value = Convert.ToDecimal(field.Value, CultureInfo.InvariantCulture);
+                        if (field.Value is float || field.Value is double || field.Value is decimal)
+                        {
+                            numericUpDown.DecimalPlaces = 2;
+                        }
+                        control = numericUpDown;
+                    }
+                    else
+                    {
+                        // Fallback for unhandled types
+                        control = new Label
+                        {
+                            Text = $"[Unhandled: {field.Value.ToString()}]", // Just display as a label if unhandled
+                            BorderStyle = BorderStyle.FixedSingle, // Make it look distinct
+                            BackColor = System.Drawing.SystemColors.ControlLight // A light background
+                        };
                     }
                 }
+                if (field.Properties.Count > 0)
+                {
+                    Type theType = control.GetType();
+                    foreach (var key in field.Properties.Keys)
+                    {
+                        PropertyInfo property = theType.GetProperty(key);
+                        object value = field.Properties[key];
+                        if (property != null && property.CanWrite)
+                        {
+                            // Handle type conversion if necessary (e.g., value is string, property is int)
+                            try
+                            {
+                                // For properties like 'Location' (Point struct), you'd need to cast 'value' accordingly
+                                // or create a new Point based on the value type.
+                                // For simple types, direct conversion might work.
+                                object convertedValue = Convert.ChangeType(value, property.PropertyType);
+                                property.SetValue(control, convertedValue, null);
+                            }
+                            catch { }
+                        }
+                    }
+                }
+                control.Dock = DockStyle.Fill;
+                control.Name = "ctrl_" + field.Name;
+                int newRowIndex = tableLayoutPanel1.RowCount;
+                tableLayoutPanel1.RowCount += 1;
+                tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                tableLayoutPanel1.Controls.Add(label, 0, newRowIndex);     // Column 0
+                tableLayoutPanel1.Controls.Add(control, 1, newRowIndex);   // Column 1
             }
-            int newRowIndex = tableLayoutPanel1.RowCount;
-            tableLayoutPanel1.RowCount += 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            tableLayoutPanel1.Controls.Add(label, 0, newRowIndex);     // Column 0
-            tableLayoutPanel1.Controls.Add(control, 1, newRowIndex);   // Column 1
-            return control;
         }
 
-        private void AddRecordForm_Load(object sender, EventArgs e)
+
+        private void DynamicFormBuilder_Load(object sender, EventArgs e)
         {
-            Util.FormHelper.SetFocusToFirstEditableControl(this.tableLayoutPanel1);
+            
         }
 
-        private void AddRecordForm_Shown(object sender, EventArgs e)
+        private void DynamicFormBuilder_Shown(object sender, EventArgs e)
         {
             //base.OnShown(e);
             //this.SelectNextControl(this, true, true, true, true);
+            Util.FormHelper.SetFocusToFirstEditableControl(this.tableLayoutPanel1);
         }
     }
 }
