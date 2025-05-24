@@ -20,27 +20,6 @@ using System.Windows.Forms;
 
 namespace focusbeam
 {
-    internal enum FieldControlType
-    {
-        Auto, // New value to indicate auto-deduction
-        TextBox,
-        NumericUpDown,
-        ComboBox,
-        CheckBox,
-        DateTimePicker,
-        Custom // For when CustomControl is explicitly set
-    }
-
-    internal class Field
-    {
-        internal string Name { get; set; }
-        internal object Value { get; set; }
-        internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
-        internal FieldControlType ControlType { get; set; }
-        internal bool Required { get; set; } = false;
-        internal Control CustomControl { get; set; }
-        internal string[] Items { get; set; } = new string[] { }; // for combo box
-    }
 
     internal partial class DynamicFormBuilder : Form
     {
@@ -81,7 +60,11 @@ namespace focusbeam
                     TextAlign = ContentAlignment.MiddleRight
                 };
                 Control control = null;
-                if (field.ControlType == FieldControlType.TextBox)
+                if (field.CustomControl != null)
+                {
+                    control = field.CustomControl;
+                }
+                else if (field.ControlType == FieldControlType.TextBox)
                 {
                     control = new TextBox
                     {
@@ -205,4 +188,27 @@ namespace focusbeam
             Util.FormHelper.SetFocusToFirstEditableControl(this.tableLayoutPanel1);
         }
     }
+
+    internal enum FieldControlType
+    {
+        Auto, // New value to indicate auto-deduction
+        TextBox,
+        NumericUpDown,
+        ComboBox,
+        CheckBox,
+        DateTimePicker,
+        Custom // For when CustomControl is explicitly set
+    }
+
+    internal class Field
+    {
+        internal string Name { get; set; }
+        internal object Value { get; set; }
+        internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+        internal FieldControlType ControlType { get; set; }
+        internal bool Required { get; set; } = false;
+        internal Control CustomControl { get; set; }
+        internal string[] Items { get; set; } = new string[] { }; // for combo box
+    }
+
 }

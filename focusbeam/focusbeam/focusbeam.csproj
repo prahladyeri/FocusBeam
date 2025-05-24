@@ -54,7 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicFormBuilder.cs" />
+    <Compile Include="DynamicFormBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DynamicFormBuilder.Designer.cs">
       <DependentUpon>DynamicFormBuilder.cs</DependentUpon>
     </Compile>
