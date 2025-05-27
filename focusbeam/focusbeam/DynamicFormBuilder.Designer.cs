@@ -57,6 +57,7 @@
             // 
             this.btnDelete.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Location = new System.Drawing.Point(299, 3);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(143, 24);
@@ -85,6 +86,7 @@
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "💾 Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -114,7 +116,6 @@
             this.Name = "DynamicFormBuilder";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Edit Record";
             this.Load += new System.EventHandler(this.DynamicFormBuilder_Load);
             this.Shown += new System.EventHandler(this.DynamicFormBuilder_Shown);
             this.tlpButtons.ResumeLayout(false);

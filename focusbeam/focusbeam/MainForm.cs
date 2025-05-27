@@ -8,14 +8,8 @@ using focusbeam.Controls;
 using focusbeam.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace focusbeam
@@ -207,31 +201,64 @@ namespace focusbeam
 
         private void rpkProject_AddButtonClicked(object sender, EventArgs e)
         {
+            List<string> theTags = new List<string> { "Alpha", "Beta", "Epsilon" };
             DynamicFormBuilder dialog = new DynamicFormBuilder(new List<Field> {
-                new Field{Name = "Title", ControlType=FieldControlType.TextBox,  Value = "", Required = true},
+                new Field{Name = "Title", Value = "",
+                    ControlType=FieldControlType.TextBox,  
+                    Required = true},
                 new Field{Name = "Category", 
                     ControlType=FieldControlType.Auto , 
-                    Value = CategoryLevel.Home, 
-                    Required = true},
+                    Value = CategoryLevel.Home,  Required = true},
                 new Field{
-                    Name = "Price", 
-                    Value = 0.00, 
-                    ControlType=FieldControlType.NumericUpDown,
+                    Name = "Tags",
+                    ControlType = FieldControlType.Custom,
+                    CustomControl = new TagsPicker { 
+                        Tags = theTags
+                    },
                     Required = true,
-                    Properties = new Dictionary<string, object>{
-                        { "Minimum", 1 },
-                    }
+                },
+                new Field{
+                    Name = "StartDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = DateTime.Now,
+                },
+                new Field{
+                    Name = "EndDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = DateTime.Now,
                 },
                 new Field { 
-                    Name = "Notes", 
-                    Value = "",
-                    ControlType=FieldControlType.TextBox,
-                    Properties = new Dictionary<string, object> {
-                        { "Multiline", true },
-                        { "Height", 60}
-                    }
+                    Name = "Notes",  Value = "",
+                    ControlType=FieldControlType.MultilineTextBox,
                 }
-            });
+            }, EditMode.Add);
+            dialog.SaveButtonClicked += (s, ev) =>
+            {
+                Field tags = dialog.FieldsToGenerate.Find(item => item.Name == "Tags");
+                TagsPicker picker = (dialog.Controls["ctrl_Tags"] as TagsPicker);
+                tags.Value = picker.Tags;
+                Project project = new Project();
+                //foreach (Field field in dialog.FieldsToGenerate) {
+                //    PropertyInfo property = typeof(Project).GetProperty(field.Name);
+                //    property.SetValue(p, field.Value, null);
+                //}
+                Util.EntityMapper.MapFieldsToEntity(dialog.FieldsToGenerate, project);
+                project.Save();
+                TaskItem task= new TaskItem {
+                    ProjectId = project.Id,
+                    Title = "Default Task",
+                    Priority = PriorityLevel.High,
+                    Status = StatusLevel.Pending,
+                    StartDate = project.StartDate,
+                    EndDate = project.EndDate,
+                };
+                project.Tasks.Add(task);
+                task.Save(); // TODO: Perform Validation
+                _projects.Add(project);
+                rpkProject.cmbMain.Items.Add(project.Title);
+                rpkProject.cmbMain.Text = project.Title;
+                MessageBox.Show("Project created.");
+            };
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {

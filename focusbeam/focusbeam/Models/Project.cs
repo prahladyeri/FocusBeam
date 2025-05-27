@@ -23,7 +23,7 @@ namespace focusbeam.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public CategoryLevel Category { get; set; }
-        public string[] Tags { get; set; }
+        public List<string> Tags { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
@@ -46,7 +46,7 @@ namespace focusbeam.Models
                 };
                 if (!row.IsNull("tags"))
                 {
-                    project.Tags = row.Field<string>("tags").Split(',');
+                    project.Tags = row.Field<string>("tags").Split(',').ToList();
                 }
                 var items = DBAL.FetchResult($"select * from tasks where project_id={project.Id}");
                 foreach (DataRow taskRow in items.Rows)
@@ -65,7 +65,7 @@ namespace focusbeam.Models
                     };
                     if (!taskRow.IsNull("tags"))
                     {
-                        taskItem.Tags = taskRow.Field<string>("tags").Split(',');
+                        taskItem.Tags = taskRow.Field<string>("tags").Split(',').ToList();
                     }
 
                     var titems = DBAL.FetchResult($"select * from timesheet where task_id={taskItem.Id} order by id;");

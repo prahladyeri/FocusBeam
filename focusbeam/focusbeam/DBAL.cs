@@ -41,7 +41,7 @@ namespace focusbeam
                     Title = "Default Project",
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(90),
-                    Tags = new string[] { "Alpha", "Beta", "Epsilon" },
+                    Tags = new List<string> { "Alpha", "Beta", "Epsilon" },
                 };
                 project.Tasks = new List<TaskItem> {
                     new TaskItem {
@@ -51,7 +51,7 @@ namespace focusbeam
                         Status = StatusLevel.Pending,
                         StartDate = project.StartDate,
                         EndDate = project.EndDate,
-                        Tags = new string[] { "Tango", "Charlie" },
+                        Tags = new List<string> { "Tango", "Charlie" },
                     },
                 };
                 project.Save();

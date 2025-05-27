@@ -23,19 +23,18 @@ namespace focusbeam
 
     internal partial class DynamicFormBuilder : Form
     {
-        private List<Field> fieldsToGenerate;
-        private int yOffset = 20;
-        private const int controlHeight = 25;
-        private const int labelWidth = 100;
-        private const int controlWidth = 200;
-        private const int padding = 10;
+        internal event EventHandler SaveButtonClicked;
+        internal List<Field> FieldsToGenerate;
+        private EditMode _editMode;
 
 
-        public DynamicFormBuilder(List<Field> fieldsToGenerate)
+        public DynamicFormBuilder(List<Field> fieldsToGenerate, EditMode editMode)
         {
+            _editMode = editMode;
+            this.Text = $"{_editMode} Record";
             InitializeComponent();
             this.AutoScroll = true; // Enable scrolling if many fields
-            this.fieldsToGenerate = fieldsToGenerate;
+            this.FieldsToGenerate = fieldsToGenerate;
             GenerateFormControls();
         }
 
@@ -45,8 +44,8 @@ namespace focusbeam
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F)); // 120 pixels wide
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); // Take 100% of remaining space
             tableLayoutPanel1.ColumnCount = 2;
-            
-            foreach (Field field in fieldsToGenerate) 
+
+            foreach (Field field in FieldsToGenerate)
             {
                 Label label = new Label
                 {
@@ -59,6 +58,15 @@ namespace focusbeam
                 {
                     control = field.CustomControl;
                 }
+                else if (field.ControlType == FieldControlType.DateTimePicker) {
+                    var dtp = new DateTimePicker
+                    {
+                        Value = (DateTime)field.Value,
+                        Format = DateTimePickerFormat.Custom,
+                        CustomFormat = "yyyy-MM-dd",
+                    };
+                    control = dtp;
+                }
                 else if (field.ControlType == FieldControlType.TextBox)
                 {
                     control = new TextBox
@@ -66,7 +74,16 @@ namespace focusbeam
                         Text = field.Value.ToString(),
                     };
                 }
-                else if (field.ControlType== FieldControlType.ComboBox) 
+                else if (field.ControlType == FieldControlType.MultilineTextBox)
+                {
+                    control = new TextBox
+                    {
+                        Text = field.Value.ToString(),
+                        Multiline = true,
+                        Height = 60,
+                    };
+                }
+                else if (field.ControlType == FieldControlType.ComboBox)
                 {
                     var combo = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList };
                     foreach (string name in field.Items)
@@ -93,16 +110,16 @@ namespace focusbeam
                 }
                 else if (field.Value != null) //Fallback to auto-deduction 
                 {
-                    if (field.Value.GetType() == typeof(string))
+                    if (field.ValueType == typeof(string))
                     {
                         control = new TextBox
                         {
                             Text = field.Value.ToString(),
                         };
                     }
-                    else if (field.Value != null && field.Value.GetType().IsEnum)
+                    else if (field.Value != null && field.ValueType.IsEnum)
                     {
-                        var enumType = field.Value.GetType();
+                        var enumType = field.ValueType;
                         var combo = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList };
                         foreach (string name in Enum.GetNames(enumType))
                         {
@@ -111,7 +128,7 @@ namespace focusbeam
                         combo.Text = field.Value.ToString();
                         control = combo;
                     }
-                    else if (Util.Core.IsNumericType(field.Value.GetType())) // Helper method to check for numeric types
+                    else if (Util.Core.IsNumericType(field.ValueType)) // Helper method to check for numeric types
                     {
                         var numericUpDown = new NumericUpDown
                         {
@@ -172,7 +189,7 @@ namespace focusbeam
 
         private void DynamicFormBuilder_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void DynamicFormBuilder_Shown(object sender, EventArgs e)
@@ -181,12 +198,39 @@ namespace focusbeam
             //this.SelectNextControl(this, true, true, true, true);
             Util.FormHelper.SetFocusToFirstEditableControl(this.tableLayoutPanel1);
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            foreach (Field field in FieldsToGenerate) {
+                Control control = tableLayoutPanel1.Controls[$"ctrl_{field.Name}"];
+                switch (field.ControlType) {
+                    case FieldControlType.TextBox:
+                    case FieldControlType.MultilineTextBox:
+                    case FieldControlType.ComboBox:
+                        field.Value = control.Text;
+                        break;
+                    case FieldControlType.DateTimePicker:
+                        DateTimePicker dtp= (DateTimePicker)control;
+                        field.Value = dtp.Value;
+                        break;
+                    case FieldControlType.NumericUpDown:
+                        field.Value = Convert.ChangeType(control.Text, field.ValueType);
+                        break;
+                }
+                if (field.ControlType == FieldControlType.Auto &&
+                    field.ValueType.IsEnum) {
+                    field.Value = Enum.Parse(field.ValueType, control.Text);
+                }
+            }
+            SaveButtonClicked?.Invoke(this, e);
+        }
     }
 
     internal enum FieldControlType
     {
         Auto, // New value to indicate auto-deduction
         TextBox,
+        MultilineTextBox,
         NumericUpDown,
         ComboBox,
         CheckBox,
@@ -196,6 +240,8 @@ namespace focusbeam
 
     internal class Field
     {
+        private Type _valueType;
+
         internal string Name { get; set; }
         internal object Value { get; set; }
         internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
@@ -203,6 +249,23 @@ namespace focusbeam
         internal bool Required { get; set; } = false;
         internal Control CustomControl { get; set; }
         internal string[] Items { get; set; } = new string[] { }; // for combo box
+        internal Type ValueType
+        {
+            get
+            {
+                if (_valueType == null && Value != null)
+                {
+                    _valueType = Value.GetType();
+                }
+                return _valueType;
+            }
+            set => _valueType = value;
+        }
     }
 
+    internal enum EditMode
+    {
+        Add,
+        Edit
+    }
 }

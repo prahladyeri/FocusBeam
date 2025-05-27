@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,6 +61,12 @@
     <Compile Include="Controls\AboutView.Designer.cs">
       <DependentUpon>AboutView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TagsPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TagsPicker.Designer.cs">
+      <DependentUpon>TagsPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="DynamicFormBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +107,9 @@
     <EmbeddedResource Include="Controls\AboutView.resx">
       <DependentUpon>AboutView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TagsPicker.resx">
+      <DependentUpon>TagsPicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DynamicFormBuilder.resx">
       <DependentUpon>DynamicFormBuilder.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +133,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
