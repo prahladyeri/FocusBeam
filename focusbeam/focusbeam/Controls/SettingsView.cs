@@ -1,4 +1,11 @@
-﻿using focusbeam.Util;
+﻿/**
+ * SettingsView.cs - The main form
+ * 
+ * @author Prahlad Yeri <prahladyeri@yahoo.com>
+ * @license MIT
+ */
+
+using focusbeam.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

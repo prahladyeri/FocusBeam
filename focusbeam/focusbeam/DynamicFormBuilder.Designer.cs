@@ -46,20 +46,20 @@
             this.tlpButtons.Controls.Add(this.btnCancel, 1, 0);
             this.tlpButtons.Controls.Add(this.btnSave, 0, 0);
             this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tlpButtons.Location = new System.Drawing.Point(5, 214);
+            this.tlpButtons.Location = new System.Drawing.Point(5, 293);
             this.tlpButtons.Name = "tlpButtons";
             this.tlpButtons.RowCount = 1;
             this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpButtons.Size = new System.Drawing.Size(409, 30);
+            this.tlpButtons.Size = new System.Drawing.Size(445, 30);
             this.tlpButtons.TabIndex = 0;
             // 
             // btnDelete
             // 
             this.btnDelete.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDelete.Location = new System.Drawing.Point(275, 3);
+            this.btnDelete.Location = new System.Drawing.Point(299, 3);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(131, 24);
+            this.btnDelete.Size = new System.Drawing.Size(143, 24);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "❌ Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -68,9 +68,9 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCancel.Location = new System.Drawing.Point(139, 3);
+            this.btnCancel.Location = new System.Drawing.Point(151, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(130, 24);
+            this.btnCancel.Size = new System.Drawing.Size(142, 24);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "⚠️ Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -81,7 +81,7 @@
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSave.Location = new System.Drawing.Point(3, 3);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(130, 24);
+            this.btnSave.Size = new System.Drawing.Size(142, 24);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "💾 Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -98,7 +98,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(409, 0);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(445, 0);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // DynamicFormBuilder
@@ -106,13 +106,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(419, 249);
+            this.ClientSize = new System.Drawing.Size(455, 328);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tlpButtons);
             this.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "DynamicFormBuilder";
-            this.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Record";
             this.Load += new System.EventHandler(this.DynamicFormBuilder_Load);

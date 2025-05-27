@@ -54,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AboutView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AboutView.Designer.cs">
+      <DependentUpon>AboutView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DynamicFormBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers.cs" />
+    <EmbeddedResource Include="Controls\AboutView.resx">
+      <DependentUpon>AboutView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DynamicFormBuilder.resx">
       <DependentUpon>DynamicFormBuilder.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,10 +145,10 @@
     <EmbeddedResource Include="files\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="licenses\newtonsoft.json.txt">
+    <Content Include="licenses\Newtonsoft.Json.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="licenses\sqlite.txt">
+    <Content Include="licenses\System.Data.SQLite.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

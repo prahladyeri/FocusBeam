@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Focus Beam")]
-[assembly: AssemblyDescription("Productivity tool for freelancers and students")]
+[assembly: AssemblyDescription("Productivity tool for Students and Freelancers")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Prahlad Yeri")]
+[assembly: AssemblyCompany("Prahlad Yeri <prahladyeri@yahoo.com>")]
 [assembly: AssemblyProduct("Focus Beam")]
 [assembly: AssemblyCopyright("Copyright © 2025, Prahlad Yeri")]
 [assembly: AssemblyTrademark("")]

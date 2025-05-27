@@ -292,6 +292,23 @@ namespace focusbeam.Util
                 return attr?.Title ?? "Untitled";
             }
         }
+        public static string Copyright
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly()
+                    .GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
+            }
+        }
+
+        public static string Company
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly()
+                    .GetCustomAttribute<AssemblyCompanyAttribute>().Company;
+            }
+        }
 
         public static string GetDescription()
         {

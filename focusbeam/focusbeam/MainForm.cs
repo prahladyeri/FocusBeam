@@ -244,5 +244,14 @@ namespace focusbeam
                 MessageBox.Show("Cancel button clicked.");
             }
         }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            this.panelMain.Controls.Clear();
+            AboutView theView = new AboutView();
+            theView.Dock = DockStyle.Fill;
+            this.panelMain.Controls.Add(theView);
+            _view = theView;
+        }
     }
 }

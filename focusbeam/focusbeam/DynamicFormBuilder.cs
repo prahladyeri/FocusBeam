@@ -41,14 +41,9 @@ namespace focusbeam
 
         private void GenerateFormControls()
         {
-            // Clear existing styles if any, or ensure it's empty
             tableLayoutPanel1.ColumnStyles.Clear();
-            // Column 0: Fixed width for Labels (e.g., 120 pixels)
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F)); // 120 pixels wide
-            // Column 1: Fills the remaining space
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); // Take 100% of remaining space
-            // Ensure the TableLayoutPanel has 2 columns defined.
-            // If you add more columns dynamically, adjust this.
             tableLayoutPanel1.ColumnCount = 2;
             
             foreach (Field field in fieldsToGenerate) 
@@ -112,7 +107,6 @@ namespace focusbeam
                         foreach (string name in Enum.GetNames(enumType))
                         {
                             combo.Items.Add(name);
-                            //Console.WriteLine($"{enumNames[i]} = {(int)enumValues.GetValue(i)}");
                         }
                         combo.Text = field.Value.ToString();
                         control = combo;
