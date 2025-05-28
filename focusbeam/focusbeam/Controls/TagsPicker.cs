@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace focusbeam.Controls
 {
@@ -22,17 +23,16 @@ namespace focusbeam.Controls
 
         private void RemoveLink_Click(object sender, EventArgs e)
         {
-            if (sender is Label link && link.Tag is Control tagPanel)
+            if (sender is Label lbl && lbl.Tag is Control tagPanel)
             {
                 flowLayoutPanel1.Controls.Remove(tagPanel);
+                int idx = Tags.IndexOf(tagPanel.Controls[0].Text);
+                Tags.RemoveAt(idx);
                 tagPanel.Dispose();
-                // Optional: update Tags array or raise an event
-                Tags.Remove(link.Text);
-                
             }
         }
 
-        private void AddTag(string tag) {
+        private void CreateTagLabel(string tag) {
             //tableLayoutPanel1.ColumnCount += 1;
             FlowLayoutPanel tagPanel = new FlowLayoutPanel
             {
@@ -79,7 +79,7 @@ namespace focusbeam.Controls
         private void TagsPicker_Load(object sender, EventArgs e)
         {
             foreach (string tag in Tags) {
-                AddTag(tag);
+                CreateTagLabel(tag);
             }
         }
 
@@ -95,7 +95,13 @@ namespace focusbeam.Controls
                 txtTag.Focus();
                 return;
             }
-            AddTag(txtTag.Text.Trim());
+            else if (Tags.Contains(txtTag.Text))
+            {
+                MessageBox.Show("This tag already exists.");
+                return;
+            }
+            Tags.Add(txtTag.Text);
+            CreateTagLabel(txtTag.Text.Trim());
             txtTag.Text = "";
             txtTag.Focus();
 

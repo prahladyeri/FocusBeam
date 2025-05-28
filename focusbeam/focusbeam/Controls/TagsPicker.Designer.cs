@@ -51,12 +51,11 @@
             this.txtTag.Name = "txtTag";
             this.txtTag.Size = new System.Drawing.Size(47, 20);
             this.txtTag.TabIndex = 3;
-            this.txtTag.Text = "ddd";
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(47, 2);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(0, 2, 2, 0);
+            this.btnAdd.Location = new System.Drawing.Point(47, 0);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(0);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(29, 20);
             this.btnAdd.TabIndex = 4;

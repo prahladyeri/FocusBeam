@@ -22,6 +22,42 @@ using System.Windows.Forms;
 
 namespace focusbeam.Util
 {
+    public enum SystemSoundTheme
+    {
+        Asterisk,
+        Beep,
+        Exclamation,
+        Hand,
+        Question
+    }
+
+    public static class SoundPlayerHelper
+    {
+        public static void Play(SystemSoundTheme theme)
+        {
+            switch (theme)
+            {
+                case SystemSoundTheme.Asterisk:
+                    System.Media.SystemSounds.Asterisk.Play();
+                    break;
+                case SystemSoundTheme.Beep:
+                    System.Media.SystemSounds.Beep.Play();
+                    break;
+                case SystemSoundTheme.Exclamation:
+                    System.Media.SystemSounds.Exclamation.Play();
+                    break;
+                case SystemSoundTheme.Hand:
+                    System.Media.SystemSounds.Hand.Play();
+                    break;
+                case SystemSoundTheme.Question:
+                    System.Media.SystemSounds.Question.Play();
+                    break;
+            }
+        }
+    }
+
+
+
     internal static class EmojiConstants
     {
         public const string PLUS = "➕";
@@ -214,11 +250,14 @@ namespace focusbeam.Util
         }
     }
 
-    public class AppSettings {
+    public class AppSettings 
+    {
         private static string _filePath = "settings.json";
         private static string _salt = "fUvcePiyrdLkj";
 
         public bool ShowPomodoroAlerts { get; set; } = true;
+        public bool EnableSoundNotifications { get; set; } = true;
+        public SystemSoundTheme NotificationSoundTheme { get; set; } = SystemSoundTheme.Exclamation;
         public int PomodoroInterval { get; set; } = 25; // minutes
         public bool AutoStartNextSession { get; set; } = false;
         public int PomodoroShortBreakInterval { get; set; } = 5; // minutes
@@ -226,6 +265,11 @@ namespace focusbeam.Util
         public int PomodoroLongBreakInterval { get; set; } = 15; // minutes
         public bool ShowMotivationTipsOnBreaks { get; set; } = false;
         public bool ShowWaterRemindersOnBreaks { get; set; } = true;
+
+        //public bool EnableIdleDetection { get; set; } = true;
+        //public int IdleTimeoutMinutes { get; set; } = 10;
+
+
 
         public static AppSettings Load(string secretKey = null)
         {
@@ -240,7 +284,7 @@ namespace focusbeam.Util
 
         public static void Save(AppSettings settings, string secretKey = null)
         {
-            //JsonSerializerSettings ss = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All };
+            //TODO: Add validate section or method
             string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             if (!string.IsNullOrEmpty(secretKey))
                 json = CryptoHelper.Encrypt(json, secretKey, _salt);

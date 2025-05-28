@@ -23,7 +23,7 @@ namespace focusbeam.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public CategoryLevel Category { get; set; }
-        public List<string> Tags { get; set; }
+        public List<string> Tags { get; set; } = new List<string>();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }

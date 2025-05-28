@@ -115,9 +115,13 @@ namespace focusbeam
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            //TODO: Play custom sound before/after this.
             if (!_isTracking) {
                 //Start logic
-                notifyIcon1.ShowBalloonTip(3000, Util.AssemblyInfoHelper.Title, "Started Tracking Time", ToolTipIcon.Info);
+                notifyIcon1.ShowBalloonTip(3000, 
+                    Util.AssemblyInfoHelper.Title, 
+                    "Started Tracking Time", 
+                    ToolTipIcon.None);
                 btnStart.Text = "⏸️ Stop";
                 _isTracking = true;
                 _trackingStartedAt = DateTime.Now;
@@ -126,7 +130,10 @@ namespace focusbeam
             else
             {
                 //Stop logic
-                notifyIcon1.ShowBalloonTip(3000, Util.AssemblyInfoHelper.Title, "Stopped Tracking Time", ToolTipIcon.Info);
+                notifyIcon1.ShowBalloonTip(3000, 
+                    Util.AssemblyInfoHelper.Title, 
+                    "Stopped Tracking Time", 
+                    ToolTipIcon.None);
                 btnStart.Text = "▶️ Start" ;
                 _isTracking = false;
                 timer1.Enabled = false;
@@ -235,7 +242,7 @@ namespace focusbeam
             dialog.SaveButtonClicked += (s, ev) =>
             {
                 Field tags = dialog.FieldsToGenerate.Find(item => item.Name == "Tags");
-                TagsPicker picker = (dialog.Controls["ctrl_Tags"] as TagsPicker);
+                TagsPicker picker = (dialog.Controls["tableLayoutPanel1"].Controls["ctrl_Tags"] as TagsPicker);
                 tags.Value = picker.Tags;
                 Project project = new Project();
                 //foreach (Field field in dialog.FieldsToGenerate) {

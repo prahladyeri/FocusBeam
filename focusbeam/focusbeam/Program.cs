@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,7 @@ namespace focusbeam
     static class Program
     {
         public static AppSettings Settings;
+        private static Mutex mutex = null;
 
         public static void StyleGrid(DataGridView dgv) {
             dgv.RowHeadersVisible = false;
@@ -30,8 +32,15 @@ namespace focusbeam
         [STAThread]
         static void Main()
         {
+            const string mutexName = "Global\\FocusBeamMutex";
+            bool createdNew;
+            mutex = new Mutex(true, mutexName, out createdNew);
+            if (!createdNew)
+            {
+                MessageBox.Show("Another instance of the application is already running.", "Instance Already Running", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             Settings = AppSettings.Load();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

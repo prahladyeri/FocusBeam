@@ -201,6 +201,7 @@ namespace focusbeam
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            //TODO: Perform validation
             foreach (Field field in FieldsToGenerate) {
                 Control control = tableLayoutPanel1.Controls[$"ctrl_{field.Name}"];
                 switch (field.ControlType) {
