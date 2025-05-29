@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Media;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace focusbeam
@@ -240,22 +241,27 @@ namespace focusbeam
                 }
             }, EditMode.Edit);
             builder.RecordValidating += (s, ev) => {
-                TagsPicker tp = (builder.FindControl("Tags") as TagsPicker);
-                if (tp.Value.Count == 0)
-                {
-                    MessageBox.Show("At least one tag must be added.");
-                    ev.Cancel = true;
-                    return;
-                }
+                //TagsPicker tp = (builder.FindControl("Tags") as TagsPicker);
+                //if (tp.Value.Count == 0)
+                //{
+                //    MessageBox.Show("At least one tag must be added.");
+                //    ev.Cancel = true;
+                //    return;
+                //}
                 Project clone = Helper.DeepClone( _currentProject);
                 Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
                 bool success = clone.Save();
                 if (!success) {
-                    //TODO: Upon cancel, update the _currentProject to its older value.
                     ev.Cancel = true;
                     return;
                 }
                 _currentProject = clone;
+                // Update in collection
+                int index = _projects.FindIndex(p => p.Id == _currentProject.Id);
+                if (index != -1)
+                {
+                    _projects[index] = _currentProject;
+                }
                 string oldTitle = rpkProject.cmbMain.Text;
                 string newTitle = _currentProject.Title;
                 if (!string.Equals(oldTitle, newTitle, StringComparison.Ordinal))
@@ -309,14 +315,13 @@ namespace focusbeam
                 }
             }, EditMode.Add);
             builder.RecordValidating += (s, ev) => {
-                TagsPicker tp = (builder.FindControl("Tags") as TagsPicker);
-                if (tp.Value.Count == 0)
-                {
-                    MessageBox.Show("At least one tag must be added.");
-                    ev.Cancel = true;
-                    return;
-                }
-                //builder.FindField("Tags").Value = tp.Value;
+                //TagsPicker tp = (builder.FindControl("Tags") as TagsPicker);
+                //if (tp.Value.Count == 0)
+                //{
+                //    MessageBox.Show("At least one tag must be added.");
+                //    ev.Cancel = true;
+                //    return;
+                //}
                 Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, project);
                 bool success = project.Save();
                 if (!success) {
