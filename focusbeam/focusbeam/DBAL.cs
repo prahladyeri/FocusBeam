@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace focusbeam
 {
@@ -58,6 +59,32 @@ namespace focusbeam
             }
         }
 
+        public static int ExecuteNonQuery(string sql, object[] args = null) 
+        {
+            try
+            {
+                args = (args == null ? Array.Empty<object>() : args);
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    for (int i = 0; i < args.Length; i++)
+                    {
+                        cmd.Parameters.AddWithValue($"@param{i}", args[i]);
+                    }
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) {
+                if (ex is SQLiteException sqliteEx && sqliteEx.ResultCode == SQLiteErrorCode.Constraint)
+                {
+                    MessageBox.Show("Duplicate entry or constraint violation.");
+                }
+                else {
+                    MessageBox.Show($"Error occurred: {ex.Message}");
+                }
+                return -1;
+            }
+        }
+
         public static DataTable Execute(string sql, object[] args = null) {
             args = (args == null ? Array.Empty<object>() : args);
             using (var cmd = new SQLiteCommand(sql, conn)) 
@@ -66,18 +93,11 @@ namespace focusbeam
                 {
                     cmd.Parameters.AddWithValue($"@param{i}", args[i]);
                 }
-                if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
-                {
-                    cmd.ExecuteNonQuery();
-                    return null;
-                }
-                else {
-                    using (var da = new SQLiteDataAdapter(cmd)) {
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        return dt;
-                    } 
-                }
+                using (var da = new SQLiteDataAdapter(cmd)) {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    return dt;
+                } 
             }
         }
 

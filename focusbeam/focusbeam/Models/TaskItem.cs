@@ -7,9 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace focusbeam.Models
 {
@@ -41,8 +38,9 @@ namespace focusbeam.Models
             return this.TimeEntries.Sum(te => te.Duration);
         }
 
-        public void Save()
+        public bool Save()
         {
+            int cnt;
             var tags = string.Join(",", Tags);
             if (Id == 0) //new
             {
@@ -50,20 +48,24 @@ namespace focusbeam.Models
 status, start_date, end_date, tags, planned_hours, notes) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 object[] args = { ProjectId, Title, (int)Priority, (int)Status, StartDate, EndDate, tags,
                     PlannedHours, Notes };
-                DBAL.Execute(sql, args);
-                Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (cnt>0)
+                    Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
             }
             else
             {
                 var sql = @"UPDATE tasks SET title=?, priority=?, status=?, start_date = ?, end_date = ?, 
 tags= ?, planned_hours = ?, notes = ? WHERE id = ?";
                 object[] args = { Title, (int)Priority, (int)Status, StartDate, EndDate, tags, PlannedHours, Notes, Id };
-                DBAL.Execute(sql, args);
+                cnt = DBAL.ExecuteNonQuery(sql, args);
             }
-            TimeEntries.ForEach(te => {
-                te.TaskId = this.Id;
-                te.Save();
-            });
+            if (cnt > 0) {
+                TimeEntries.ForEach(te => {
+                    te.TaskId = this.Id;
+                    te.Save();
+                });
+            }
+            return (cnt > 0);
         }
 
     }

@@ -13,8 +13,13 @@ namespace focusbeam.Controls
 {
     public partial class TagsPicker : UserControl
     {
-        internal List<string> Tags { get; set; }
-        internal Color TagBackColor { get; set; } = Color.Cornsilk;
+        public List<string> Value { get; set; } = new List<string>();
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("The background color used for individual tag labels.")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Color TagBackColor { get; set; } = Color.Cornsilk;
+
 
         public TagsPicker()
         {
@@ -26,8 +31,8 @@ namespace focusbeam.Controls
             if (sender is Label lbl && lbl.Tag is Control tagPanel)
             {
                 flowLayoutPanel1.Controls.Remove(tagPanel);
-                int idx = Tags.IndexOf(tagPanel.Controls[0].Text);
-                Tags.RemoveAt(idx);
+                int idx = Value.IndexOf(tagPanel.Controls[0].Text);
+                Value.RemoveAt(idx);
                 tagPanel.Dispose();
             }
         }
@@ -78,33 +83,30 @@ namespace focusbeam.Controls
 
         private void TagsPicker_Load(object sender, EventArgs e)
         {
-            foreach (string tag in Tags) {
+            foreach (string tag in Value) {
                 CreateTagLabel(tag);
             }
         }
 
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
-        }
-
-        private void btnAdd_Click_1(object sender, EventArgs e)
-        {
-            if (txtTag.Text.Trim() == "")
+            string newTag = txtTag.Text.Trim();
+            if (string.IsNullOrEmpty(newTag))
             {
                 MessageBox.Show("Tag can't be empty.");
                 txtTag.Focus();
                 return;
             }
-            else if (Tags.Contains(txtTag.Text))
+            else if (Value.Contains(newTag))
             {
                 MessageBox.Show("This tag already exists.");
                 return;
             }
-            Tags.Add(txtTag.Text);
-            CreateTagLabel(txtTag.Text.Trim());
+            Value.Add(newTag);
+            CreateTagLabel(newTag);
             txtTag.Text = "";
             txtTag.Focus();
-
         }
     }
 }

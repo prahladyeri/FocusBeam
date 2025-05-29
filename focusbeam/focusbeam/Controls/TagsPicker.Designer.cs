@@ -61,7 +61,7 @@
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "➕";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click_1);
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // TagsPicker
             // 

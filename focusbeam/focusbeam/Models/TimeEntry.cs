@@ -23,23 +23,26 @@ namespace focusbeam.Models
         public TimeEntryStatusLevel Status { get; set; }
         public string Notes { get; set; }
 
-        public void Save()
+        public bool Save()
         {
+            int cnt;
             if (Id == 0) //new
             {
                 var sql = @"insert into timesheet(task_id, start_time, end_time,
 duration, status, notes) values(?, ?, ?, ?, ?, ?)";
                 object[] args = { TaskId, StartTime, EndTime, Duration, (int)Status, Notes };
-                DBAL.Execute(sql, args);
-                Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (cnt>0)
+                    Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
             }
             else {
                 var sql = @"UPDATE timesheet SET
                       task_id = ?, start_time = ?, end_time = ?, duration = ?, status = ?, notes = ?
                     WHERE id = ?";
                 object[] args = { TaskId, StartTime, EndTime, Duration, (int)Status, Notes, Id };
-                DBAL.Execute(sql, args);
+                cnt =DBAL.ExecuteNonQuery(sql, args);
             }
+            return (cnt>0);
         }
     }
 }

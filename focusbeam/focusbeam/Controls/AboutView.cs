@@ -67,7 +67,8 @@ namespace focusbeam.Controls
                 {
                     Text = "Read License",
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                    //Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                    AutoSize = true,
                     Dock = DockStyle.None,
                     Height = lblVersion.Height,
                     Font = new Font(this.Font.FontFamily, 15f),

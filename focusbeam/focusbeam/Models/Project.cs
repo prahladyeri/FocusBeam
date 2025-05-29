@@ -91,27 +91,33 @@ namespace focusbeam.Models
         }
 
 
-        public void Save()
+        public bool Save()
         {
+            int cnt;
             var tags = string.Join(",", Tags);
             if (Id == 0) //new
             {
                 var sql = @"insert into projects (title, category, tags, start_date, end_date, notes) 
 values(?, ?, ?, ?, ?, ?)";
                 object[] args = { Title, (int)Category, tags, StartDate, EndDate, Notes };
-                DBAL.Execute(sql, args);
-                Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (cnt > 0)
+                    Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
             }
             else
             {
                 var sql = @"UPDATE projects SET title=?, category=?, tags=?, start_date = ?, end_date = ?, notes = ? WHERE id = ?";
                 object[] args = { Title, (int)Category, tags, StartDate, EndDate, Notes, Id };
-                DBAL.Execute(sql, args);
+                cnt = DBAL.ExecuteNonQuery(sql, args);
             }
-            Tasks.ForEach(t => {
-                t.ProjectId = this.Id;
-                t.Save();
+            if (cnt > 0) 
+            {
+                Tasks.ForEach(t => {
+                    t.ProjectId = this.Id;
+                    t.Save();
                 });
+            }
+            return (cnt > 0);
         }
     }
 }

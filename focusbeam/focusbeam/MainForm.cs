@@ -6,9 +6,11 @@
  */
 using focusbeam.Controls;
 using focusbeam.Models;
+using focusbeam.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -43,6 +45,8 @@ namespace focusbeam
             }
             btnDashboard_Click(this, new EventArgs());
             rpkProject.cmbMain.SelectedIndex = 0;
+
+            
         }
 
 
@@ -117,11 +121,10 @@ namespace focusbeam
         {
             //TODO: Play custom sound before/after this.
             if (!_isTracking) {
-                //Start logic
                 notifyIcon1.ShowBalloonTip(3000, 
                     Util.AssemblyInfoHelper.Title, 
                     "Started Tracking Time", 
-                    ToolTipIcon.None);
+                    ToolTipIcon.Info);
                 btnStart.Text = "⏸️ Stop";
                 _isTracking = true;
                 _trackingStartedAt = DateTime.Now;
@@ -133,7 +136,7 @@ namespace focusbeam
                 notifyIcon1.ShowBalloonTip(3000, 
                     Util.AssemblyInfoHelper.Title, 
                     "Stopped Tracking Time", 
-                    ToolTipIcon.None);
+                    ToolTipIcon.Info);
                 btnStart.Text = "▶️ Start" ;
                 _isTracking = false;
                 timer1.Enabled = false;
@@ -206,10 +209,77 @@ namespace focusbeam
             RefreshTimesheetGrid();
         }
 
+        private void rpkProject_EditButtonClicked(object sender, EventArgs e)
+        {
+            DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
+                new Field{Name = "Title", Value = _currentProject.Title,
+                    ControlType=FieldControlType.TextBox,
+                    Required = true},
+                new Field{Name = "Category",
+                    Value = _currentProject.Category,  Required = true},
+                new Field{
+                    Name = "Tags",
+                    ControlType = FieldControlType.Custom,
+                    CustomControl = new TagsPicker {
+                        Value = _currentProject.Tags
+                    },
+                },
+                new Field {
+                    Name = "StartDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = _currentProject.StartDate,
+                },
+                new Field{
+                    Name = "EndDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = _currentProject.EndDate,
+                },
+                new Field {
+                    Name = "Notes",  Value =_currentProject.Notes,
+                    ControlType=FieldControlType.MultilineTextBox,
+                }
+            }, EditMode.Edit);
+            builder.RecordValidating += (s, ev) => {
+                TagsPicker tp = (builder.FindControl("Tags") as TagsPicker);
+                if (tp.Value.Count == 0)
+                {
+                    MessageBox.Show("At least one tag must be added.");
+                    ev.Cancel = true;
+                    return;
+                }
+                Project clone = Helper.DeepClone( _currentProject);
+                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
+                bool success = clone.Save();
+                if (!success) {
+                    //TODO: Upon cancel, update the _currentProject to its older value.
+                    ev.Cancel = true;
+                    return;
+                }
+                _currentProject = clone;
+                string oldTitle = rpkProject.cmbMain.Text;
+                string newTitle = _currentProject.Title;
+                if (!string.Equals(oldTitle, newTitle, StringComparison.Ordinal))
+                {
+                    if (rpkProject.cmbMain.Items.Contains(oldTitle))
+                    {
+                        rpkProject.cmbMain.Items.Remove(oldTitle);
+                    }
+                    if (!rpkProject.cmbMain.Items.Contains(newTitle))
+                    {
+                        rpkProject.cmbMain.Items.Add(newTitle);
+                    }
+                    rpkProject.cmbMain.Text = newTitle;
+                }
+                MessageBox.Show(FormHelper.RecordSaveMessage(_currentProject));
+            };
+            DialogResult result = builder.ShowDialog();
+        }
+
         private void rpkProject_AddButtonClicked(object sender, EventArgs e)
         {
-            List<string> theTags = new List<string> { "Alpha", "Beta", "Epsilon" };
-            DynamicFormBuilder dialog = new DynamicFormBuilder(new List<Field> {
+            //List<string> theTags = new List<string> { "PHP", "Java", "dotnet" };
+            Project project = new Project();
+            DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
                 new Field{Name = "Title", Value = "",
                     ControlType=FieldControlType.TextBox,  
                     Required = true},
@@ -220,9 +290,8 @@ namespace focusbeam
                     Name = "Tags",
                     ControlType = FieldControlType.Custom,
                     CustomControl = new TagsPicker { 
-                        Tags = theTags
+                        Value = project.Tags
                     },
-                    Required = true,
                 },
                 new Field{
                     Name = "StartDate",
@@ -239,19 +308,23 @@ namespace focusbeam
                     ControlType=FieldControlType.MultilineTextBox,
                 }
             }, EditMode.Add);
-            dialog.SaveButtonClicked += (s, ev) =>
-            {
-                Field tags = dialog.FieldsToGenerate.Find(item => item.Name == "Tags");
-                TagsPicker picker = (dialog.Controls["tableLayoutPanel1"].Controls["ctrl_Tags"] as TagsPicker);
-                tags.Value = picker.Tags;
-                Project project = new Project();
-                //foreach (Field field in dialog.FieldsToGenerate) {
-                //    PropertyInfo property = typeof(Project).GetProperty(field.Name);
-                //    property.SetValue(p, field.Value, null);
-                //}
-                Util.EntityMapper.MapFieldsToEntity(dialog.FieldsToGenerate, project);
-                project.Save();
-                TaskItem task= new TaskItem {
+            builder.RecordValidating += (s, ev) => {
+                TagsPicker tp = (builder.FindControl("Tags") as TagsPicker);
+                if (tp.Value.Count == 0)
+                {
+                    MessageBox.Show("At least one tag must be added.");
+                    ev.Cancel = true;
+                    return;
+                }
+                //builder.FindField("Tags").Value = tp.Value;
+                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, project);
+                bool success = project.Save();
+                if (!success) {
+                    ev.Cancel = true;
+                    return;
+                }
+                TaskItem task = new TaskItem
+                {
                     ProjectId = project.Id,
                     Title = "Default Task",
                     Priority = PriorityLevel.High,
@@ -260,23 +333,13 @@ namespace focusbeam
                     EndDate = project.EndDate,
                 };
                 project.Tasks.Add(task);
-                task.Save(); // TODO: Perform Validation
+                task.Save();
                 _projects.Add(project);
                 rpkProject.cmbMain.Items.Add(project.Title);
                 rpkProject.cmbMain.Text = project.Title;
-                MessageBox.Show("Project created.");
+                MessageBox.Show(FormHelper.RecordSaveMessage(project));
             };
-            DialogResult result = dialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                MessageBox.Show("Save button clicked.");
-            }
-            else if (result == DialogResult.Abort) {
-                MessageBox.Show("Delete button clicked.");
-            }
-            else if (result == DialogResult.Cancel) {
-                MessageBox.Show("Cancel button clicked.");
-            }
+            builder.ShowDialog();
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
@@ -286,6 +349,11 @@ namespace focusbeam
             theView.Dock = DockStyle.Fill;
             this.panelMain.Controls.Add(theView);
             _view = theView;
+        }
+
+        private void rpkTaskItem_AddButtonClicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

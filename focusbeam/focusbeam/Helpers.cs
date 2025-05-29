@@ -111,7 +111,7 @@ namespace focusbeam.Util
         public const string UNLOCK = "🔓";
     }
 
-    internal static class Core
+    internal static class Helper
     {
         internal static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
 
@@ -128,6 +128,12 @@ namespace focusbeam.Util
                    type == typeof(float) ||
                    type == typeof(double) ||
                    type == typeof(decimal);
+        }
+
+        public static T DeepClone<T>(T obj)
+        {
+            return JsonConvert.DeserializeObject<T>(
+                JsonConvert.SerializeObject(obj));
         }
     }
 
@@ -170,6 +176,10 @@ namespace focusbeam.Util
     }
 
     internal static class FormHelper {
+
+        internal static string RecordSaveMessage(object obj) {
+            return $"{obj.GetType().Name} saved.";
+        }
 
         internal static void SetFocusToFirstEditableControl(TableLayoutPanel tlp)
         {
@@ -256,8 +266,6 @@ namespace focusbeam.Util
         private static string _salt = "fUvcePiyrdLkj";
 
         public bool ShowPomodoroAlerts { get; set; } = true;
-        public bool EnableSoundNotifications { get; set; } = true;
-        public SystemSoundTheme NotificationSoundTheme { get; set; } = SystemSoundTheme.Exclamation;
         public int PomodoroInterval { get; set; } = 25; // minutes
         public bool AutoStartNextSession { get; set; } = false;
         public int PomodoroShortBreakInterval { get; set; } = 5; // minutes
@@ -301,9 +309,9 @@ namespace focusbeam.Util
             string htmlBody = Util.FileHelper.ReadEmbeddedResource("focusbeam.files.email.html")
                 .Replace("{{body}}", body)
                 .Replace("{{subject}}", subject)
-                .Replace("{{regards}}", $"{Core.AppName} Support")
+                .Replace("{{regards}}", $"{Helper.AppName} Support")
                 ;
-            var fromAddress = new MailAddress("support@example.com", $"{Core.AppName} Support");
+            var fromAddress = new MailAddress("support@example.com", $"{Helper.AppName} Support");
 
             var smtp = new SmtpClient
             {
@@ -415,27 +423,55 @@ namespace focusbeam.Util
 
         public static void CleanUp()
         {
-            // TODO Check if log size is greater than 100MB
-            // If so, rename it to something else, also warn user to delete or take backup.
             const long MaxSize = 100 * 1024 * 1024; // 100 MB
+            const int MaxBackups = 5;
+
             if (File.Exists(Path))
             {
                 FileInfo fi = new FileInfo(Path);
                 if (fi.Length > MaxSize)
                 {
-                    string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                    string newPath = Path.Replace(".txt", $"_{timestamp}.bak.txt");
-                    File.Move(Path, newPath);
-                    MessageBox.Show(
-                        $"The log file exceeded 100MB and was renamed to:\n\n{newPath}\n\n" +
-                        $"Please consider deleting or backing it up.",
-                        "Log File Cleanup",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    try
+                    {
+                        // Step 1: Delete the oldest backup
+                        string oldestBackup = Path.Replace(".txt", $".bak.{MaxBackups}.txt");
+                        if (File.Exists(oldestBackup))
+                            File.Delete(oldestBackup);
+
+                        // Step 2: Shift existing backups
+                        for (int i = MaxBackups - 1; i >= 1; i--)
+                        {
+                            string src = Path.Replace(".txt", $".bak.{i}.txt");
+                            string dst = Path.Replace(".txt", $".bak.{i + 1}.txt");
+                            if (File.Exists(src))
+                                File.Move(src, dst);
+                        }
+
+                        // Step 3: Move the main log to bak.1
+                        string backup1 = Path.Replace(".txt", ".bak.1.txt");
+                        File.Move(Path, backup1);
+
+                        // Step 4: Notify user
+                        MessageBox.Show(
+                            $"The log file exceeded 100MB and was rotated.\n\nOldest backups beyond {MaxBackups} were deleted.",
+                            "Log File Rotation",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"Failed to rotate log file:\n\n{ex.Message}",
+                            "Log Rotation Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
                 }
             }
         }
+
 
         public static void WriteLog(string message)
         {

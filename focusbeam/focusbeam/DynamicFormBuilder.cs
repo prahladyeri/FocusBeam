@@ -17,25 +17,46 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace focusbeam
 {
 
     internal partial class DynamicFormBuilder : Form
     {
-        internal event EventHandler SaveButtonClicked;
         internal List<Field> FieldsToGenerate;
         private EditMode _editMode;
 
+        internal event EventHandler SaveButtonClicked;
 
-        public DynamicFormBuilder(List<Field> fieldsToGenerate, EditMode editMode)
+        internal class RecordValidatingEventArgs : CancelEventArgs
+        {
+            internal List<Field> Fields { get; }
+
+            internal RecordValidatingEventArgs(List<Field> fields)
+            {
+                Fields = fields;
+            }
+        }
+        internal event EventHandler<RecordValidatingEventArgs> RecordValidating;
+
+
+        internal DynamicFormBuilder(List<Field> fieldsToGenerate, EditMode editMode)
         {
             _editMode = editMode;
             this.Text = $"{_editMode} Record";
             InitializeComponent();
-            this.AutoScroll = true; // Enable scrolling if many fields
+            this.AutoScroll = true;
             this.FieldsToGenerate = fieldsToGenerate;
             GenerateFormControls();
+        }
+
+        internal Field FindField(string fieldName) {
+            return FieldsToGenerate.Find(item => item.Name == fieldName);
+        }
+
+        internal Control FindControl(string fieldName) {
+            return tableLayoutPanel1.Controls[$"ctrl_{fieldName}"];
         }
 
         private void GenerateFormControls()
@@ -128,7 +149,7 @@ namespace focusbeam
                         combo.Text = field.Value.ToString();
                         control = combo;
                     }
-                    else if (Util.Core.IsNumericType(field.ValueType)) // Helper method to check for numeric types
+                    else if (Util.Helper.IsNumericType(field.ValueType)) // Helper method to check for numeric types
                     {
                         var numericUpDown = new NumericUpDown
                         {
@@ -201,13 +222,26 @@ namespace focusbeam
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //TODO: Perform validation
             foreach (Field field in FieldsToGenerate) {
                 Control control = tableLayoutPanel1.Controls[$"ctrl_{field.Name}"];
                 switch (field.ControlType) {
+                    case FieldControlType.Custom:
+                        if (field.CustomControlValueProperty.Length > 0) {
+                            PropertyInfo prop = control.GetType().GetProperty(field.CustomControlValueProperty,
+                                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                            if (prop != null && prop.CanRead) {
+                                field.Value = prop.GetValue(control);
+                            }
+                        }
+                        break;
                     case FieldControlType.TextBox:
                     case FieldControlType.MultilineTextBox:
                     case FieldControlType.ComboBox:
+                        if (field.Required && control.Text.Trim().Length == 0) {
+                            MessageBox.Show("Value can't be empty");
+                            control.Focus();
+                            return;
+                        }
                         field.Value = control.Text;
                         break;
                     case FieldControlType.DateTimePicker:
@@ -223,7 +257,14 @@ namespace focusbeam
                     field.Value = Enum.Parse(field.ValueType, control.Text);
                 }
             }
+            var args = new RecordValidatingEventArgs(FieldsToGenerate);
+            RecordValidating?.Invoke(this, args);
+            if (args.Cancel)
+            {
+                return; // validation failed
+            }
             SaveButtonClicked?.Invoke(this, e);
+            this.Close();
         }
     }
 
@@ -249,6 +290,12 @@ namespace focusbeam
         internal FieldControlType ControlType { get; set; }
         internal bool Required { get; set; } = false;
         internal Control CustomControl { get; set; }
+        /// <summary>
+        /// The name of the property to fetch from the custom control using reflection.
+        /// Set this to an empty string ("") to ignore the property and skip value extraction.
+        /// Default is "Value".
+        /// </summary>        
+        internal String CustomControlValueProperty { get; set; } = "Value";
         internal string[] Items { get; set; } = new string[] { }; // for combo box
         internal Type ValueType
         {
