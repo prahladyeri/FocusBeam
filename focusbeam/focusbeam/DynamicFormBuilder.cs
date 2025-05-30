@@ -230,7 +230,15 @@ namespace focusbeam
                     case FieldControlType.TextBox:
                     case FieldControlType.MultilineTextBox:
                     case FieldControlType.ComboBox:
-                        if (field.Required && control.Text.Trim().Length == 0) {
+                        if (field.Required && string.IsNullOrWhiteSpace(control.Text)) {
+                            MessageBox.Show("Value can't be empty");
+                            control.Focus();
+                            return;
+                        }
+                        field.Value = control.Text;
+                        break;
+                    case FieldControlType.Auto:
+                        if (field.Required && control is TextBox tb && string.IsNullOrWhiteSpace(control.Text)) {
                             MessageBox.Show("Value can't be empty");
                             control.Focus();
                             return;

@@ -10,10 +10,6 @@ using focusbeam.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Media;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace focusbeam
@@ -303,12 +299,12 @@ namespace focusbeam
                 new Field{
                     Name = "StartDate",
                     ControlType = FieldControlType.DateTimePicker,
-                    Value = DateTime.Now,
+                    Value = project.StartDate,
                 },
                 new Field{
                     Name = "EndDate",
                     ControlType = FieldControlType.DateTimePicker,
-                    Value = DateTime.Now,
+                    Value = project.EndDate,
                 },
                 new Field { 
                     Name = "Notes",  Value = "",
@@ -359,7 +355,7 @@ namespace focusbeam
 
         private void rpkTaskItem_AddButtonClicked(object sender, EventArgs e)
         {
-            TaskItem task = new TaskItem();
+            TaskItem task = new TaskItem { ProjectId = _currentProject.Id };
             DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
                 new Field {
                     Name = "Title",
@@ -390,7 +386,37 @@ namespace focusbeam
                     ControlType = FieldControlType.DateTimePicker,
                     Value = task.EndDate,
                 },
+                new Field {
+                    Name = "PlannedHours",
+                    ControlType = FieldControlType.NumericUpDown,
+                    Value = 1,
+                    Properties = {
+                        {"Minimum", 1 },
+                    }
+                },
+                new Field {
+                    Name = "Notes",
+                    ControlType = FieldControlType.MultilineTextBox,
+                    Value = "",
+                },
             }, EditMode.Add);
+            builder.RecordValidating += (s, ev) => {
+                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, task);
+                bool success = task.Save();
+                if (!success)
+                {
+                    ev.Cancel = true;
+                    return;
+                }
+                _currentProject.Tasks.Add(task);
+                rpkTaskItem.cmbMain.Items.Add(task.Title);
+                rpkTaskItem.cmbMain.Text = task.Title;
+                MessageBox.Show(FormHelper.RecordSaveMessage(task));
+                RefreshTimesheetGrid();
+            };
+
+            builder.ShowDialog();
+
         }
     }
 }
