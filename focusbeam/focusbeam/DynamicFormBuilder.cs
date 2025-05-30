@@ -4,20 +4,13 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
-using Newtonsoft.Json.Linq;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace focusbeam
 {
@@ -285,7 +278,7 @@ namespace focusbeam
         private Type _valueType;
 
         internal string Name { get; set; }
-        internal object Value { get; set; }
+        internal object Value { get; set; } = "";
         internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
         internal FieldControlType ControlType { get; set; }
         internal bool Required { get; set; } = false;

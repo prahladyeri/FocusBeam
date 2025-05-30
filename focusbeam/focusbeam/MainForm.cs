@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Media;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 
@@ -358,7 +359,38 @@ namespace focusbeam
 
         private void rpkTaskItem_AddButtonClicked(object sender, EventArgs e)
         {
-
+            TaskItem task = new TaskItem();
+            DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
+                new Field {
+                    Name = "Title",
+                    Required = true,
+                },
+                new Field{
+                    Name = "Priority",
+                    Value = PriorityLevel.Critical,
+                },
+                new Field{
+                    Name = "Status",
+                    Value = StatusLevel.Pending,
+                },
+                new Field{
+                    Name = "Tags",
+                    ControlType = FieldControlType.Custom,
+                    CustomControl = new TagsPicker {
+                        Value = task.Tags,
+                    }
+                },
+                new Field {
+                    Name = "StartDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = task.StartDate,
+                },
+                new Field {
+                    Name = "EndDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = task.EndDate,
+                },
+            }, EditMode.Add);
         }
     }
 }

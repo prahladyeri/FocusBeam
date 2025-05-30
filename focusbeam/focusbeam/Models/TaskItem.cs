@@ -15,7 +15,6 @@ namespace focusbeam.Models
 
     public class TaskItem
     {
-
         public override string ToString()
         {
             return $"{Title} [{Status}] ({PlannedHours}h)";
