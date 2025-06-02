@@ -416,7 +416,73 @@ namespace focusbeam
             };
 
             builder.ShowDialog();
+        }
 
+        private void rpkTaskItem_EditButtonClicked(object sender, EventArgs e)
+        {
+            TaskItem task = _currentProject.Tasks.Find(ti => ti.Title == rpkTaskItem.cmbMain.Text);
+            int taskidx = rpkTaskItem.cmbMain.Items.IndexOf(task.Title);
+            //TaskItem task = new TaskItem { ProjectId = _currentProject.Id };
+            DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
+                new Field {
+                    Name = "Title",
+                    Required = true,
+                    Value = task.Title,
+                },
+                new Field{
+                    Name = "Priority",
+                    Value = task.Priority,
+                },
+                new Field{
+                    Name = "Status",
+                    Value = task.Status,
+                },
+                new Field{
+                    Name = "Tags",
+                    ControlType = FieldControlType.Custom,
+                    CustomControl = new TagsPicker {
+                        Value = task.Tags,
+                    }
+                },
+                new Field {
+                    Name = "StartDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = task.StartDate,
+                },
+                new Field {
+                    Name = "EndDate",
+                    ControlType = FieldControlType.DateTimePicker,
+                    Value = task.EndDate,
+                },
+                new Field {
+                    Name = "PlannedHours",
+                    ControlType = FieldControlType.NumericUpDown,
+                    Value = task.PlannedHours,
+                    Properties = {
+                        {"Minimum", 1 },
+                    }
+                },
+                new Field {
+                    Name = "Notes",
+                    ControlType = FieldControlType.MultilineTextBox,
+                    Value = task.Notes,
+                },
+            }, EditMode.Add);
+            builder.RecordValidating += (s, ev) => {
+                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, task);
+                bool success = task.Save();
+                if (!success)
+                {
+                    ev.Cancel = true;
+                    return;
+                }
+                //_currentProject.Tasks.Add(task);
+                rpkTaskItem.cmbMain.Items[taskidx] = task.Title;
+                //rpkTaskItem.cmbMain.Text = task.Title;
+                MessageBox.Show(FormHelper.RecordSaveMessage(task));
+                RefreshTimesheetGrid();
+            };
+            builder.ShowDialog();
         }
     }
 }

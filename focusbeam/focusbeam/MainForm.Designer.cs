@@ -271,6 +271,7 @@ namespace focusbeam
             this.rpkTaskItem.TabIndex = 13;
             this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
             this.rpkTaskItem.AddButtonClicked += new System.EventHandler(this.rpkTaskItem_AddButtonClicked);
+            this.rpkTaskItem.EditButtonClicked += new System.EventHandler(this.rpkTaskItem_EditButtonClicked);
             this.rpkTaskItem.Load += new System.EventHandler(this.rpkTaskItem_Load);
             // 
             // MainForm

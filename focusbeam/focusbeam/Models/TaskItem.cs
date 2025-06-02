@@ -29,7 +29,7 @@ namespace focusbeam.Models
         public DateTime? StartDate { get; set; } = DateTime.Now;
         public DateTime? EndDate { get; set; } = DateTime.Now;
         public int PlannedHours { get; set; }
-        public string Notes { get; set; }
+        public string Notes { get; set; } = "";
 
         public List<TimeEntry> TimeEntries { get; set; } = new List<TimeEntry>();
 
