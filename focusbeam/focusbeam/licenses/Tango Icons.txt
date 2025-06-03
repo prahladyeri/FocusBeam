@@ -1,0 +1,6 @@
+﻿## Icons
+
+Some icons used in this project are from the [Tango Desktop Project](http://tango.freedesktop.org/), 
+licensed under the [Creative Commons Attribution-ShareAlike 2.5 License](https://creativecommons.org/licenses/by-sa/2.5/).
+
+© Tango Desktop Project
