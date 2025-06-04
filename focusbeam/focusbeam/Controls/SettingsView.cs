@@ -119,7 +119,8 @@ namespace focusbeam.Controls
                 catch (Exception ex)
                 {
                     // Optional: log or report conversion error
-                    MessageBox.Show($"Error saving setting '{propName}': {ex.Message}");
+                    MessageBox.Show($"Error saving setting '{propName}': {ex.Message}",Application.ProductName,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             AppSettings.Save(settings);
@@ -151,12 +152,14 @@ namespace focusbeam.Controls
                     btnSave.Invalidate();
                 };
             }
+            btnSave.Font = new Font(btnSave.Font, FontStyle.Bold);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveSettingsFromGrid(this.dataGridView1, Program.Settings);
-            MessageBox.Show("Settings are saved.\nSome changes may require application restart to take effect.");
+            MessageBox.Show("Settings are saved.\nSome changes may require application restart to take effect."
+                , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

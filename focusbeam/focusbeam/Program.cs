@@ -37,7 +37,8 @@ namespace focusbeam
             mutex = new Mutex(true, mutexName, out createdNew);
             if (!createdNew)
             {
-                MessageBox.Show("Another instance of the application is already running.", "Instance Already Running", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Another instance of the application is already running.", "Instance Already Running", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             Settings = AppSettings.Load();

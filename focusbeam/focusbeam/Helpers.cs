@@ -113,8 +113,6 @@ namespace focusbeam.Util
 
     internal static class Helper
     {
-        internal static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
-
         internal static bool IsNumericType(Type type)
         {
             return type == typeof(byte) ||
@@ -322,9 +320,9 @@ namespace focusbeam.Util
             string htmlBody = Util.FileHelper.ReadEmbeddedResource("focusbeam.files.email.html")
                 .Replace("{{body}}", body)
                 .Replace("{{subject}}", subject)
-                .Replace("{{regards}}", $"{Helper.AppName} Support")
+                .Replace("{{regards}}", $"{Application.ProductName} Support")
                 ;
-            var fromAddress = new MailAddress("support@example.com", $"{Helper.AppName} Support");
+            var fromAddress = new MailAddress("support@example.com", $"{Application.ProductName} Support");
 
             var smtp = new SmtpClient
             {

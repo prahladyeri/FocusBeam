@@ -76,10 +76,12 @@ namespace focusbeam
             catch (Exception ex) {
                 if (ex is SQLiteException sqliteEx && sqliteEx.ResultCode == SQLiteErrorCode.Constraint)
                 {
-                    MessageBox.Show("Duplicate entry or constraint violation.");
+                    MessageBox.Show("Duplicate entry or constraint violation.", Application.ProductName,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else {
-                    MessageBox.Show($"Error occurred: {ex.Message}");
+                    MessageBox.Show($"Error occurred: {ex.Message}", Application.ProductName,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return -1;
             }

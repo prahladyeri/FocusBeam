@@ -94,13 +94,15 @@ namespace focusbeam.Controls
             string newTag = txtTag.Text.Trim();
             if (string.IsNullOrEmpty(newTag))
             {
-                MessageBox.Show("Tag can't be empty.");
+                MessageBox.Show("Tag can't be empty.", ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtTag.Focus();
                 return;
             }
             else if (Value.Contains(newTag))
             {
-                MessageBox.Show("This tag already exists.");
+                MessageBox.Show("This tag already exists.", ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Value.Add(newTag);

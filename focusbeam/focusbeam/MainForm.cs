@@ -98,7 +98,8 @@ namespace focusbeam
             {
                 e.Cancel = true;
                 _isExiting = false;
-                MessageBox.Show("Tracking is still in progress.");
+                MessageBox.Show("Tracking is still in progress.", Application.ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else {
                 DBAL.Dispose();
@@ -197,7 +198,8 @@ namespace focusbeam
                 if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
                 {
                     string taskTitle = theView.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
-                    MessageBox.Show($"Timesheet for task: {taskTitle}");
+                    MessageBox.Show($"Timesheet for task: {taskTitle}", ProductName,
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             };
             theView.Dock = DockStyle.Fill;
@@ -273,7 +275,8 @@ namespace focusbeam
                     }
                     rpkProject.cmbMain.Text = newTitle;
                 }
-                MessageBox.Show(FormHelper.RecordSaveMessage(_currentProject));
+                MessageBox.Show(FormHelper.RecordSaveMessage(_currentProject), ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
             DialogResult result = builder.ShowDialog();
         }
@@ -339,7 +342,8 @@ namespace focusbeam
                 _projects.Add(project);
                 rpkProject.cmbMain.Items.Add(project.Title);
                 rpkProject.cmbMain.Text = project.Title;
-                MessageBox.Show(FormHelper.RecordSaveMessage(project));
+                MessageBox.Show(FormHelper.RecordSaveMessage(project), Application.ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
             builder.ShowDialog();
         }
@@ -411,7 +415,8 @@ namespace focusbeam
                 _currentProject.Tasks.Add(task);
                 rpkTaskItem.cmbMain.Items.Add(task.Title);
                 rpkTaskItem.cmbMain.Text = task.Title;
-                MessageBox.Show(FormHelper.RecordSaveMessage(task));
+                MessageBox.Show(FormHelper.RecordSaveMessage(task), Application.ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshTimesheetGrid();
             };
 
@@ -479,7 +484,8 @@ namespace focusbeam
                 //_currentProject.Tasks.Add(task);
                 rpkTaskItem.cmbMain.Items[taskidx] = task.Title;
                 //rpkTaskItem.cmbMain.Text = task.Title;
-                MessageBox.Show(FormHelper.RecordSaveMessage(task));
+                MessageBox.Show(FormHelper.RecordSaveMessage(task), Application.ProductName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshTimesheetGrid();
             };
             builder.ShowDialog();
