@@ -262,7 +262,7 @@ namespace focusbeam.Util
 
     public class AppSettings 
     {
-        private static string _filePath = "settings.json";
+        private static string _filePath;
         private static string _salt = "fUvcePiyrdLkj";
 
         public bool ShowPomodoroAlerts { get; set; } = true;
@@ -277,10 +277,9 @@ namespace focusbeam.Util
         //public bool EnableIdleDetection { get; set; } = true;
         //public int IdleTimeoutMinutes { get; set; } = 10;
 
-
-
-        public static AppSettings Load(string secretKey = null)
+        public static AppSettings Load(string secretKey = null, string filepath = "settings.json")
         {
+            _filePath = filepath;
             if (!File.Exists(_filePath))
                 return new AppSettings();
 
