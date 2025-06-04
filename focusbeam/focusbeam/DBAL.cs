@@ -39,20 +39,20 @@ namespace focusbeam
                 }
                 //Create default project, task.
                 Project project = new Project { 
-                    Title = "Default Project",
+                    Title = "Getting Started – Your First Project",
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(90),
-                    Tags = new List<string> { "Alpha", "Beta", "Epsilon" },
+                    Tags = new List<string> { "urgent", "bug"},
                 };
                 project.Tasks = new List<TaskItem> {
                     new TaskItem {
                         ProjectId = project.Id,
-                        Title = "Default Task",
+                        Title = "First Task",
                         Priority = PriorityLevel.High,
                         Status = StatusLevel.Pending,
                         StartDate = project.StartDate,
                         EndDate = project.EndDate,
-                        Tags = new List<string> { "Tango", "Charlie" },
+                        Tags = new List<string> { "low-priority", "research" },
                     },
                 };
                 project.Save();
