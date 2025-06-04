@@ -422,7 +422,7 @@ namespace focusbeam.Util
 
         public static void CleanUp()
         {
-            const long MaxSize = 100 * 1024 * 1024; // 100 MB
+            const long MaxSize = 2 * 1024 * 1024; // 2 MB
             const int MaxBackups = 5;
 
             if (File.Exists(Path))
