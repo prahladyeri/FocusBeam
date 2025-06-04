@@ -177,8 +177,22 @@ namespace focusbeam.Util
 
     internal static class FormHelper {
 
+        private static ToolTip sharedToolTip = new ToolTip
+        {
+            AutoPopDelay = 5000,
+            InitialDelay = 200,
+            ReshowDelay = 500,
+            ShowAlways = true
+        };
+
         internal static string RecordSaveMessage(object obj) {
             return $"{obj.GetType().Name} saved.";
+        }
+
+
+        internal static void CreateTooltip(Control ctrl, string text)
+        {
+            sharedToolTip.SetToolTip(ctrl, text);
         }
 
         internal static void SetFocusToFirstEditableControl(TableLayoutPanel tlp)

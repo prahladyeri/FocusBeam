@@ -39,7 +39,7 @@ namespace focusbeam
                 }
                 //Create default project, task.
                 Project project = new Project { 
-                    Title = "Getting Started – Your First Project",
+                    Title = "First Project",
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(90),
                     Tags = new List<string> { "urgent", "bug"},

@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,8 @@ namespace focusbeam.Controls
         {
             InitializeComponent();
             comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
+            FormHelper.CreateTooltip(btnNew, "New Record");
+            FormHelper.CreateTooltip(btnEdit, "Edit Record");
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
