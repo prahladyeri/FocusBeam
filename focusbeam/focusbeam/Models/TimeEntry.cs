@@ -21,7 +21,7 @@ namespace focusbeam.Models
         public DateTime EndTime { get; set; }
         public int Duration { get; set; } // Duration in minutes (e.g., 25 for a standard Pomodoro)
         public TimeEntryStatusLevel Status { get; set; }
-        public string Notes { get; set; }
+        public string Notes { get; set; } = "";
 
         public bool Save()
         {

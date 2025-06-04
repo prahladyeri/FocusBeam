@@ -43,8 +43,6 @@ namespace focusbeam
             }
             btnDashboard_Click(this, new EventArgs());
             rpkProject.cmbMain.SelectedIndex = 0;
-
-            
         }
 
 
@@ -127,6 +125,7 @@ namespace focusbeam
                 btnStart.Text = "⏸️ Stop";
                 _isTracking = true;
                 _trackingStartedAt = DateTime.Now;
+                FormHelper.CreateTooltip(lblTracker, $"Started tracking since {_trackingStartedAt.ToShortTimeString()}");
                 timer1.Enabled = true;
             }
             else
@@ -151,6 +150,7 @@ namespace focusbeam
                 };
                 te.Save();
                 _currentTask.TimeEntries.Add(te);
+                RefreshTimesheetGrid();
             }
         }
 
@@ -198,8 +198,20 @@ namespace focusbeam
                 if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
                 {
                     string taskTitle = theView.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
-                    MessageBox.Show($"Timesheet for task: {taskTitle}", ProductName,
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TimesheetForm dialog = new TimesheetForm();
+                    DataGridView dgv = dialog.Controls["dgvEntries"] as DataGridView;
+                    List<TimeEntry> entries = _currentProject.Tasks.Find(t => t.Title == taskTitle).TimeEntries;
+                    if (entries.Count == 0) { 
+                        MessageBox.Show($"No entries found.", ProductName,
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    entries.ForEach(te =>
+                    {
+                        dgv.Rows.Add(te.StartTime.ToString(), te.EndTime.ToString(),
+                            te.Status.ToString(), te.Duration, te.Notes);
+                    });
+                    dialog.ShowDialog();
                 }
             };
             theView.Dock = DockStyle.Fill;

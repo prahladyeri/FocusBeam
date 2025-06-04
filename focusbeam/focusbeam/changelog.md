@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - [x] Settings View
 - [x] Project creation and editing
 - [x] Task creation and editing
-- [ ] Enable "Timesheet" button on dashboard
+- [+] Enable "Timesheet" button on dashboard
 - [ ] Show Total Hours worked on the project on Dashboard View
 - [ ] Logged hours computation
 - [ ] Notes
