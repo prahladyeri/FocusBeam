@@ -43,6 +43,7 @@
             this.dgvEntries.AllowUserToAddRows = false;
             this.dgvEntries.AllowUserToDeleteRows = false;
             this.dgvEntries.AllowUserToResizeRows = false;
+            this.dgvEntries.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvEntries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEntries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.start_time,
@@ -63,7 +64,7 @@
             this.start_time.HeaderText = "Start Time";
             this.start_time.Name = "start_time";
             this.start_time.ReadOnly = true;
-            this.start_time.Width = 84;
+            this.start_time.Width = 78;
             // 
             // end_time
             // 
@@ -71,7 +72,7 @@
             this.end_time.HeaderText = "End Time";
             this.end_time.Name = "end_time";
             this.end_time.ReadOnly = true;
-            this.end_time.Width = 78;
+            this.end_time.Width = 72;
             // 
             // status
             // 
