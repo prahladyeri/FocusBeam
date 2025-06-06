@@ -66,9 +66,12 @@ namespace focusbeam
         private void RefreshTimesheetGrid() {
             var timesheetView = (TimesheetView)_view;
             timesheetView.dgv.Rows.Clear();
+            decimal totLogged = 0;
             _currentProject.Tasks.ForEach(task => {
+                totLogged += task.GetTotalLogged();
                 addTaskToGrid(task);
             });
+            lblLoggedHours.Text = (totLogged / 60).ToString("F2") + " hrs logged.";
         }
 
         private void rpkTaskItem_SelectedIndexChanged(object sender, EventArgs e)
@@ -501,6 +504,11 @@ namespace focusbeam
                 RefreshTimesheetGrid();
             };
             builder.ShowDialog();
+        }
+
+        private void panelMain_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

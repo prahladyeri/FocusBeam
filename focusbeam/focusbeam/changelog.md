@@ -8,7 +8,7 @@
 - [x] Project creation and editing
 - [x] Task creation and editing
 - [x] Enable "Timesheet" button on dashboard
-- [ ] Show Total Hours worked on the project on Dashboard View
+- [+] Show Total Hours worked on the project on Dashboard View
 - [ ] Logged hours computation
 - [ ] Notes
 - [ ] Mind Maps

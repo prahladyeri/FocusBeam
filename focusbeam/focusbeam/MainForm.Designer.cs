@@ -43,6 +43,7 @@ namespace focusbeam
             this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblLoggedHours = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
@@ -50,6 +51,7 @@ namespace focusbeam
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelMain = new System.Windows.Forms.Panel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -212,6 +214,7 @@ namespace focusbeam
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblLoggedHours,
             this.lblStatus,
             this.toolStripStatusLabel1,
             this.progressBar1});
@@ -228,10 +231,17 @@ namespace focusbeam
             this.lblStatus.Size = new System.Drawing.Size(39, 17);
             this.lblStatus.Text = "Ready";
             // 
+            // lblLoggedHours
+            // 
+            this.lblLoggedHours.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
+            this.lblLoggedHours.Name = "lblLoggedHours";
+            this.lblLoggedHours.Size = new System.Drawing.Size(93, 17);
+            this.lblLoggedHours.Text = "00:00 hrs logged";
+            // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(642, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(556, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // progressBar1
@@ -271,6 +281,12 @@ namespace focusbeam
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(794, 550);
             this.panelMain.TabIndex = 2;
+            this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
             // 
             // MainForm
             // 
@@ -319,6 +335,8 @@ namespace focusbeam
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panelMain;
+        private System.Windows.Forms.ToolStripStatusLabel lblLoggedHours;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }
 
