@@ -6,13 +6,7 @@
  */
 using focusbeam.Util;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace focusbeam.Controls
@@ -20,8 +14,29 @@ namespace focusbeam.Controls
     [DefaultEvent("SelectedIndexChanged")]
     public partial class RefPicker : UserControl
     {
-        public ComboBox cmbMain {
-            get { return this.comboBox1; }
+
+        public ComboBox.ObjectCollection Items
+        {
+            get { return comboBox1.Items; }
+        }
+
+
+        public override string Text
+        {
+            get { return comboBox1.Text; }
+            set { comboBox1.Text = value; }
+        }
+
+        public int SelectedIndex
+        {
+            get { return comboBox1.SelectedIndex; }
+            set { comboBox1.SelectedIndex = value; }
+        }
+
+        public object SelectedItem
+        {
+            get { return comboBox1.SelectedItem; }
+            set { comboBox1.SelectedItem = value; }
         }
 
         public event EventHandler SelectedIndexChanged;

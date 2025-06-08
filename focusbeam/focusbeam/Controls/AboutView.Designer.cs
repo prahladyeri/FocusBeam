@@ -102,7 +102,7 @@
             this.label4.Size = new System.Drawing.Size(195, 28);
             this.label4.TabIndex = 12;
             this.label4.Text = "Website:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lnkGithub
             // 
@@ -122,7 +122,7 @@
             this.label2.Size = new System.Drawing.Size(195, 28);
             this.label2.TabIndex = 9;
             this.label2.Text = "Author:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblCompany
             // 
@@ -140,7 +140,7 @@
             this.label1.Size = new System.Drawing.Size(195, 28);
             this.label1.TabIndex = 7;
             this.label1.Text = "Version:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblVersion
             // 
@@ -178,13 +178,13 @@
             this.label3.Size = new System.Drawing.Size(195, 20);
             this.label3.TabIndex = 10;
             this.label3.Text = "Framework Version:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // AboutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Cornsilk;
+            this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "AboutView";
             this.Size = new System.Drawing.Size(690, 345);

@@ -39,23 +39,23 @@ namespace focusbeam
             DBAL.Init();
             _projects = Project.GetAll();
             foreach (Project proj in _projects) {
-                this.rpkProject.cmbMain.Items.Add(proj.Title);
+                this.rpkProject.Items.Add(proj.Title);
             }
             btnDashboard_Click(this, new EventArgs());
-            rpkProject.cmbMain.SelectedIndex = 0;
+            rpkProject.SelectedIndex = 0;
         }
 
 
         private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string title = rpkProject.cmbMain.SelectedItem.ToString();
+            string title = rpkProject.SelectedItem.ToString();
             _currentProject = _projects.FirstOrDefault(p => p.Title == title);
-            rpkTaskItem.cmbMain.Items.Clear();
+            rpkTaskItem.Items.Clear();
             foreach (TaskItem task in _currentProject.Tasks)
             {
-                rpkTaskItem.cmbMain.Items.Add(task.Title);
+                rpkTaskItem.Items.Add(task.Title);
             }
-            rpkTaskItem.cmbMain.SelectedIndex = 0;
+            rpkTaskItem.SelectedIndex = 0;
             // update the view
             
             if (_view.GetType() == typeof(TimesheetView)) {
@@ -76,7 +76,7 @@ namespace focusbeam
 
         private void rpkTaskItem_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string title = rpkTaskItem.cmbMain.SelectedItem.ToString();
+            string title = rpkTaskItem.SelectedItem.ToString();
             //currentProject = projects.FirstOrDefault(p => p.Title == title);
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
             lblStatus.Text = $"Current task set to {_currentProject.Title} => {title}";
@@ -220,7 +220,7 @@ namespace focusbeam
             theView.Dock = DockStyle.Fill;
             this.panelMain.Controls.Add(theView);
             _view = theView;
-            rpkProject.cmbMain.SelectedIndex = 0;
+            rpkProject.SelectedIndex = 0;
             RefreshTimesheetGrid();
         }
 
@@ -276,19 +276,19 @@ namespace focusbeam
                 {
                     _projects[index] = _currentProject;
                 }
-                string oldTitle = rpkProject.cmbMain.Text;
+                string oldTitle = rpkProject.Text;
                 string newTitle = _currentProject.Title;
                 if (!string.Equals(oldTitle, newTitle, StringComparison.Ordinal))
                 {
-                    if (rpkProject.cmbMain.Items.Contains(oldTitle))
+                    if (rpkProject.Items.Contains(oldTitle))
                     {
-                        rpkProject.cmbMain.Items.Remove(oldTitle);
+                        rpkProject.Items.Remove(oldTitle);
                     }
-                    if (!rpkProject.cmbMain.Items.Contains(newTitle))
+                    if (!rpkProject.Items.Contains(newTitle))
                     {
-                        rpkProject.cmbMain.Items.Add(newTitle);
+                        rpkProject.Items.Add(newTitle);
                     }
-                    rpkProject.cmbMain.Text = newTitle;
+                    rpkProject.Text = newTitle;
                 }
                 MessageBox.Show(FormHelper.RecordSaveMessage(_currentProject), ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -355,8 +355,8 @@ namespace focusbeam
                 project.Tasks.Add(task);
                 task.Save();
                 _projects.Add(project);
-                rpkProject.cmbMain.Items.Add(project.Title);
-                rpkProject.cmbMain.Text = project.Title;
+                rpkProject.Items.Add(project.Title);
+                rpkProject.Text = project.Title;
                 MessageBox.Show(FormHelper.RecordSaveMessage(project), Application.ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
@@ -428,8 +428,8 @@ namespace focusbeam
                     return;
                 }
                 _currentProject.Tasks.Add(task);
-                rpkTaskItem.cmbMain.Items.Add(task.Title);
-                rpkTaskItem.cmbMain.Text = task.Title;
+                rpkTaskItem.Items.Add(task.Title);
+                rpkTaskItem.Text = task.Title;
                 MessageBox.Show(FormHelper.RecordSaveMessage(task), Application.ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshTimesheetGrid();
@@ -440,8 +440,8 @@ namespace focusbeam
 
         private void rpkTaskItem_EditButtonClicked(object sender, EventArgs e)
         {
-            TaskItem task = _currentProject.Tasks.Find(ti => ti.Title == rpkTaskItem.cmbMain.Text);
-            int taskidx = rpkTaskItem.cmbMain.Items.IndexOf(task.Title);
+            TaskItem task = _currentProject.Tasks.Find(ti => ti.Title == rpkTaskItem.Text);
+            int taskidx = rpkTaskItem.Items.IndexOf(task.Title);
             //TaskItem task = new TaskItem { ProjectId = _currentProject.Id };
             DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
                 new Field {
@@ -497,8 +497,8 @@ namespace focusbeam
                     return;
                 }
                 //_currentProject.Tasks.Add(task);
-                rpkTaskItem.cmbMain.Items[taskidx] = task.Title;
-                //rpkTaskItem.cmbMain.Text = task.Title;
+                rpkTaskItem.Items[taskidx] = task.Title;
+                //rpkTaskItem.Text = task.Title;
                 MessageBox.Show(FormHelper.RecordSaveMessage(task), Application.ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshTimesheetGrid();
