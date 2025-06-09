@@ -7,7 +7,6 @@ init.sql - Build the schema
 drop table if exists projects;
 drop table if exists tasks;
 drop table if exists timesheet;
-drop table if exists notes;
 drop table if exists mindmaps;
 drop table if exists mcq;
 
@@ -47,16 +46,6 @@ create table timesheet (
 	status int not null, -- enum
 	notes text,
 	foreign key (task_id) references tasks (id)
-);
-
-create table notes (
-	id integer primary key,
-	project_id int not null,
-	status text not null check (status in ('Pending', 'Completed')),
-	title text,
-	notes text,
-	due_date datetime, -- for reminder, in case note is about an event.
-	foreign key (project_id) references projects (id)
 );
 
 create table mindmaps (
