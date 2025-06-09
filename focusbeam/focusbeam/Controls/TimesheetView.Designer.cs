@@ -43,7 +43,6 @@ namespace focusbeam.Controls
             // 
             this.dgvTasks.AllowUserToAddRows = false;
             this.dgvTasks.AllowUserToDeleteRows = false;
-            this.dgvTasks.AllowUserToOrderColumns = true;
             this.dgvTasks.AllowUserToResizeRows = false;
             this.dgvTasks.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvTasks.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -66,6 +65,7 @@ namespace focusbeam.Controls
             this.title.HeaderText = "Title";
             this.title.Name = "title";
             this.title.ReadOnly = true;
+            this.title.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.title.Width = 200;
             // 
             // priority
@@ -73,12 +73,14 @@ namespace focusbeam.Controls
             this.priority.HeaderText = "Priority";
             this.priority.Name = "priority";
             this.priority.ReadOnly = true;
+            this.priority.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // status
             // 
             this.status.HeaderText = "Status";
             this.status.Name = "status";
             this.status.ReadOnly = true;
+            this.status.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // total_logged
             // 
@@ -87,6 +89,7 @@ namespace focusbeam.Controls
             this.total_logged.HeaderText = "Logged Hours";
             this.total_logged.Name = "total_logged";
             this.total_logged.ReadOnly = true;
+            this.total_logged.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.total_logged.Width = 120;
             // 
             // timesheet
