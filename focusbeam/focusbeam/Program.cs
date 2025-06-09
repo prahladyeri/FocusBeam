@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,6 +42,7 @@ namespace focusbeam
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             Settings = AppSettings.Load();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
