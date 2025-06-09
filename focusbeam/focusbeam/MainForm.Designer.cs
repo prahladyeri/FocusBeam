@@ -44,6 +44,8 @@ namespace focusbeam
             this.label2 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTracker = new System.Windows.Forms.Label();
+            this.rpkProject = new focusbeam.Controls.RefPicker();
+            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblLoggedHours = new System.Windows.Forms.ToolStripStatusLabel();
@@ -56,8 +58,6 @@ namespace focusbeam
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelMain = new System.Windows.Forms.Panel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.rpkProject = new focusbeam.Controls.RefPicker();
-            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -66,6 +66,7 @@ namespace focusbeam
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewToolStripMenuItem,
             this.helpToolStripMenuItem,
@@ -139,8 +140,8 @@ namespace focusbeam
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(38, 20);
-            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(68, 20);
+            this.exitToolStripMenuItem1.Text = "Minimize";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // tableLayoutPanel1
@@ -203,6 +204,36 @@ namespace focusbeam
             this.lblTracker.Text = "🕒 00:00:00";
             this.lblTracker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // rpkProject
+            // 
+            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkProject.Location = new System.Drawing.Point(76, 2);
+            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 40);
+            this.rpkProject.Name = "rpkProject";
+            this.rpkProject.SelectedIndex = -1;
+            this.rpkProject.SelectedItem = null;
+            this.rpkProject.Size = new System.Drawing.Size(204, 27);
+            this.rpkProject.TabIndex = 12;
+            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
+            this.rpkProject.AddButtonClicked += new System.EventHandler(this.rpkProject_AddButtonClicked);
+            this.rpkProject.EditButtonClicked += new System.EventHandler(this.rpkProject_EditButtonClicked);
+            // 
+            // rpkTaskItem
+            // 
+            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkTaskItem.Location = new System.Drawing.Point(356, 2);
+            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 40);
+            this.rpkTaskItem.Name = "rpkTaskItem";
+            this.rpkTaskItem.SelectedIndex = -1;
+            this.rpkTaskItem.SelectedItem = null;
+            this.rpkTaskItem.Size = new System.Drawing.Size(237, 27);
+            this.rpkTaskItem.TabIndex = 13;
+            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
+            this.rpkTaskItem.AddButtonClicked += new System.EventHandler(this.rpkTaskItem_AddButtonClicked);
+            this.rpkTaskItem.EditButtonClicked += new System.EventHandler(this.rpkTaskItem_EditButtonClicked);
+            // 
             // label1
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -243,7 +274,7 @@ namespace focusbeam
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(660, 21);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(680, 21);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // progressBar1
@@ -289,36 +320,6 @@ namespace focusbeam
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
-            // 
-            // rpkProject
-            // 
-            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkProject.Location = new System.Drawing.Point(76, 2);
-            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 40);
-            this.rpkProject.Name = "rpkProject";
-            this.rpkProject.SelectedIndex = -1;
-            this.rpkProject.SelectedItem = null;
-            this.rpkProject.Size = new System.Drawing.Size(204, 27);
-            this.rpkProject.TabIndex = 12;
-            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
-            this.rpkProject.AddButtonClicked += new System.EventHandler(this.rpkProject_AddButtonClicked);
-            this.rpkProject.EditButtonClicked += new System.EventHandler(this.rpkProject_EditButtonClicked);
-            // 
-            // rpkTaskItem
-            // 
-            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkTaskItem.Location = new System.Drawing.Point(356, 2);
-            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 40);
-            this.rpkTaskItem.Name = "rpkTaskItem";
-            this.rpkTaskItem.SelectedIndex = -1;
-            this.rpkTaskItem.SelectedItem = null;
-            this.rpkTaskItem.Size = new System.Drawing.Size(237, 27);
-            this.rpkTaskItem.TabIndex = 13;
-            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
-            this.rpkTaskItem.AddButtonClicked += new System.EventHandler(this.rpkTaskItem_AddButtonClicked);
-            this.rpkTaskItem.EditButtonClicked += new System.EventHandler(this.rpkTaskItem_EditButtonClicked);
             // 
             // MainForm
             // 

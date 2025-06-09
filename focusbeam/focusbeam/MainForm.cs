@@ -38,7 +38,7 @@ namespace focusbeam
             notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
-            DBAL.Init();
+            DBAL.Init("focusbeam.db");
             _projects = Project.GetAll();
             foreach (Project proj in _projects) {
                 this.rpkProject.Items.Add(proj.Title);
@@ -520,5 +520,6 @@ namespace focusbeam
             this.panelMain.Controls.Add(theView);
             _view = theView;
         }
+
     }
 }

@@ -95,6 +95,7 @@ namespace focusbeam
                         Text = field.Value.ToString(),
                         Multiline = true,
                         Height = 60,
+                        ScrollBars = ScrollBars.Vertical
                     };
                 }
                 else if (field.ControlType == FieldControlType.ComboBox)

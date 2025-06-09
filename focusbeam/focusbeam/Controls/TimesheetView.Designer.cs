@@ -43,6 +43,7 @@ namespace focusbeam.Controls
             // 
             this.dgvTasks.AllowUserToAddRows = false;
             this.dgvTasks.AllowUserToDeleteRows = false;
+            this.dgvTasks.AllowUserToOrderColumns = true;
             this.dgvTasks.AllowUserToResizeRows = false;
             this.dgvTasks.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvTasks.BorderStyle = System.Windows.Forms.BorderStyle.None;

@@ -26,12 +26,15 @@ namespace focusbeam
             conn = null;
         }
 
-        public static void Init() {
-            string dbPath = "focusbeam.db";
+        public static void Init(string dbPath) {
             bool isNew = false;
             if (!File.Exists(dbPath)) isNew = true;
             conn = new SQLiteConnection($"Data Source={dbPath};Version=3;");
             conn.Open();
+            using (var cmd = new SQLiteCommand("PRAGMA journal_mode=WAL;", conn))
+            {
+                cmd.ExecuteNonQuery();
+            }
             if (isNew) {
                 string sql = Util.FileHelper.ReadEmbeddedResource("focusbeam.files.init.sql");
                 using (var cmd = new SQLiteCommand(sql, conn)) {
@@ -42,7 +45,6 @@ namespace focusbeam
                     Title = "First Project",
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(90),
-                    Tags = new List<string> { "urgent", "bug"},
                 };
                 project.Tasks = new List<TaskItem> {
                     new TaskItem {
@@ -52,7 +54,6 @@ namespace focusbeam
                         Status = StatusLevel.Pending,
                         StartDate = project.StartDate,
                         EndDate = project.EndDate,
-                        Tags = new List<string> { "low-priority", "research" },
                     },
                 };
                 project.Save();

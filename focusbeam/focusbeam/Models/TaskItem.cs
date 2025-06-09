@@ -25,9 +25,9 @@ namespace focusbeam.Models
         public string Title { get; set; }
         public PriorityLevel Priority { get; set; }
         public StatusLevel Status { get; set; }
-        public List<string> Tags { get; set; } = new List<string>();
+        public List<string> Tags { get; set; } = new List<string> { "high-priority", "research" }; 
         public DateTime? StartDate { get; set; } = DateTime.Now;
-        public DateTime? EndDate { get; set; } = DateTime.Now;
+        public DateTime? EndDate { get; set; } = DateTime.Now.AddMonths(1);
         public int PlannedHours { get; set; }
         public string Notes { get; set; } = "";
 
