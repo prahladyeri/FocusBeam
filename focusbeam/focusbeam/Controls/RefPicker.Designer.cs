@@ -56,7 +56,7 @@ namespace focusbeam.Controls
             // 
             // btnNew
             // 
-            this.btnNew.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnNew.Location = new System.Drawing.Point(335, 0);
             this.btnNew.Margin = new System.Windows.Forms.Padding(0);
             this.btnNew.Name = "btnNew";
@@ -68,7 +68,7 @@ namespace focusbeam.Controls
             // 
             // btnEdit
             // 
-            this.btnEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.btnEdit.Location = new System.Drawing.Point(312, 0);
             this.btnEdit.Margin = new System.Windows.Forms.Padding(0);
             this.btnEdit.Name = "btnEdit";

@@ -45,6 +45,7 @@ namespace focusbeam.Controls
             this.dgvTasks.AllowUserToDeleteRows = false;
             this.dgvTasks.AllowUserToResizeRows = false;
             this.dgvTasks.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvTasks.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTasks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.title,
