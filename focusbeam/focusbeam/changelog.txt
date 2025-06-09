@@ -15,6 +15,7 @@
 + fix: Minor UI bugs on task list (Ongoing)
 
 ## [Ongoing Improvements]
++ fix: Add grouping of settings in SettingsView
 + fix: Performance improvements in task loading
 
 ## [v0.1.0] - 2024-09-16
