@@ -40,6 +40,8 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblAppName = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lnkChangelog = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,8 +51,10 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.lnkChangelog, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.lblFrameworkVersion, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lnkGithub, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 3);
@@ -62,7 +66,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 8;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -70,7 +74,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(646, 243);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(646, 271);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -87,7 +92,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel1.SetColumnSpan(this.label5, 2);
-            this.label5.Location = new System.Drawing.Point(3, 190);
+            this.label5.Location = new System.Drawing.Point(3, 218);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(640, 48);
@@ -180,6 +185,26 @@
             this.label3.Text = "Framework Version:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(3, 185);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(195, 28);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Changelog:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lnkChangelog
+            // 
+            this.lnkChangelog.Location = new System.Drawing.Point(204, 185);
+            this.lnkChangelog.Name = "lnkChangelog";
+            this.lnkChangelog.Size = new System.Drawing.Size(439, 28);
+            this.lnkChangelog.TabIndex = 16;
+            this.lnkChangelog.TabStop = true;
+            this.lnkChangelog.Text = "View changelog.txt";
+            this.lnkChangelog.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkChangelog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkChangelog_LinkClicked);
+            // 
             // AboutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -209,5 +234,7 @@
         private System.Windows.Forms.LinkLabel lnkGithub;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblFrameworkVersion;
+        private System.Windows.Forms.LinkLabel lnkChangelog;
+        private System.Windows.Forms.Label label6;
     }
 }

@@ -99,5 +99,16 @@ namespace focusbeam.Controls
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
         }
+
+        private void lnkChangelog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var fname = "changelog.txt";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "notepad.exe",
+                Arguments = $"\"{fname}\"",
+                UseShellExecute = true
+            });
+        }
     }
 }
