@@ -28,6 +28,8 @@ namespace focusbeam
         public MainForm()
         {
             InitializeComponent();
+            //this.Controls.SetChildIndex(menuStrip1, 0);          // menuStrip goes at top visually
+            //this.Controls.SetChildIndex(tableLayoutPanel1, 1);   // tableLayoutPanel comes below it
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -41,7 +43,7 @@ namespace focusbeam
             foreach (Project proj in _projects) {
                 this.rpkProject.Items.Add(proj.Title);
             }
-            btnDashboard_Click(this, new EventArgs());
+            dashboardToolStripMenuItem_Click_1(this, new EventArgs());
             rpkProject.SelectedIndex = 0;
         }
 
@@ -178,51 +180,6 @@ namespace focusbeam
             //🕒 00:00:00
             TimeSpan ts = DateTime.Now.Subtract(_trackingStartedAt);
             lblTracker.Text = "🕒" + ts.ToString(@"hh\:mm\:ss");
-        }
-
-        private void rpkTaskItem_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            this.panelMain.Controls.Clear();
-            SettingsView theView = new SettingsView();
-            theView.Dock = DockStyle.Fill;
-            this.panelMain.Controls.Add(theView);
-            _view = theView;
-        }
-
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            this.panelMain.Controls.Clear();
-            TimesheetView theView = new TimesheetView();
-            theView.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
-                if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
-                {
-                    string taskTitle = theView.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
-                    TimesheetForm dialog = new TimesheetForm();
-                    DataGridView dgv = dialog.Controls["dgvEntries"] as DataGridView;
-                    List<TimeEntry> entries = _currentProject.Tasks.Find(t => t.Title == taskTitle).TimeEntries;
-                    if (entries.Count == 0) { 
-                        MessageBox.Show($"No entries found.", ProductName,
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    entries.ForEach(te =>
-                    {
-                        dgv.Rows.Add(te.StartTime.ToString(), te.EndTime.ToString(),
-                            te.Status.ToString(), te.Duration, te.Notes);
-                    });
-                    dialog.ShowDialog();
-                }
-            };
-            theView.Dock = DockStyle.Fill;
-            this.panelMain.Controls.Add(theView);
-            _view = theView;
-            rpkProject.SelectedIndex = 0;
-            RefreshTimesheetGrid();
         }
 
         private void rpkProject_EditButtonClicked(object sender, EventArgs e)
@@ -364,15 +321,6 @@ namespace focusbeam
             builder.ShowDialog();
         }
 
-        private void btnAbout_Click(object sender, EventArgs e)
-        {
-            this.panelMain.Controls.Clear();
-            AboutView theView = new AboutView();
-            theView.Dock = DockStyle.Fill;
-            this.panelMain.Controls.Add(theView);
-            _view = theView;
-        }
-
         private void rpkTaskItem_AddButtonClicked(object sender, EventArgs e)
         {
             TaskItem task = new TaskItem { ProjectId = _currentProject.Id };
@@ -507,9 +455,70 @@ namespace focusbeam
             builder.ShowDialog();
         }
 
-        private void panelMain_Paint(object sender, PaintEventArgs e)
+
+        private void aboutToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            this.panelMain.Controls.Clear();
+            AboutView theView = new AboutView();
+            theView.Dock = DockStyle.Fill;
+            this.panelMain.Controls.Add(theView);
+            _view = theView;
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dashboardToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            this.panelMain.Controls.Clear();
+            TimesheetView theView = new TimesheetView();
+            theView.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
+                if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
+                {
+                    string taskTitle = theView.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
+                    TimesheetForm dialog = new TimesheetForm();
+                    DataGridView dgv = dialog.Controls["dgvEntries"] as DataGridView;
+                    List<TimeEntry> entries = _currentProject.Tasks.Find(t => t.Title == taskTitle).TimeEntries;
+                    if (entries.Count == 0)
+                    {
+                        MessageBox.Show($"No entries found.", ProductName,
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    entries.ForEach(te =>
+                    {
+                        dgv.Rows.Add(te.StartTime.ToString(), te.EndTime.ToString(),
+                            te.Status.ToString(), te.Duration, te.Notes);
+                    });
+                    dialog.ShowDialog();
+                }
+            };
+            theView.Dock = DockStyle.Fill;
+            this.panelMain.Controls.Add(theView);
+            _view = theView;
+            rpkProject.SelectedIndex = 0;
+            RefreshTimesheetGrid();
+        }
+
+        private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void mCQToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void settingsToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            this.panelMain.Controls.Clear();
+            SettingsView theView = new SettingsView();
+            theView.Dock = DockStyle.Fill;
+            this.panelMain.Controls.Add(theView);
+            _view = theView;
         }
     }
 }
