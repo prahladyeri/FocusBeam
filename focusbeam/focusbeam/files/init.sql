@@ -61,8 +61,8 @@ create table notes (
 
 create table mindmaps (
 	id integer primary key,
-	type text check (type in ('Idea', 'Note', 'Question', 'Reference')) default 'Idea',
 	project_id int not null,
+	type text check (type in ('Idea', 'Note', 'Question', 'Reference')) default 'Idea',
 	parent_id int, -- parent item's id or null in case of top level
 	status text not null check (status in ('Pending', 'Completed')),
 	pos int default 0, -- position for custom ordering

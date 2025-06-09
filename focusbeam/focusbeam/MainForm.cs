@@ -64,6 +64,7 @@ namespace focusbeam
         }
 
         private void RefreshTimesheetGrid() {
+            if (_view.GetType().Name != "TimesheetView") return;
             var timesheetView = (TimesheetView)_view;
             timesheetView.dgv.Rows.Clear();
             decimal totLogged = 0;

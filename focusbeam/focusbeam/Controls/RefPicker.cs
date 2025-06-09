@@ -14,12 +14,15 @@ namespace focusbeam.Controls
     [DefaultEvent("SelectedIndexChanged")]
     public partial class RefPicker : UserControl
     {
+        public override string ToString()
+        {
+            return $"RefPicker: Text={Text}, SelectedIndex={SelectedIndex}";
+        }
 
         public ComboBox.ObjectCollection Items
         {
             get { return comboBox1.Items; }
         }
-
 
         public override string Text
         {
