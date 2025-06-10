@@ -4,10 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
-using focusbeam.Models;
-using focusbeam.Util;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
@@ -24,9 +21,9 @@ namespace focusbeam
             conn = null;
         }
 
-        public static void Init(string dbPath) {
-            bool isNew = false; string result;
-            if (!File.Exists(dbPath)) isNew = true;
+        public static bool Init(string dbPath, string initSql) {
+            bool isnew = false; string result;
+            if (!File.Exists(dbPath)) isnew = true;
             conn = new SQLiteConnection($"Data Source={dbPath};Version=3;");
             conn.Open();
             using (var cmd = new SQLiteCommand("PRAGMA journal_mode=WAL;", conn))
@@ -43,29 +40,14 @@ namespace focusbeam
                     cmd.ExecuteNonQuery();
                 }
             }
-            if (isNew) {
-                string sql = Util.FileHelper.ReadEmbeddedResource(typeof(Program).Namespace + ".files.init.sql");
-                using (var cmd = new SQLiteCommand(sql, conn)) {
+            if (isnew)
+            {
+                using (var cmd = new SQLiteCommand(initSql, conn))
+                {
                     cmd.ExecuteNonQuery(); // a bunch of DDL/DML statements.
                 }
-                //Create default project, task, etc.
-                Project project = new Project { 
-                    Title = "First Project",
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(90),
-                };
-                project.Tasks = new List<TaskItem> {
-                    new TaskItem {
-                        ProjectId = project.Id,
-                        Title = "First Task",
-                        Priority = PriorityLevel.High,
-                        Status = StatusLevel.Pending,
-                        StartDate = project.StartDate,
-                        EndDate = project.EndDate,
-                    },
-                };
-                project.Save();
             }
+            return isnew;
         }
 
         public static int ExecuteNonQuery(string sql, object[] args = null) 

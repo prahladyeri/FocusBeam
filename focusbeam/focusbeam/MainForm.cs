@@ -38,7 +38,30 @@ namespace focusbeam
             notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
-            DBAL.Init("focusbeam.db");
+            bool isnew = DBAL.Init("focusbeam.db",
+                FileHelper.ReadEmbeddedResource(typeof(Program).Namespace + ".files.init.sql"));
+            if (isnew)
+            {
+                //Create default project, task, etc.
+                Project project = new Project
+                {
+                    Title = "First Project",
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddDays(90),
+                };
+                project.Tasks = new List<TaskItem> {
+                    new TaskItem {
+                        ProjectId = project.Id,
+                        Title = "First Task",
+                        Priority = PriorityLevel.High,
+                        Status = StatusLevel.Pending,
+                        StartDate = project.StartDate,
+                        EndDate = project.EndDate,
+                    },
+                };
+                project.Save();
+            }
+
             _projects = Project.GetAll();
             foreach (Project proj in _projects) {
                 this.rpkProject.Items.Add(proj.Title);

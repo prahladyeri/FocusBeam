@@ -62,7 +62,7 @@ namespace focusbeam.Controls
             // 
             // title
             // 
-            this.title.HeaderText = "Title";
+            this.title.HeaderText = "Task";
             this.title.Name = "title";
             this.title.ReadOnly = true;
             this.title.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
