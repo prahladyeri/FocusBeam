@@ -9,13 +9,13 @@ using System;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Windows.Forms;
 
 namespace focusbeam
 {
     public static class DBAL
     {
         private static SQLiteConnection conn = null;
+        public static string LastError = "";
 
         public static void Dispose() {
             conn.Dispose();
@@ -55,6 +55,7 @@ namespace focusbeam
         {
             try
             {
+                LastError = "";
                 args = (args == null ? Array.Empty<object>() : args);
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
@@ -69,12 +70,10 @@ namespace focusbeam
                 Logger.WriteLog("DBAL ERROR: " + ex.ToString());
                 if (ex is SQLiteException sqliteEx && sqliteEx.ResultCode == SQLiteErrorCode.Constraint)
                 {
-                    MessageBox.Show("Duplicate entry or constraint violation.", Application.ProductName,
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LastError = "Duplicate entry or constraint violation.";
                 }
                 else {
-                    MessageBox.Show($"Error occurred: {ex.Message}", Application.ProductName,
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LastError = $"Error occurred: {ex.Message}";
                 }
                 return -1;
             }

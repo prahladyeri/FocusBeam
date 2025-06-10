@@ -5,10 +5,7 @@
  * @license MIT
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace focusbeam.Models
 {
@@ -34,6 +31,8 @@ duration, status, notes) values(?, ?, ?, ?, ?, ?)";
                 cnt = DBAL.ExecuteNonQuery(sql, args);
                 if (cnt>0)
                     Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else {
                 var sql = @"UPDATE timesheet SET
@@ -41,6 +40,8 @@ duration, status, notes) values(?, ?, ?, ?, ?, ?)";
                     WHERE id = ?";
                 object[] args = { TaskId, StartTime, EndTime, Duration, (int)Status, Notes, Id };
                 cnt =DBAL.ExecuteNonQuery(sql, args);
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return (cnt>0);
         }

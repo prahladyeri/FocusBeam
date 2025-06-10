@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace focusbeam.Models
 {
@@ -50,6 +51,8 @@ status, start_date, end_date, tags, planned_hours, notes) values(?, ?, ?, ?, ?, 
                 cnt = DBAL.ExecuteNonQuery(sql, args);
                 if (cnt>0)
                     Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -57,6 +60,8 @@ status, start_date, end_date, tags, planned_hours, notes) values(?, ?, ?, ?, ?, 
 tags= ?, planned_hours = ?, notes = ? WHERE id = ?";
                 object[] args = { Title, (int)Priority, (int)Status, StartDate, EndDate, tags, PlannedHours, Notes, Id };
                 cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if (cnt > 0) {
                 TimeEntries.ForEach(te => {

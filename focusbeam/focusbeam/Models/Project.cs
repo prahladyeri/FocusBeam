@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace focusbeam.Models
 {
@@ -102,12 +103,16 @@ values(?, ?, ?, ?, ?, ?)";
                 cnt = DBAL.ExecuteNonQuery(sql, args);
                 if (cnt > 0)
                     Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 var sql = @"UPDATE projects SET title=?, category=?, tags=?, start_date = ?, end_date = ?, notes = ? WHERE id = ?";
                 object[] args = { Title, (int)Category, tags, StartDate, EndDate, Notes, Id };
                 cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if (cnt > 0) 
             {
