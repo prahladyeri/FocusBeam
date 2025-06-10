@@ -7,10 +7,8 @@
 * feat: Enable "Timesheet" button on dashboard
 * feat: Show Total Hours worked on the project on Dashboard View
 * fix: Restore state of task after attempted duplicate entry in edit followed by cancel
-- feat: Notes
 - feat: Mind Maps
 - feat: MCQ
-- feat: Export/Reports
 
 ## [Ongoing Fixes]
 + fix: Minor UI bugs on task list (Ongoing)
