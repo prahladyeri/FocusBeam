@@ -17,12 +17,14 @@ namespace focusbeam.Models
     }
     public class Project
     {
+        //TODO: Generate a unique ID
+        //"TX" + Guid.NewGuid().ToString("N").Substring(13)
         public int Id { get; set; }
         public string Title { get; set; }
         public CategoryLevel Category { get; set; }
         public List<string> Tags { get; set; } = new List<string> { "urgent", "bug" };
         public DateTime StartDate { get; set; } = DateTime.Now;
-        public DateTime EndDate { get; set; } = DateTime.Now;
+        public DateTime EndDate { get; set; } = DateTime.Now.AddMonths(1);
         public string Notes { get; set; }
         public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
 

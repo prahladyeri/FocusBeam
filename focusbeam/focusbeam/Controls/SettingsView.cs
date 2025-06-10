@@ -23,12 +23,16 @@ namespace focusbeam.Controls
             {
                 Name = "Property",
                 ReadOnly = true,
+                SortMode = DataGridViewColumnSortMode.NotSortable,
+                Resizable = DataGridViewTriState.False,
                 Width = 250
             });
 
             dgv.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Value",
+                SortMode = DataGridViewColumnSortMode.NotSortable,
+                Resizable = DataGridViewTriState.False,
                 Width = 250
             });
 

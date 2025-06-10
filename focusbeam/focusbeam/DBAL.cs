@@ -5,14 +5,12 @@
  * @license MIT
  */
 using focusbeam.Models;
+using focusbeam.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace focusbeam
@@ -27,20 +25,30 @@ namespace focusbeam
         }
 
         public static void Init(string dbPath) {
-            bool isNew = false;
+            bool isNew = false; string result;
             if (!File.Exists(dbPath)) isNew = true;
             conn = new SQLiteConnection($"Data Source={dbPath};Version=3;");
             conn.Open();
             using (var cmd = new SQLiteCommand("PRAGMA journal_mode=WAL;", conn))
             {
-                cmd.ExecuteNonQuery();
+                result = (string)cmd.ExecuteScalar();
+            }
+            if (!string.Equals(result, "wal", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Failed to set WAL mode on SQLite database.");
+            }
+            if (DateTime.Now.Date.Day == 1) {
+                using (var cmd = new SQLiteCommand("vacuum;", conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
             if (isNew) {
-                string sql = Util.FileHelper.ReadEmbeddedResource("focusbeam.files.init.sql");
+                string sql = Util.FileHelper.ReadEmbeddedResource(typeof(Program).Namespace + ".files.init.sql");
                 using (var cmd = new SQLiteCommand(sql, conn)) {
                     cmd.ExecuteNonQuery(); // a bunch of DDL/DML statements.
                 }
-                //Create default project, task.
+                //Create default project, task, etc.
                 Project project = new Project { 
                     Title = "First Project",
                     StartDate = DateTime.Now,

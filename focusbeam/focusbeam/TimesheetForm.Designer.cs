@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvEntries = new System.Windows.Forms.DataGridView();
             this.start_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.end_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,9 +53,10 @@
             this.notes});
             this.dgvEntries.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvEntries.Location = new System.Drawing.Point(0, 0);
+            this.dgvEntries.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dgvEntries.Name = "dgvEntries";
             this.dgvEntries.RowHeadersVisible = false;
-            this.dgvEntries.Size = new System.Drawing.Size(742, 326);
+            this.dgvEntries.Size = new System.Drawing.Size(789, 396);
             this.dgvEntries.TabIndex = 2;
             // 
             // start_time
@@ -64,7 +65,7 @@
             this.start_time.HeaderText = "Start Time";
             this.start_time.Name = "start_time";
             this.start_time.ReadOnly = true;
-            this.start_time.Width = 78;
+            this.start_time.Width = 79;
             // 
             // end_time
             // 
@@ -72,7 +73,7 @@
             this.end_time.HeaderText = "End Time";
             this.end_time.Name = "end_time";
             this.end_time.ReadOnly = true;
-            this.end_time.Width = 72;
+            this.end_time.Width = 75;
             // 
             // status
             // 
@@ -82,8 +83,8 @@
             // 
             // duration
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.duration.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.duration.DefaultCellStyle = dataGridViewCellStyle3;
             this.duration.HeaderText = "Duration (Mins)";
             this.duration.Name = "duration";
             this.duration.ReadOnly = true;
@@ -98,12 +99,13 @@
             // 
             // TimesheetForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 326);
+            this.ClientSize = new System.Drawing.Size(789, 396);
             this.Controls.Add(this.dgvEntries);
-            this.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "TimesheetForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View Timesheet";
