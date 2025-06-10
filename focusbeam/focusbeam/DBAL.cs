@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Util;
 using System;
 using System.Data;
 using System.Data.SQLite;
@@ -65,6 +66,7 @@ namespace focusbeam
                 }
             }
             catch (Exception ex) {
+                Logger.WriteLog("DBAL ERROR: " + ex.ToString());
                 if (ex is SQLiteException sqliteEx && sqliteEx.ResultCode == SQLiteErrorCode.Constraint)
                 {
                     MessageBox.Show("Duplicate entry or constraint violation.", Application.ProductName,
