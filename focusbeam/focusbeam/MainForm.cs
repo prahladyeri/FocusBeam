@@ -461,13 +461,15 @@ namespace focusbeam
                 },
             }, EditMode.Add);
             builder.RecordValidating += (s, ev) => {
-                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, task);
-                bool success = task.Save();
+                TaskItem clone =  Helper.DeepClone(task);
+                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
+                bool success = clone.Save();
                 if (!success)
                 {
                     ev.Cancel = true;
                     return;
                 }
+                task = clone;
                 //_currentProject.Tasks.Add(task);
                 rpkTaskItem.Items[taskidx] = task.Title;
                 //rpkTaskItem.Text = task.Title;
