@@ -71,6 +71,10 @@ Example project structure for building FocusBeam itself:
 
 You can open and build the solution using any recent version of Visual Studio.
 
+## 📄 License
+
+[MIT License](LICENSE) – you're free to use, modify, and distribute this software.
+
 ### 📌 Dependencies
 
 - Via NuGet: `System.Data.SQLite.Core`  
@@ -87,3 +91,11 @@ You can open and build the solution using any recent version of Visual Studio.
 
 > FocusBeam is open source and crafted with care for desktop productivity lovers.  
 > Feel free to fork, contribute, or just use it to level up your personal project management game! 🚀
+
+## 📸 Screenshots
+
+![About](https://prahladyeri.github.io/uploads/focusbeam/About.png)
+
+![Settings](https://prahladyeri.github.io/uploads/focusbeam/Settings.png)
+
+![Dashboard](https://prahladyeri.github.io/uploads/focusbeam/Dashboard.png)
