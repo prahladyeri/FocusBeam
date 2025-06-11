@@ -470,6 +470,12 @@ namespace focusbeam
                     return;
                 }
                 task = clone;
+                // Update in collection
+                int index = _currentProject.Tasks.FindIndex(t => t.Id == task.Id);
+                if (index != -1)
+                {
+                    _currentProject.Tasks[index] = task;
+                }
                 //_currentProject.Tasks.Add(task);
                 rpkTaskItem.Items[taskidx] = task.Title;
                 //rpkTaskItem.Text = task.Title;
