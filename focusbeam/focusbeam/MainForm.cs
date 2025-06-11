@@ -67,7 +67,6 @@ namespace focusbeam
                 this.rpkProject.Items.Add(proj.Title);
             }
             dashboardToolStripMenuItem_Click_1(this, new EventArgs());
-            rpkProject.SelectedIndex = 0;
         }
 
 
@@ -491,6 +490,7 @@ namespace focusbeam
             theView.Dock = DockStyle.Fill;
             this.panelMain.Controls.Add(theView);
             _view = theView;
+            this.Text = ProductName + " - " + theView.Name.TrimEnd("View".ToCharArray());
         }
 
         private void aboutToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -505,11 +505,11 @@ namespace focusbeam
 
         private void dashboardToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            TimesheetView theView = new TimesheetView();
-            theView.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
-                if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
+            TimesheetView view = new TimesheetView();
+            view.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
+                if (ev.RowIndex >= 0 && view.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
                 {
-                    string taskTitle = theView.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
+                    string taskTitle = view.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
                     TimesheetForm dialog = new TimesheetForm();
                     DataGridView dgv = dialog.Controls["dgvEntries"] as DataGridView;
                     List<TimeEntry> entries = _currentProject.Tasks.Find(t => t.Title == taskTitle).TimeEntries;
@@ -527,9 +527,8 @@ namespace focusbeam
                     dialog.ShowDialog();
                 }
             };
-            setView(theView);
+            setView(view);
             rpkProject.SelectedIndex = 0;
-            RefreshTimesheetGrid();
         }
 
         private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
