@@ -23,9 +23,9 @@
 📁 Project & Task Management  
 ⏱️ Time Tracking with system tray icon  
 📝 Ad-hoc Notes with Reminders  
-🧠 Hierarchical Notes (Mind Maps)  
-💡 Brain Teasers / MCQs for mental agility  
 🍅 Pomodoro Timer with break reminders  
+🧠 Hierarchical Notes (Mind Maps) - Coming Soon
+💡 Brain Teasers / MCQs for mental agility - Coming Soon
 
 ---
 

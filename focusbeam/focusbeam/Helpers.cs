@@ -429,7 +429,6 @@ namespace focusbeam.Util
 
     public static class Logger
     {
-
         public static readonly string BaseName =
             Assembly.GetExecutingAssembly().GetName().Name;
         private const long MaxSize = 2 * 1024 * 1024; // 2 MB

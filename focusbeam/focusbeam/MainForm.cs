@@ -529,12 +529,14 @@ namespace focusbeam
 
         private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Under Construction", Application.ProductName,
+                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void mCQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Under Construction", Application.ProductName,
+                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void settingsToolStripMenuItem1_Click_1(object sender, EventArgs e)
