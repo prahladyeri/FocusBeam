@@ -429,74 +429,65 @@ namespace focusbeam.Util
 
     public static class Logger
     {
-        public static readonly string Path =
-            $"{Assembly.GetExecutingAssembly().GetName().Name}_log.txt";
 
-        public static void CleanUp()
+        public static readonly string BaseName =
+            Assembly.GetExecutingAssembly().GetName().Name;
+        private const long MaxSize = 2 * 1024 * 1024; // 2 MB
+        private const int MaxBackups = 5;
+
+        //TODO:NOTE: Ensure each thread logs to a different context to avoid race conditions.
+        public static void WriteLog(string message, string context = "CORE")
         {
-            const long MaxSize = 2 * 1024 * 1024; // 2 MB
-            const int MaxBackups = 5;
-
-            if (File.Exists(Path))
+            try
             {
-                FileInfo fi = new FileInfo(Path);
-                if (fi.Length > MaxSize)
+                string path = $"{BaseName}_{context}_log.txt";
+                using (StreamWriter writer = new StreamWriter(path, true))
                 {
-                    try
-                    {
-                        // Step 1: Delete the oldest backup
-                        string oldestBackup = Path.Replace(".txt", $".bak.{MaxBackups}.txt");
-                        if (File.Exists(oldestBackup))
-                            File.Delete(oldestBackup);
-
-                        // Step 2: Shift existing backups
-                        for (int i = MaxBackups - 1; i >= 1; i--)
-                        {
-                            string src = Path.Replace(".txt", $".bak.{i}.txt");
-                            string dst = Path.Replace(".txt", $".bak.{i + 1}.txt");
-                            if (File.Exists(src))
-                                File.Move(src, dst);
-                        }
-
-                        // Step 3: Move the main log to bak.1
-                        string backup1 = Path.Replace(".txt", ".bak.1.txt");
-                        File.Move(Path, backup1);
-
-                        // Step 4: Notify user
-                        MessageBox.Show(
-                            $"The log file exceeded 100MB and was rotated.\n\nOldest backups beyond {MaxBackups} were deleted.",
-                            "Log File Rotation",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information
-                        );
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(
-                            $"Failed to rotate log file:\n\n{ex.Message}",
-                            "Log Rotation Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error
-                        );
-                    }
+                    writer.WriteLine($"{DateTime.Now:u} [{context.ToUpper()}] {message}");
                 }
+                RotateIfNeeded(path);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Logging failed for context '{context}': {ex.Message}");
+            }
+        }
+
+        private static void RotateIfNeeded(string path)
+        {
+            if (!File.Exists(path)) return;
+            FileInfo fi = new FileInfo(path);
+            if (fi.Length < MaxSize) return;
+
+            try
+            {
+                string oldest = path.Replace(".txt", $".bak.{MaxBackups}.txt");
+                if (File.Exists(oldest)) File.Delete(oldest);
+
+                for (int i = MaxBackups - 1; i >= 1; i--)
+                {
+                    string src = path.Replace(".txt", $".bak.{i}.txt");
+                    string dst = path.Replace(".txt", $".bak.{i + 1}.txt");
+                    if (File.Exists(src)) File.Move(src, dst);
+                }
+
+                string bak1 = path.Replace(".txt", ".bak.1.txt");
+                File.Move(path, bak1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Log rotation failed for {path}: {ex.Message}");
             }
         }
 
 
-        public static void WriteLog(string message)
+        public static void CleanUp()
         {
-            try
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var allLogs = Directory.GetFiles(baseDir, $"{BaseName}_*_log.txt");
+            foreach (string logPath in allLogs)
             {
-                using (StreamWriter writer = new StreamWriter(Path, true))
-                {
-                    writer.WriteLine(String.Format("{0}: {1}", DateTime.Now, message));
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any errors related to file access or logging
-                Console.WriteLine(String.Format("Logging failed: {0}", ex.Message));
+                RotateIfNeeded(logPath);
             }
         }
     }
