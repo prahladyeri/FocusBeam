@@ -486,14 +486,16 @@ namespace focusbeam
             builder.ShowDialog();
         }
 
-
-        private void aboutToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
+        private void setView(Control theView) {
             this.panelMain.Controls.Clear();
-            AboutView theView = new AboutView();
             theView.Dock = DockStyle.Fill;
             this.panelMain.Controls.Add(theView);
             _view = theView;
+        }
+
+        private void aboutToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            setView(new AboutView());
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -503,7 +505,6 @@ namespace focusbeam
 
         private void dashboardToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            this.panelMain.Controls.Clear();
             TimesheetView theView = new TimesheetView();
             theView.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
                 if (ev.RowIndex >= 0 && theView.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
@@ -526,9 +527,7 @@ namespace focusbeam
                     dialog.ShowDialog();
                 }
             };
-            theView.Dock = DockStyle.Fill;
-            this.panelMain.Controls.Add(theView);
-            _view = theView;
+            setView(theView);
             rpkProject.SelectedIndex = 0;
             RefreshTimesheetGrid();
         }
@@ -547,11 +546,7 @@ namespace focusbeam
 
         private void settingsToolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
-            this.panelMain.Controls.Clear();
-            SettingsView theView = new SettingsView();
-            theView.Dock = DockStyle.Fill;
-            this.panelMain.Controls.Add(theView);
-            _view = theView;
+            setView(new SettingsView());
         }
 
     }

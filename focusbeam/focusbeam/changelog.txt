@@ -1,4 +1,8 @@
-﻿## [Unreleased]
+﻿## [1.1]
+- feat: Mind Maps
+- feat: MCQ
+
+## [1.0]
 * feat: Dashboard and Timesheet view
 * feat: About View
 * feat: Settings View
@@ -7,8 +11,6 @@
 * feat: Enable "Timesheet" button on dashboard
 * feat: Show Total Hours worked on the project on Dashboard View
 * fix: Restore state of task after attempted duplicate entry in edit followed by cancel
-- feat: Mind Maps
-- feat: MCQ
 
 ## [Ongoing Fixes]
 + fix: Minor UI bugs on task list (Ongoing)
