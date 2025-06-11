@@ -20,12 +20,12 @@
 
 ## ✨ Features
 
-📁 Project & Task Management  
-⏱️ Time Tracking with system tray icon  
-📝 Ad-hoc Notes with Reminders  
-🍅 Pomodoro Timer with break reminders  
-🧠 Hierarchical Notes (Mind Maps) - Coming Soon
-💡 Brain Teasers / MCQs for mental agility - Coming Soon
+- 📁 Project & Task Management  
+- ⏱️ Time Tracking with system tray icon  
+- 📝 Ad-hoc Notes with Reminders  
+- 🍅 Pomodoro Timer with break reminders  
+- 🧠 Hierarchical Notes (Mind Maps) - Coming Soon
+- 💡 Brain Teasers / MCQs for mental agility - Coming Soon
 
 ---
 
