@@ -82,23 +82,25 @@ namespace focusbeam
                 rpkTaskItem.Items.Add(task.Title);
             }
             rpkTaskItem.SelectedIndex = 0;
-            // update the view
-            
-            if (_view.GetType() == typeof(TimesheetView)) {
-                RefreshTimesheetGrid();
-            }
+            RefreshView();
         }
 
-        private void RefreshTimesheetGrid() {
-            if (_view.GetType().Name != "TimesheetView" || _currentProject == null) return;
-            var timesheetView = (TimesheetView)_view;
-            timesheetView.dgv.Rows.Clear();
-            decimal totLogged = 0;
-            _currentProject.Tasks.ForEach(task => {
-                totLogged += task.GetTotalLogged();
-                addTaskToGrid(task);
-            });
-            lblLoggedHours.Text = (totLogged / 60).ToString("F2") + " hrs logged.";
+        private void RefreshView() {
+            Control view;  decimal totLogged = 0;
+            if (_currentProject == null) return;
+            switch (_view) {
+                case TimesheetView tv:
+                    tv.dgv.Rows.Clear();
+                    _currentProject.Tasks.ForEach(task => {
+                        totLogged += task.GetTotalLogged();
+                        addTaskToGrid(task);
+                    });
+                    lblLoggedHours.Text = (totLogged / 60).ToString("F2") + " hrs logged.";
+                    break;
+                case NoteView nv:
+                    nv.Text = _currentTask.Notes;
+                    break;
+            }
         }
 
         private void rpkTaskItem_SelectedIndexChanged(object sender, EventArgs e)
@@ -180,7 +182,7 @@ namespace focusbeam
                 };
                 te.Save();
                 _currentTask.TimeEntries.Add(te);
-                RefreshTimesheetGrid();
+                RefreshView();
             }
         }
 
@@ -405,7 +407,7 @@ namespace focusbeam
                 rpkTaskItem.Text = task.Title;
                 MessageBox.Show(FormHelper.RecordSaveMessage(task), Application.ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                RefreshTimesheetGrid();
+                RefreshView();
             };
 
             builder.ShowDialog();
@@ -486,7 +488,7 @@ namespace focusbeam
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (_view is TimesheetView)
                 {
-                    RefreshTimesheetGrid();
+                    RefreshView();
                 }
                 else if (_view is NoteView) {
                     _view.Text = _currentTask.Notes;
@@ -503,7 +505,7 @@ namespace focusbeam
             _view = theView;
             switch (theView.Name) {
                 case "TimesheetView":
-                    RefreshTimesheetGrid();
+                    RefreshView();
                     break;
             }
         }
