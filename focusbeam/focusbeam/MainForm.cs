@@ -379,7 +379,7 @@ namespace focusbeam
                 new Field {
                     Name = "PlannedHours",
                     ControlType = FieldControlType.NumericUpDown,
-                    Value = 1,
+                    Value = task.PlannedHours,
                     Properties = {
                         {"Minimum", 1 },
                     }
