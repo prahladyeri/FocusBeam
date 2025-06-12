@@ -1,4 +1,5 @@
 ﻿## [1.1]
+* feat: Added Task Notes View
 - feat: Mind Maps
 - feat: MCQ
 

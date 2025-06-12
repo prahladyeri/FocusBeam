@@ -71,6 +71,12 @@
     <Compile Include="Controls\AboutView.Designer.cs">
       <DependentUpon>AboutView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NoteView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\NoteView.Designer.cs">
+      <DependentUpon>NoteView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TagsPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -123,6 +129,9 @@
     <Content Include="logo.ico" />
     <EmbeddedResource Include="Controls\AboutView.resx">
       <DependentUpon>AboutView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NoteView.resx">
+      <DependentUpon>NoteView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TagsPicker.resx">
       <DependentUpon>TagsPicker.cs</DependentUpon>

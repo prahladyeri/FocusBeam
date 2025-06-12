@@ -44,8 +44,6 @@ namespace focusbeam
             this.label2 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblTracker = new System.Windows.Forms.Label();
-            this.rpkProject = new focusbeam.Controls.RefPicker();
-            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblLoggedHours = new System.Windows.Forms.ToolStripStatusLabel();
@@ -58,6 +56,9 @@ namespace focusbeam
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelMain = new System.Windows.Forms.Panel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnTaskNotes = new System.Windows.Forms.Button();
+            this.rpkProject = new focusbeam.Controls.RefPicker();
+            this.rpkTaskItem = new focusbeam.Controls.RefPicker();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -92,33 +93,33 @@ namespace focusbeam
             // dashboardToolStripMenuItem
             // 
             this.dashboardToolStripMenuItem.Name = "dashboardToolStripMenuItem";
-            this.dashboardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dashboardToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.dashboardToolStripMenuItem.Text = "🚀 Dashboard";
             this.dashboardToolStripMenuItem.Click += new System.EventHandler(this.dashboardToolStripMenuItem_Click_1);
             // 
             // mindMapsToolStripMenuItem
             // 
             this.mindMapsToolStripMenuItem.Name = "mindMapsToolStripMenuItem";
-            this.mindMapsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mindMapsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.mindMapsToolStripMenuItem.Text = "🧠 Mind Maps";
             this.mindMapsToolStripMenuItem.Click += new System.EventHandler(this.mindMapsToolStripMenuItem_Click_1);
             // 
             // mCQToolStripMenuItem
             // 
             this.mCQToolStripMenuItem.Name = "mCQToolStripMenuItem";
-            this.mCQToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mCQToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.mCQToolStripMenuItem.Text = "💡 MCQ";
             this.mCQToolStripMenuItem.Click += new System.EventHandler(this.mCQToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(146, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.settingsToolStripMenuItem1.Text = "⚙️ Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click_1);
             // 
@@ -147,19 +148,21 @@ namespace focusbeam
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
-            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnCount = 7;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.92719F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.05704F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.433F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.8199F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.8199F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.49707F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.44589F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
             this.tableLayoutPanel1.Controls.Add(this.label2, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnStart, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblTracker, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnStart, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblTracker, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.rpkProject, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.rpkTaskItem, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnTaskNotes, 4, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -172,7 +175,7 @@ namespace focusbeam
             // label2
             // 
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(285, 2);
+            this.label2.Location = new System.Drawing.Point(293, 2);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 27);
             this.label2.TabIndex = 15;
@@ -183,10 +186,10 @@ namespace focusbeam
             // 
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(598, 2);
+            this.btnStart.Location = new System.Drawing.Point(709, 2);
             this.btnStart.Margin = new System.Windows.Forms.Padding(0);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(171, 27);
+            this.btnStart.Size = new System.Drawing.Size(111, 27);
             this.btnStart.TabIndex = 6;
             this.btnStart.Text = "▶️ Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -196,43 +199,13 @@ namespace focusbeam
             // 
             this.lblTracker.AutoSize = true;
             this.lblTracker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTracker.Location = new System.Drawing.Point(771, 2);
+            this.lblTracker.Location = new System.Drawing.Point(822, 2);
             this.lblTracker.Margin = new System.Windows.Forms.Padding(0);
             this.lblTracker.Name = "lblTracker";
-            this.lblTracker.Size = new System.Drawing.Size(173, 27);
+            this.lblTracker.Size = new System.Drawing.Size(122, 27);
             this.lblTracker.TabIndex = 11;
             this.lblTracker.Text = "🕒 00:00:00";
             this.lblTracker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // rpkProject
-            // 
-            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkProject.Location = new System.Drawing.Point(76, 2);
-            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 40);
-            this.rpkProject.Name = "rpkProject";
-            this.rpkProject.SelectedIndex = -1;
-            this.rpkProject.SelectedItem = null;
-            this.rpkProject.Size = new System.Drawing.Size(204, 27);
-            this.rpkProject.TabIndex = 12;
-            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
-            this.rpkProject.AddButtonClicked += new System.EventHandler(this.rpkProject_AddButtonClicked);
-            this.rpkProject.EditButtonClicked += new System.EventHandler(this.rpkProject_EditButtonClicked);
-            // 
-            // rpkTaskItem
-            // 
-            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkTaskItem.Location = new System.Drawing.Point(357, 2);
-            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 40);
-            this.rpkTaskItem.Name = "rpkTaskItem";
-            this.rpkTaskItem.SelectedIndex = -1;
-            this.rpkTaskItem.SelectedItem = null;
-            this.rpkTaskItem.Size = new System.Drawing.Size(239, 27);
-            this.rpkTaskItem.TabIndex = 13;
-            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
-            this.rpkTaskItem.AddButtonClicked += new System.EventHandler(this.rpkTaskItem_AddButtonClicked);
-            this.rpkTaskItem.EditButtonClicked += new System.EventHandler(this.rpkTaskItem_EditButtonClicked);
             // 
             // label1
             // 
@@ -321,6 +294,48 @@ namespace focusbeam
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
             // 
+            // btnTaskNotes
+            // 
+            this.btnTaskNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTaskNotes.Location = new System.Drawing.Point(616, 2);
+            this.btnTaskNotes.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTaskNotes.Name = "btnTaskNotes";
+            this.btnTaskNotes.Size = new System.Drawing.Size(91, 27);
+            this.btnTaskNotes.TabIndex = 16;
+            this.btnTaskNotes.Text = "📝 Notes";
+            this.btnTaskNotes.UseVisualStyleBackColor = true;
+            this.btnTaskNotes.Click += new System.EventHandler(this.btnTaskNotes_Click);
+            // 
+            // rpkProject
+            // 
+            this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkProject.Location = new System.Drawing.Point(76, 2);
+            this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 40);
+            this.rpkProject.Name = "rpkProject";
+            this.rpkProject.SelectedIndex = -1;
+            this.rpkProject.SelectedItem = null;
+            this.rpkProject.Size = new System.Drawing.Size(212, 27);
+            this.rpkProject.TabIndex = 12;
+            this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
+            this.rpkProject.AddButtonClicked += new System.EventHandler(this.rpkProject_AddButtonClicked);
+            this.rpkProject.EditButtonClicked += new System.EventHandler(this.rpkProject_EditButtonClicked);
+            // 
+            // rpkTaskItem
+            // 
+            this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rpkTaskItem.Location = new System.Drawing.Point(365, 2);
+            this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
+            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 40);
+            this.rpkTaskItem.Name = "rpkTaskItem";
+            this.rpkTaskItem.SelectedIndex = -1;
+            this.rpkTaskItem.SelectedItem = null;
+            this.rpkTaskItem.Size = new System.Drawing.Size(249, 27);
+            this.rpkTaskItem.TabIndex = 13;
+            this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
+            this.rpkTaskItem.AddButtonClicked += new System.EventHandler(this.rpkTaskItem_AddButtonClicked);
+            this.rpkTaskItem.EditButtonClicked += new System.EventHandler(this.rpkTaskItem_EditButtonClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -380,6 +395,7 @@ namespace focusbeam
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnTaskNotes;
     }
 }
 

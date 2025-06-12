@@ -38,6 +38,8 @@ namespace focusbeam
             notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
             notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
+            FormHelper.CreateTooltip(btnTaskNotes, "Task Notes");
+            FormHelper.CreateTooltip(btnStart, "Start Tracking");
             bool isnew = DBAL.Init("focusbeam.db",
                 FileHelper.ReadEmbeddedResource(typeof(Program).Namespace + ".files.init.sql"));
             if (isnew)
@@ -88,7 +90,7 @@ namespace focusbeam
         }
 
         private void RefreshTimesheetGrid() {
-            if (_view.GetType().Name != "TimesheetView") return;
+            if (_view.GetType().Name != "TimesheetView" || _currentProject == null) return;
             var timesheetView = (TimesheetView)_view;
             timesheetView.dgv.Rows.Clear();
             decimal totLogged = 0;
@@ -411,7 +413,8 @@ namespace focusbeam
 
         private void rpkTaskItem_EditButtonClicked(object sender, EventArgs e)
         {
-            TaskItem task = _currentProject.Tasks.Find(ti => ti.Title == rpkTaskItem.Text);
+            //TaskItem task = _currentProject.Tasks.Find(ti => ti.Title == rpkTaskItem.Text);
+            TaskItem task = _currentTask;
             int taskidx = rpkTaskItem.Items.IndexOf(task.Title);
             //TaskItem task = new TaskItem { ProjectId = _currentProject.Id };
             DynamicFormBuilder builder = new DynamicFormBuilder(new List<Field> {
@@ -474,13 +477,20 @@ namespace focusbeam
                 if (index != -1)
                 {
                     _currentProject.Tasks[index] = task;
+                    _currentTask = task;
                 }
                 //_currentProject.Tasks.Add(task);
                 rpkTaskItem.Items[taskidx] = task.Title;
                 //rpkTaskItem.Text = task.Title;
                 MessageBox.Show(FormHelper.RecordSaveMessage(task), Application.ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                RefreshTimesheetGrid();
+                if (_view is TimesheetView)
+                {
+                    RefreshTimesheetGrid();
+                }
+                else if (_view is NoteView) {
+                    _view.Text = _currentTask.Notes;
+                }
             };
             builder.ShowDialog();
         }
@@ -489,8 +499,13 @@ namespace focusbeam
             this.panelMain.Controls.Clear();
             theView.Dock = DockStyle.Fill;
             this.panelMain.Controls.Add(theView);
-            _view = theView;
             this.Text = ProductName + " - " + theView.Name.TrimEnd("View".ToCharArray());
+            _view = theView;
+            switch (theView.Name) {
+                case "TimesheetView":
+                    RefreshTimesheetGrid();
+                    break;
+            }
         }
 
         private void aboutToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -548,5 +563,16 @@ namespace focusbeam
             setView(new SettingsView());
         }
 
+        private void btnTaskNotes_Click(object sender, EventArgs e)
+        {
+            NoteView view = new NoteView(_currentTask.Notes);
+            view.SaveButtonClicked += (s, ev) => {
+                _currentTask.Notes = view.Text;
+                _currentTask.Save();
+                MessageBox.Show("Notes saved.", ProductName,
+                    MessageBoxButtons.OK,  MessageBoxIcon.Information);
+            };
+            setView(view);
+        }
     }
 }
