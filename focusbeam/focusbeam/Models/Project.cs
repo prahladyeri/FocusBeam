@@ -26,7 +26,7 @@ namespace focusbeam.Models
         public List<string> Tags { get; set; } = new List<string> { "urgent", "bug" };
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now.AddMonths(1);
-        public string Notes { get; set; }
+        public string Notes { get; set; } = "";
         public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
 
         public static List<Project> GetAll()

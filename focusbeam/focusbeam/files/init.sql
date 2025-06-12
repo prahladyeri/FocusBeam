@@ -53,20 +53,18 @@ create table mindmaps (
 	project_id int not null,
 	type text check (type in ('Idea', 'Note', 'Question', 'Reference')) default 'Idea',
 	parent_id int, -- parent item's id or null in case of top level
-	status text not null check (status in ('Pending', 'Completed')),
 	pos int default 0, -- position for custom ordering
 	title text,
 	tags text,
-	links text,
 	color text,
 	notes text,
+	unique(project_id, title),
 	foreign key (project_id) references projects (id),
 	foreign key (parent_id) references mindmaps (id)
 );
 
 create table mcq (
 	id integer primary key,
-	project_id int not null,
 	topic text, -- Python Variables, Python Web Development, etc.
 	question text, -- What is the popular web framework called?
 	opta text, -- Flask
@@ -74,8 +72,7 @@ create table mcq (
 	optc text, -- Handi
 	optd text, -- Kettle
 	answer int, -- 1
-	explanation text,
-	foreign key (project_id) references projects (id)
+	explanation text
 );
 
 -- insert default rows

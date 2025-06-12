@@ -71,6 +71,12 @@
     <Compile Include="Controls\AboutView.Designer.cs">
       <DependentUpon>AboutView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MindMapView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MindMapView.Designer.cs">
+      <DependentUpon>MindMapView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NoteView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,6 +120,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\MindMap.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\TaskItem.cs" />
     <Compile Include="Models\TimeEntry.cs" />
@@ -129,6 +136,9 @@
     <Content Include="logo.ico" />
     <EmbeddedResource Include="Controls\AboutView.resx">
       <DependentUpon>AboutView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MindMapView.resx">
+      <DependentUpon>MindMapView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NoteView.resx">
       <DependentUpon>NoteView.cs</DependentUpon>
