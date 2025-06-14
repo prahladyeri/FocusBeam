@@ -109,6 +109,7 @@ namespace focusbeam
             //currentProject = projects.FirstOrDefault(p => p.Title == title);
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
             lblStatus.Text = $"Current task set to {_currentProject.Title} => {title}";
+            RefreshView();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -503,8 +504,8 @@ namespace focusbeam
             this.panelMain.Controls.Add(theView);
             this.Text = ProductName + " - " + theView.Name.TrimEnd("View".ToCharArray());
             _view = theView;
-            switch (theView.Name) {
-                case "TimesheetView":
+            switch (theView) {
+                case TimesheetView tv:
                     RefreshView();
                     break;
             }
