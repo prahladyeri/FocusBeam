@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Reflection;
@@ -319,5 +320,42 @@ namespace focusbeam
     {
         Add,
         Edit
+    }
+
+    internal static class EntityMapper
+    {
+        public static void MapFieldsToEntity<T>(IEnumerable<Field> fields, T entity) where T : class
+        {
+            Type entityType = typeof(T);
+
+            foreach (Field field in fields)
+            {
+                PropertyInfo property = entityType.GetProperty(field.Name,
+                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+
+                if (property != null && property.CanWrite)
+                {
+                    try
+                    {
+                        object value = field.Value;
+
+                        // Handle nullables and type conversions
+                        //if (value != null)
+                        //{
+                        //    Type targetType = Nullable.GetUnderlyingType(property.PropertyType)
+                        //                    ?? property.PropertyType;
+                        //    value = Convert.ChangeType(value, targetType);
+                        //}
+
+                        property.SetValue(entity, value);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log mapping errors - important for debugging dynamic forms
+                        Debug.WriteLine($"Failed to map field '{field.Name}' to {entityType.Name}: {ex.Message}");
+                    }
+                }
+            }
+        }
     }
 }

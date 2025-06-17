@@ -32,7 +32,7 @@ namespace focusbeam.Models
         public static List<Project> GetAll()
         {
             var projects = new List<Project>();
-            foreach (DataRow row in DBAL.FetchResult("select * from projects order by id desc;").Rows)
+            foreach (DataRow row in DBAL.Execute("select * from projects order by id desc;").Rows)
             {
                 var project = new Project
                 {
@@ -48,7 +48,7 @@ namespace focusbeam.Models
                 {
                     project.Tags = row.Field<string>("tags").Split(',').ToList();
                 }
-                var items = DBAL.FetchResult($"select * from tasks where project_id={project.Id}");
+                var items = DBAL.Execute($"select * from tasks where project_id={project.Id}");
                 foreach (DataRow taskRow in items.Rows)
                 {
                     TaskItem taskItem = new TaskItem
@@ -68,7 +68,7 @@ namespace focusbeam.Models
                         taskItem.Tags = taskRow.Field<string>("tags").Split(',').ToList();
                     }
 
-                    var titems = DBAL.FetchResult($"select * from timesheet where task_id={taskItem.Id} order by id;");
+                    var titems = DBAL.Execute($"select * from timesheet where task_id={taskItem.Id} order by id;");
                     foreach (DataRow teRow in titems.Rows)
                     {
                         TimeEntry te = new TimeEntry

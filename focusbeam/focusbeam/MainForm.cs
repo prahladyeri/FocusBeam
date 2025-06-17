@@ -248,7 +248,7 @@ namespace focusbeam
                 //    return;
                 //}
                 Project clone = Helper.DeepClone( _currentProject);
-                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
+                EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
                 bool success = clone.Save();
                 if (!success) {
                     ev.Cancel = true;
@@ -322,7 +322,7 @@ namespace focusbeam
                 //    ev.Cancel = true;
                 //    return;
                 //}
-                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, project);
+                EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, project);
                 bool success = project.Save();
                 if (!success) {
                     ev.Cancel = true;
@@ -396,7 +396,7 @@ namespace focusbeam
                 },
             }, EditMode.Add);
             builder.RecordValidating += (s, ev) => {
-                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, task);
+                EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, task);
                 bool success = task.Save();
                 if (!success)
                 {
@@ -467,7 +467,7 @@ namespace focusbeam
             }, EditMode.Add);
             builder.RecordValidating += (s, ev) => {
                 TaskItem clone =  Helper.DeepClone(task);
-                Util.EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
+                EntityMapper.MapFieldsToEntity(builder.FieldsToGenerate, clone);
                 bool success = clone.Save();
                 if (!success)
                 {
@@ -551,8 +551,8 @@ namespace focusbeam
 
         private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show("Under Construction", Application.ProductName,
-                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MindMapView view = new MindMapView();
+            setView(view);
         }
 
         private void mCQToolStripMenuItem_Click(object sender, EventArgs e)

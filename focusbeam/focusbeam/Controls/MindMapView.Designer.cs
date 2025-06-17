@@ -33,7 +33,7 @@
             this.txtNotes = new System.Windows.Forms.TextBox();
             this.tagsPicker1 = new focusbeam.Controls.TagsPicker();
             this.btnSave = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtNode = new System.Windows.Forms.TextBox();
             this.btnAddNode = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -84,13 +84,13 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // textBox1
+            // txtNode
             // 
-            this.textBox1.Location = new System.Drawing.Point(4, 3);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(177, 23);
-            this.textBox1.TabIndex = 4;
+            this.txtNode.Location = new System.Drawing.Point(0, 3);
+            this.txtNode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtNode.Name = "txtNode";
+            this.txtNode.Size = new System.Drawing.Size(181, 23);
+            this.txtNode.TabIndex = 4;
             // 
             // btnAddNode
             // 
@@ -107,7 +107,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnAddNode);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtNode);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.tagsPicker1);
@@ -128,7 +128,7 @@
         private TagsPicker tagsPicker1;
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNode;
         private System.Windows.Forms.Button btnAddNode;
     }
 }
