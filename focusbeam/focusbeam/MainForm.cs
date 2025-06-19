@@ -551,7 +551,33 @@ namespace focusbeam
 
         private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
+            List<MindMap> _mindmaps = MindMap.GetAll();
             MindMapView view = new MindMapView();
+            for (int i = 0; i < _mindmaps.Count; i++) {
+                MindMap m = _mindmaps[i];
+                if (m.ParentId == 0)
+                {
+                    view.TreeViewControl.Nodes.Add(m.Id.ToString(), m.Title);
+                }
+                else {
+                    view.TreeViewControl.Nodes[m.ParentId.ToString()].Nodes.Add(m.Id.ToString(), m.Title);
+                }
+            }
+            view.SaveButtonClicked += (s, ev) => {
+                //TODO: Save all nodes
+                for (int i = 0; i < view.TreeViewControl.Nodes.Count; i++) {
+                    TreeNode node = view.TreeViewControl.Nodes[i];
+                    if (node.Name.StartsWith("noname"))
+                    {
+                        MindMap m = new MindMap();
+                        m.Title = node.Text;
+                        m.Notes =  (node.Tag as MindMap).Notes;
+                    }
+                    else { 
+                        
+                    }
+                }
+            };
             setView(view);
         }
 

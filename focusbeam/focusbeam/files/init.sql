@@ -52,7 +52,7 @@ create table mindmaps (
 	id integer primary key,
 	project_id int not null,
 	type text check (type in ('Idea', 'Note', 'Question', 'Reference')) default 'Idea',
-	parent_id int, -- parent item's id or null in case of top level
+	parent_id int default 0, -- parent item's id or null in case of top level
 	pos int default 0, -- position for custom ordering
 	title text,
 	tags text,

@@ -21,7 +21,6 @@ namespace focusbeam.Controls
         public event EventHandler SaveButtonClicked;
         public TreeView TreeViewControl { get { return this.treeView1; } }
         public TextBox NotesControl { get { return this.txtNotes; } }
-        public TagsPicker TagsControl { get { return this.tagsPicker1; } }
 
         public MindMapView()
         {

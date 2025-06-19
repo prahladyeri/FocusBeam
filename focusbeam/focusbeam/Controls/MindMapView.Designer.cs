@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MindMapView));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.txtNotes = new System.Windows.Forms.TextBox();
-            this.tagsPicker1 = new focusbeam.Controls.TagsPicker();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtNode = new System.Windows.Forms.TextBox();
             this.btnAddNode = new System.Windows.Forms.Button();
@@ -52,24 +50,12 @@
             this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNotes.Location = new System.Drawing.Point(271, 54);
+            this.txtNotes.Location = new System.Drawing.Point(271, 3);
             this.txtNotes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(543, 326);
+            this.txtNotes.Size = new System.Drawing.Size(543, 377);
             this.txtNotes.TabIndex = 2;
-            // 
-            // tagsPicker1
-            // 
-            this.tagsPicker1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tagsPicker1.Location = new System.Drawing.Point(271, 3);
-            this.tagsPicker1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tagsPicker1.Name = "tagsPicker1";
-            this.tagsPicker1.Size = new System.Drawing.Size(544, 44);
-            this.tagsPicker1.TabIndex = 1;
-            this.tagsPicker1.TagBackColor = System.Drawing.Color.Cornsilk;
-            this.tagsPicker1.Value = ((System.Collections.Generic.List<string>)(resources.GetObject("tagsPicker1.Value")));
             // 
             // btnSave
             // 
@@ -110,7 +96,6 @@
             this.Controls.Add(this.txtNode);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtNotes);
-            this.Controls.Add(this.tagsPicker1);
             this.Controls.Add(this.treeView1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -125,7 +110,6 @@
         #endregion
 
         private System.Windows.Forms.TreeView treeView1;
-        private TagsPicker tagsPicker1;
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtNode;
