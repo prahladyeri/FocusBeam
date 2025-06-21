@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,6 +36,27 @@ namespace focusbeam.Controls
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveButtonClicked?.Invoke(this, e);
+        }
+
+        private void btnAddNode_Click(object sender, EventArgs e)
+        {
+            MindMap mm = new MindMap();
+            mm.Title = txtNode.Text;
+            TreeNode node = new TreeNode(mm.Title);
+            node.Name = "noname" + (new Random()).Next(100, 999).ToString();
+            if (treeView1.SelectedNode != null)
+            {
+                mm.ParentId = (treeView1.SelectedNode.Tag as MindMap).Id;
+                treeView1.SelectedNode.Nodes.Add(node);
+            }
+            else {
+                treeView1.Nodes.Add(node);
+            }
+            txtNode.Text = "";
+            node.Tag = mm;
+            node.EnsureVisible();
+            treeView1.SelectedNode = node;
+            treeView1.Focus();
         }
     }
 }

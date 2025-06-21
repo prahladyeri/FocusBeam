@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace focusbeam.Models
 {
@@ -16,27 +18,38 @@ namespace focusbeam.Models
         //public List<string> Tags { get; set; } = new List<string> { "roller", "coaster" };
         public string Notes { get; set; } = "";
 
-        public static List<MindMap> GetAll() {
+        public static List<MindMap> GetAll(int projectId) {
             List<MindMap> ml = new List<MindMap>();
-            foreach (DataRow row in DBAL.Execute("select * from mindmaps order by parentid asc").Rows) {
+            DataTable tbl = DBAL.Execute("select * from mindmaps where project_id=? order by parent_id asc", 
+                new object[] { projectId });
+            foreach (DataRow row in tbl.Rows) {
                 ml.Add( DBAL.DataRowToObject<MindMap>(row) );
             }
             return ml;
         }
 
         public bool Save() {
-            //TODO: WIP
             string sql = "";
+            int cnt;
             if (Id == 0)
             { //new
                 sql = DBAL.ObjectToInsertQuery(this);
                 object[] args = DBAL.GetParamValues(this);
-                DBAL.Execute(sql, args);
+                cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (cnt > 0) {
+                    Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
+                    if (DBAL.LastError.Length > 0)
+                        MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else {
                 sql = DBAL.ObjectToUpdateQuery(this);
+                object[] args = DBAL.GetParamValues(this);
+                cnt = DBAL.ExecuteNonQuery(sql, args);
+                if (DBAL.LastError.Length > 0)
+                    MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return false;
+            return cnt > 0;
         }
     }
 }

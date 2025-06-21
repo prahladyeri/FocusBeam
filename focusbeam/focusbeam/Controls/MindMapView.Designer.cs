@@ -50,6 +50,7 @@
             this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNotes.Enabled = false;
             this.txtNotes.Location = new System.Drawing.Point(271, 3);
             this.txtNotes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNotes.Multiline = true;
@@ -87,6 +88,7 @@
             this.btnAddNode.TabIndex = 5;
             this.btnAddNode.Text = "Add Node";
             this.btnAddNode.UseVisualStyleBackColor = true;
+            this.btnAddNode.Click += new System.EventHandler(this.btnAddNode_Click);
             // 
             // MindMapView
             // 

@@ -551,30 +551,38 @@ namespace focusbeam
 
         private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            List<MindMap> _mindmaps = MindMap.GetAll();
+            List<MindMap> _mindmaps = MindMap.GetAll(_currentProject.Id);
             MindMapView view = new MindMapView();
             for (int i = 0; i < _mindmaps.Count; i++) {
                 MindMap m = _mindmaps[i];
+                TreeNode nn = new TreeNode();
+                nn.Name = m.Id.ToString();
+                nn.Text = m.Title;
+                nn.Tag = m;
                 if (m.ParentId == 0)
                 {
-                    view.TreeViewControl.Nodes.Add(m.Id.ToString(), m.Title);
+                    view.TreeViewControl.Nodes.Add(nn);
                 }
                 else {
-                    view.TreeViewControl.Nodes[m.ParentId.ToString()].Nodes.Add(m.Id.ToString(), m.Title);
+                    view.TreeViewControl.Nodes[m.ParentId.ToString()].Nodes.Add(nn);
                 }
             }
             view.SaveButtonClicked += (s, ev) => {
                 //TODO: Save all nodes
                 for (int i = 0; i < view.TreeViewControl.Nodes.Count; i++) {
                     TreeNode node = view.TreeViewControl.Nodes[i];
+                    MindMap m;
                     if (node.Name.StartsWith("noname"))
                     {
-                        MindMap m = new MindMap();
+                        m = new MindMap();
                         m.Title = node.Text;
                         m.Notes =  (node.Tag as MindMap).Notes;
+                        m.Save();
                     }
-                    else { 
-                        
+                    else {
+                        m = _mindmaps.Find(mm => mm.Id == Convert.ToInt32( node.Name));
+                        m.Notes = (node.Tag as MindMap).Notes;
+                        m.Save();
                     }
                 }
             };
