@@ -1,10 +1,12 @@
-﻿using System;
+﻿/**
+ * MindMap.cs - Class Definition
+ * 
+ * @author Prahlad Yeri <prahladyeri@yahoo.com>
+ * @license MIT
+ */
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace focusbeam.Models
