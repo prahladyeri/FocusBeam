@@ -183,6 +183,7 @@ namespace focusbeam
                 };
                 te.Save();
                 _currentTask.TimeEntries.Add(te);
+                FormHelper.CreateTooltip(lblTracker, $"Stopped tracking at {DateTime.Now.ToShortTimeString()}");
                 RefreshView();
             }
         }
