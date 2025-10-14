@@ -5,8 +5,8 @@
  * @license MIT
  */
 using focusbeam.Controls;
+using focusbeam.Helpers;
 using focusbeam.Models;
-using focusbeam.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +34,9 @@ namespace focusbeam
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png");
-            notifyIcon1.Icon = Util.FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
-            notifyIcon1.Text = Util.AssemblyInfoHelper.Title;
+            this.Icon = FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png");
+            notifyIcon1.Icon = FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
+            notifyIcon1.Text = AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
             FormHelper.CreateTooltip(btnTaskNotes, "Task Notes");
             FormHelper.CreateTooltip(btnStart, "Start Tracking");
@@ -140,8 +140,8 @@ namespace focusbeam
         private void MinimizeToTray() {
             this.Hide();
             if (!_isMinimizedTrayWarningShown) { 
-                notifyIcon1.BalloonTipTitle = Util.AssemblyInfoHelper.Title;
-                notifyIcon1.BalloonTipText = $"{Util.AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
+                notifyIcon1.BalloonTipTitle = AssemblyInfoHelper.Title;
+                notifyIcon1.BalloonTipText = $"{AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
                 notifyIcon1.ShowBalloonTip(3000); // duration in milliseconds
                 _isMinimizedTrayWarningShown = true;
             }
@@ -152,7 +152,7 @@ namespace focusbeam
             //TODO: Play custom sound before/after this.
             if (!_isTracking) {
                 notifyIcon1.ShowBalloonTip(3000, 
-                    Util.AssemblyInfoHelper.Title, 
+                    AssemblyInfoHelper.Title, 
                     "Started Tracking Time", 
                     ToolTipIcon.Info);
                 btnStart.Text = "⏸️ Stop";
@@ -165,7 +165,7 @@ namespace focusbeam
             {
                 //Stop logic
                 notifyIcon1.ShowBalloonTip(3000, 
-                    Util.AssemblyInfoHelper.Title, 
+                    AssemblyInfoHelper.Title, 
                     "Stopped Tracking Time", 
                     ToolTipIcon.Info);
                 btnStart.Text = "▶️ Start" ;

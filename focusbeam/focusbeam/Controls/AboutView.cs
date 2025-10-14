@@ -1,4 +1,5 @@
-﻿using System;
+﻿using focusbeam.Helpers;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -20,11 +21,11 @@ namespace focusbeam.Controls
             //tableLayoutPanel1.ColumnStyles[0].Width = 30;
             //tableLayoutPanel1.ColumnStyles[1].Width = 70;
             lblAppName.Text = Application.ProductName;
-            lblVersion.Text = Util.AssemblyInfoHelper.GetVersion();
-            lblDescription.Text = Util.AssemblyInfoHelper.GetDescription();
+            lblVersion.Text = AssemblyInfoHelper.GetVersion();
+            lblDescription.Text = AssemblyInfoHelper.GetDescription();
             lblFrameworkVersion.Text = Environment.Version.ToString();
             lblFrameworkVersion.Text = RuntimeEnvironment.GetSystemVersion();
-            lblCompany.Text = Util.AssemblyInfoHelper.Company;
+            lblCompany.Text = AssemblyInfoHelper.Company;
 
             foreach (Control ctrl in tableLayoutPanel1.Controls)
             {

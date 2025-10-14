@@ -4,6 +4,7 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -144,7 +145,7 @@ namespace focusbeam
                         combo.Text = field.Value.ToString();
                         control = combo;
                     }
-                    else if (Util.Helper.IsNumericType(field.ValueType)) // Helper method to check for numeric types
+                    else if (Helper.IsNumericType(field.ValueType)) // Helper method to check for numeric types
                     {
                         var numericUpDown = new NumericUpDown
                         {
@@ -212,7 +213,7 @@ namespace focusbeam
         {
             //base.OnShown(e);
             //this.SelectNextControl(this, true, true, true, true);
-            Util.FormHelper.SetFocusToFirstEditableControl(this.tableLayoutPanel1);
+            FormHelper.SetFocusToFirstEditableControl(this.tableLayoutPanel1);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
