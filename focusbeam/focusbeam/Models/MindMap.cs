@@ -21,13 +21,21 @@ namespace focusbeam.Models
         public string Notes { get; set; } = "";
 
         public static List<MindMap> GetAll(int projectId) {
-            List<MindMap> ml = new List<MindMap>();
+            List<MindMap> mmaps = new List<MindMap>();
             DataTable tbl = DBAL.Execute("select * from mindmaps where project_id=? order by parent_id asc", 
                 new object[] { projectId });
             foreach (DataRow row in tbl.Rows) {
-                ml.Add( DBAL.DataRowToObject<MindMap>(row) );
+                //ml.Add( DBAL.DataRowToObject<MindMap>(row) );
+                var mm = new MindMap {
+                    Id = Convert.ToInt32(row["id"]),
+                    Title = row.Field<string>("title"),
+                    ProjectId = row.Field<int>("project_id"),
+                    ParentId = row.Field<int>("parent_id"),
+                    Notes = row.Field<string>("notes"),
+                };
+                mmaps.Add(mm);
             }
-            return ml;
+            return mmaps;
         }
 
         public bool Save() {
@@ -35,18 +43,21 @@ namespace focusbeam.Models
             int cnt;
             if (Id == 0)
             { //new
-                sql = DBAL.ObjectToInsertQuery(this);
-                object[] args = DBAL.GetParamValues(this);
+                //sql = DBAL.ObjectToInsertQuery(this, "mindmaps");
+                sql = "INSERT INTO mindmaps (parent_id, project_id, title, notes) VALUES (?, ?, ?, ?)";
+                //object[] args = DBAL.GetParamValues(this, false);
+                object[] args = { this.ParentId, this.ProjectId, Title, Notes };
                 cnt = DBAL.ExecuteNonQuery(sql, args);
-                if (cnt > 0) {
+                if (cnt > 0) 
                     Id = Convert.ToInt32(DBAL.ExecuteScalar("SELECT last_insert_rowid()"));
-                    if (DBAL.LastError.Length > 0)
+                if (DBAL.LastError.Length > 0)
                         MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
             else {
-                sql = DBAL.ObjectToUpdateQuery(this);
-                object[] args = DBAL.GetParamValues(this);
+                //sql = DBAL.ObjectToUpdateQuery(this, "mindmaps");
+                sql = "update mindmaps set title=?, notes=? where id=?";
+                //object[] args = DBAL.GetParamValues(this);
+                object[] args = { Title, Notes, Id };
                 cnt = DBAL.ExecuteNonQuery(sql, args);
                 if (DBAL.LastError.Length > 0)
                     MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);

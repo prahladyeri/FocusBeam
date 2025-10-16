@@ -77,6 +77,7 @@ namespace focusbeam
 
             var props = type.GetProperties()
                 .Where(p => p.CanRead && p.GetValue(obj) != null) // exclude nulls
+                .Where(p => p.Name != "Id") // exclude Id field
                 .ToList();
 
             var columnNames = new List<string>();
@@ -126,18 +127,17 @@ namespace focusbeam
 
                 paramIndex++;
             }
-
-            if (string.IsNullOrWhiteSpace(whereClause))
-                throw new InvalidOperationException($"Key field '{keyField}' not found or is null in object.");
+            //if (string.IsNullOrWhiteSpace(whereClause))
+            //    throw new InvalidOperationException($"Key field '{keyField}' not found or is null in object.");
 
             string setPart = string.Join(", ", assignments);
             return $"UPDATE {tblName} SET {setPart} {whereClause};";
         }
 
-        public static object[] GetParamValues<T>(T obj)
+        public static object[] GetParamValues<T>(T obj, bool includeId = true)
         {
             return typeof(T).GetProperties()
-                .Where(p => p.CanRead && p.GetValue(obj) != null)
+                .Where(p => p.CanRead && (includeId ? true : p.Name != "Id") &&  p.GetValue(obj) != null)
                 .Select(p => p.GetValue(obj))
                 .ToArray();
         }

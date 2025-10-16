@@ -117,22 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="treeView1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="txtNotes.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="btnSave.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="txtNode.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="btnAddNode.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnAddNode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAN
+        1QAADdUBPdZY8QAAAAd0SU1FB9YHGgsHLPT7K7wAAAD3SURBVEhL7ZRNCwFRFIYHf8lfsiU/QBbKQimJ
+        nY8NkpKYDwsSZcUQZjGGjYhh5Se87uEmMSJDUd565t5Oc57OzJ1G+Oc74vbkVAY4Ki/bDwlldQ2JQXte
+        tp/fFYt2xKzx8qDO0LRi/yS24PGB0o1tbYvG2EST09J2R2mtt0ZjZKI+3EAZbNhTsJVBPbz9fugmmi5Z
+        nyOhzBGXZoiJM0SrBiIVA+GygVBpimBRR6CgI9taPC22fBW5zhL+zOSmznnt26bm/IWYl+2HZLJqwpf+
+        hLhvwpt6n9hFF5Jpiz1K3dW12MHX18JkH/kJ0VROBk1P0P6fZyMIBw6KAtHQGv7hAAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>

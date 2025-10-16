@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MindMapView));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.txtNotes = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
@@ -44,19 +45,24 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(263, 346);
             this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.Click += new System.EventHandler(this.treeView1_Click);
             // 
             // txtNotes
             // 
             this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNotes.Enabled = false;
             this.txtNotes.Location = new System.Drawing.Point(271, 3);
             this.txtNotes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
+            this.txtNotes.ReadOnly = true;
             this.txtNotes.Size = new System.Drawing.Size(543, 377);
             this.txtNotes.TabIndex = 2;
+            this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
+            this.txtNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNotes_KeyDown);
+            this.txtNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNotes_KeyUp);
             // 
             // btnSave
             // 
@@ -76,17 +82,19 @@
             this.txtNode.Location = new System.Drawing.Point(0, 3);
             this.txtNode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNode.Name = "txtNode";
-            this.txtNode.Size = new System.Drawing.Size(181, 23);
+            this.txtNode.Size = new System.Drawing.Size(159, 23);
             this.txtNode.TabIndex = 4;
             // 
             // btnAddNode
             // 
-            this.btnAddNode.Location = new System.Drawing.Point(189, 1);
+            this.btnAddNode.Image = ((System.Drawing.Image)(resources.GetObject("btnAddNode.Image")));
+            this.btnAddNode.Location = new System.Drawing.Point(167, 1);
             this.btnAddNode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAddNode.Name = "btnAddNode";
-            this.btnAddNode.Size = new System.Drawing.Size(75, 27);
+            this.btnAddNode.Size = new System.Drawing.Size(97, 27);
             this.btnAddNode.TabIndex = 5;
-            this.btnAddNode.Text = "Add Node";
+            this.btnAddNode.Text = "Add Root";
+            this.btnAddNode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddNode.UseVisualStyleBackColor = true;
             this.btnAddNode.Click += new System.EventHandler(this.btnAddNode_Click);
             // 

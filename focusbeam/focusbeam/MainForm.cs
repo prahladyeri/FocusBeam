@@ -553,40 +553,21 @@ namespace focusbeam
         private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             List<MindMap> _mindmaps = MindMap.GetAll(_currentProject.Id);
-            MindMapView view = new MindMapView();
+            MindMapView view = new MindMapView(_currentProject);
             for (int i = 0; i < _mindmaps.Count; i++) {
-                MindMap m = _mindmaps[i];
-                TreeNode nn = new TreeNode();
-                nn.Name = m.Id.ToString();
-                nn.Text = m.Title;
-                nn.Tag = m;
-                if (m.ParentId == 0)
+                MindMap mm = _mindmaps[i];
+                TreeNode tn = new TreeNode();
+                tn.Name = mm.Id.ToString();
+                tn.Text = mm.Title;
+                tn.Tag = mm;
+                if (mm.ParentId == 0)
                 {
-                    view.TreeViewControl.Nodes.Add(nn);
+                    view.TreeViewControl.Nodes.Add(tn);
                 }
                 else {
-                    view.TreeViewControl.Nodes[m.ParentId.ToString()].Nodes.Add(nn);
+                    view.TreeViewControl.Nodes[mm.ParentId.ToString()].Nodes.Add(tn);
                 }
             }
-            view.SaveButtonClicked += (s, ev) => {
-                //TODO: Save all nodes
-                for (int i = 0; i < view.TreeViewControl.Nodes.Count; i++) {
-                    TreeNode node = view.TreeViewControl.Nodes[i];
-                    MindMap m;
-                    if (node.Name.StartsWith("noname"))
-                    {
-                        m = new MindMap();
-                        m.Title = node.Text;
-                        m.Notes =  (node.Tag as MindMap).Notes;
-                        m.Save();
-                    }
-                    else {
-                        m = _mindmaps.Find(mm => mm.Id == Convert.ToInt32( node.Name));
-                        m.Notes = (node.Tag as MindMap).Notes;
-                        m.Save();
-                    }
-                }
-            };
             setView(view);
         }
 
