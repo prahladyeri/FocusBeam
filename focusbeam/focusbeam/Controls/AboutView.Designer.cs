@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lnkChangelog = new System.Windows.Forms.LinkLabel();
+            this.label6 = new System.Windows.Forms.Label();
             this.lblFrameworkVersion = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,8 +42,6 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblAppName = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lnkChangelog = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +78,26 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(646, 271);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // lnkChangelog
+            // 
+            this.lnkChangelog.Location = new System.Drawing.Point(204, 185);
+            this.lnkChangelog.Name = "lnkChangelog";
+            this.lnkChangelog.Size = new System.Drawing.Size(439, 28);
+            this.lnkChangelog.TabIndex = 16;
+            this.lnkChangelog.TabStop = true;
+            this.lnkChangelog.Text = "View changelog.txt";
+            this.lnkChangelog.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkChangelog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkChangelog_LinkClicked);
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(3, 185);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(195, 28);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Changelog:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblFrameworkVersion
             // 
@@ -185,31 +205,11 @@
             this.label3.Text = "Framework Version:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(3, 185);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(195, 28);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Changelog:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lnkChangelog
-            // 
-            this.lnkChangelog.Location = new System.Drawing.Point(204, 185);
-            this.lnkChangelog.Name = "lnkChangelog";
-            this.lnkChangelog.Size = new System.Drawing.Size(439, 28);
-            this.lnkChangelog.TabIndex = 16;
-            this.lnkChangelog.TabStop = true;
-            this.lnkChangelog.Text = "View changelog.txt";
-            this.lnkChangelog.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkChangelog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkChangelog_LinkClicked);
-            // 
             // AboutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "AboutView";
             this.Size = new System.Drawing.Size(690, 345);
