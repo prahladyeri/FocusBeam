@@ -138,6 +138,11 @@ namespace focusbeam
             }
         }
 
+        public void SetStatus(string text)
+        {
+            lblStatus.Text = text;
+        }
+
         private void MinimizeToTray() {
             this.Hide();
             if (!_isMinimizedTrayWarningShown) { 

@@ -8,7 +8,6 @@ using focusbeam.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO.MemoryMappedFiles;
 using System.Windows.Forms;
 
 namespace focusbeam.Controls
@@ -38,7 +37,8 @@ namespace focusbeam.Controls
             if (treeView1.SelectedNode?.Tag is MindMap mm)
             {
                 mm.Save();
-                this.Parent.Controls["lblStatus"].Text = $"{mm.Title} notes saved.";
+                var mainForm = this.FindForm() as MainForm;
+                mainForm.SetStatus($"{mm.Title} notes saved.");
             }
         }
 
