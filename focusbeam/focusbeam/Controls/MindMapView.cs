@@ -16,6 +16,7 @@ namespace focusbeam.Controls
     {
         private Random rnd = new Random((int)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         private System.Windows.Forms.Timer _saveTimer;
+        private MindMap _editingMindMap;
         private Project _currentProject;
         public TreeView TreeViewControl { get { return this.treeView1; } }
         public TextBox NotesControl { get { return this.txtNotes; } }
@@ -34,17 +35,17 @@ namespace focusbeam.Controls
         private void _saveTimer_Tick(object sender, EventArgs e)
         {
             _saveTimer.Stop(); // prevent multiple triggers
-            if (treeView1.SelectedNode?.Tag is MindMap mm)
+            if (_editingMindMap != null)
             {
-                mm.Save();
+                _editingMindMap.Save();
                 var mainForm = this.FindForm() as MainForm;
-                mainForm.SetStatus($"{mm.Title} notes saved.");
+                mainForm.SetStatus($"{_editingMindMap.Title} notes saved.");
             }
         }
 
         private void MindMapView_Load(object sender, EventArgs e)
         {
-            btnSave.Font = new Font(btnSave.Font, FontStyle.Bold);
+            //btnSave.Font = new Font(btnSave.Font, FontStyle.Bold);
         }
 
 
@@ -112,8 +113,8 @@ namespace focusbeam.Controls
         private void txtNotes_KeyUp(object sender, KeyEventArgs e)
         {
             if (treeView1.SelectedNode == null) return;
-            var mm = (treeView1.SelectedNode.Tag as MindMap);
-            mm.Notes = txtNotes.Text;
+            _editingMindMap = (treeView1.SelectedNode.Tag as MindMap);
+            _editingMindMap.Notes = txtNotes.Text;
 
             _saveTimer.Stop();  // reset timer
             _saveTimer.Start(); // start countdown again
