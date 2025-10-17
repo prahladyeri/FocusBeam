@@ -8,13 +8,14 @@ using focusbeam.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO.MemoryMappedFiles;
 using System.Windows.Forms;
 
 namespace focusbeam.Controls
 {
     public partial class MindMapView : UserControl
     {
-        Random rnd = new Random(987589);
+        private System.Windows.Forms.Timer _saveTimer;
         private Project _currentProject;
         public TreeView TreeViewControl { get { return this.treeView1; } }
         public TextBox NotesControl { get { return this.txtNotes; } }
@@ -23,6 +24,22 @@ namespace focusbeam.Controls
         {
             this._currentProject = currentProject;
             InitializeComponent();
+
+            _saveTimer = new System.Windows.Forms.Timer();
+            _saveTimer.Interval = 2000; // 2 seconds idle delay
+            _saveTimer.Tick += _saveTimer_Tick;
+        }
+
+        
+
+        private void _saveTimer_Tick(object sender, EventArgs e)
+        {
+            _saveTimer.Stop(); // prevent multiple triggers
+            if (treeView1.SelectedNode?.Tag is MindMap mm)
+            {
+                mm.Save();
+                this.Parent.Controls["lblStatus"].Text = $"{mm.Title} notes saved.";
+            }
         }
 
         private void MindMapView_Load(object sender, EventArgs e)
@@ -39,14 +56,14 @@ namespace focusbeam.Controls
                 MindMap m;
                 if (node.Name.StartsWith("noname")) //new node
                 {
-                    m = new MindMap();
-                    m.Title = node.Text;
-                    m.Notes = (node.Tag as MindMap).Notes;
-                    m.ProjectId = _currentProject.Id;
-                    if (node.Parent != null) // non-root node
-                        m.ParentId = int.Parse(node.Parent.Name);
-                    m.Save();
-                    node.Name = m.Id.ToString();
+                    //m = new MindMap();
+                    //m.Title = node.Text;
+                    //m.Notes = (node.Tag as MindMap).Notes;
+                    //m.ProjectId = _currentProject.Id;
+                    //if (node.Parent != null) // non-root node
+                    //    m.ParentId = int.Parse(node.Parent.Name);
+                    //m.Save();
+                    //node.Name = m.Id.ToString();
                 }
                 else
                 {
@@ -65,32 +82,36 @@ namespace focusbeam.Controls
             MessageBox.Show("Node data saved", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void btnAddNode_Click(object sender, EventArgs e)
+        private void btnAddNodeToRoot_Click(object sender, EventArgs e)
         {
             if (txtNode.Text.Trim().Length == 0) {
                 txtNode.Focus();
                 return;
             }
-            TreeNode node = CreateNewMindMap(txtNode.Text);
+            TreeNode node = CreateNewMindMap(txtNode.Text, "");
 
             node.EnsureVisible();
             treeView1.SelectedNode = node;
             treeView1.Focus();
         }
 
-        private TreeNode CreateNewMindMap(string text, string parentId = "") {
+        private TreeNode CreateNewMindMap(string text, string parentId = "") 
+        {
             MindMap mm = new MindMap();
             mm.Title = text;
-            TreeNode node = new TreeNode(mm.Title);
-            node.Name = "noname" + (rnd).Next(0, 9999).ToString();
-            if (parentId != "")
-            {
-                treeView1.Nodes[parentId].Nodes.Add(node);
+            if (!string.IsNullOrEmpty(parentId))
                 mm.ParentId = int.Parse( parentId);
-            }
-            treeView1.Nodes.Add(node);
+            mm.Save();
+            TreeNode node = new TreeNode(mm.Title)
+            {
+                Name = mm.Id.ToString(),
+                Tag = mm
+            };
+            if (!string.IsNullOrEmpty(parentId))
+                treeView1.Nodes[parentId].Nodes.Add(node);
+            else
+                treeView1.Nodes.Add(node);
             txtNode.Text = "";
-            node.Tag = mm;
             return node;
         }
 
@@ -109,7 +130,11 @@ namespace focusbeam.Controls
         private void txtNotes_KeyUp(object sender, KeyEventArgs e)
         {
             if (treeView1.SelectedNode == null) return;
-            (treeView1.SelectedNode.Tag as MindMap).Notes = txtNotes.Text;
+            var mm = (treeView1.SelectedNode.Tag as MindMap);
+            mm.Notes = txtNotes.Text;
+
+            _saveTimer.Stop();  // reset timer
+            _saveTimer.Start(); // start countdown again
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)

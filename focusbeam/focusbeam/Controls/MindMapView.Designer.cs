@@ -17,6 +17,8 @@
             {
                 components.Dispose();
             }
+            if (disposing)
+                _saveTimer?.Dispose();
             base.Dispose(disposing);
         }
 
@@ -28,18 +30,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MindMapView));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.txtNotes = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtNode = new System.Windows.Forms.TextBox();
-            this.btnAddNode = new System.Windows.Forms.Button();
+            this.btnAddNodeToRoot = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createSubitemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
             // 
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
             this.treeView1.Location = new System.Drawing.Point(0, 34);
             this.treeView1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.treeView1.Name = "treeView1";
@@ -85,24 +93,44 @@
             this.txtNode.Size = new System.Drawing.Size(159, 23);
             this.txtNode.TabIndex = 4;
             // 
-            // btnAddNode
+            // btnAddNodeToRoot
             // 
-            this.btnAddNode.Image = ((System.Drawing.Image)(resources.GetObject("btnAddNode.Image")));
-            this.btnAddNode.Location = new System.Drawing.Point(167, 1);
-            this.btnAddNode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnAddNode.Name = "btnAddNode";
-            this.btnAddNode.Size = new System.Drawing.Size(97, 27);
-            this.btnAddNode.TabIndex = 5;
-            this.btnAddNode.Text = "Add Root";
-            this.btnAddNode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAddNode.UseVisualStyleBackColor = true;
-            this.btnAddNode.Click += new System.EventHandler(this.btnAddNode_Click);
+            this.btnAddNodeToRoot.Image = ((System.Drawing.Image)(resources.GetObject("btnAddNodeToRoot.Image")));
+            this.btnAddNodeToRoot.Location = new System.Drawing.Point(167, 1);
+            this.btnAddNodeToRoot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnAddNodeToRoot.Name = "btnAddNodeToRoot";
+            this.btnAddNodeToRoot.Size = new System.Drawing.Size(97, 27);
+            this.btnAddNodeToRoot.TabIndex = 5;
+            this.btnAddNodeToRoot.Text = "Add Root";
+            this.btnAddNodeToRoot.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAddNodeToRoot.UseVisualStyleBackColor = true;
+            this.btnAddNodeToRoot.Click += new System.EventHandler(this.btnAddNodeToRoot_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createSubitemToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(156, 48);
+            // 
+            // createSubitemToolStripMenuItem
+            // 
+            this.createSubitemToolStripMenuItem.Name = "createSubitemToolStripMenuItem";
+            this.createSubitemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createSubitemToolStripMenuItem.Text = "Create Subitem";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // MindMapView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnAddNode);
+            this.Controls.Add(this.btnAddNodeToRoot);
             this.Controls.Add(this.txtNode);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtNotes);
@@ -112,6 +140,7 @@
             this.Name = "MindMapView";
             this.Size = new System.Drawing.Size(814, 413);
             this.Load += new System.EventHandler(this.MindMapView_Load);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,6 +152,9 @@
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtNode;
-        private System.Windows.Forms.Button btnAddNode;
+        private System.Windows.Forms.Button btnAddNodeToRoot;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem createSubitemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

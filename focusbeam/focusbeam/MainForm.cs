@@ -9,6 +9,7 @@ using focusbeam.Helpers;
 using focusbeam.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -196,6 +197,22 @@ namespace focusbeam
                 task.Status,
                 ((double)task.GetTotalLogged() / 60).ToString("0.00")
             );
+            //TODO: change color of row-header of added row depending on Priority:
+            var row = timesheetView.dgv.Rows[0];
+            switch (task.Priority) {
+                case PriorityLevel.Critical:
+                    row.HeaderCell.Style.BackColor = Color.Red;
+                    break;
+                case PriorityLevel.High:
+                    row.HeaderCell.Style.BackColor = Color.Orange;
+                    break;
+                case PriorityLevel.Low:
+                    row.HeaderCell.Style.BackColor = Color.Yellow;
+                    break;
+                case PriorityLevel.Medium:
+                    row.HeaderCell.Style.BackColor = Color.Green;
+                    break;
+            }
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -547,6 +564,8 @@ namespace focusbeam
                 }
             };
             setView(view);
+            view.dgv.RowHeadersVisible = true;
+            view.dgv.RowHeadersWidth = 10;
             rpkProject.SelectedIndex = 0;
         }
 
@@ -554,18 +573,22 @@ namespace focusbeam
         {
             List<MindMap> _mindmaps = MindMap.GetAll(_currentProject.Id);
             MindMapView view = new MindMapView(_currentProject);
-            for (int i = 0; i < _mindmaps.Count; i++) {
+            for (int i = 0; i < _mindmaps.Count; i++) 
+            {
                 MindMap mm = _mindmaps[i];
-                TreeNode tn = new TreeNode();
-                tn.Name = mm.Id.ToString();
-                tn.Text = mm.Title;
-                tn.Tag = mm;
+                TreeNode node = new TreeNode 
+                {
+                    Name = mm.Id.ToString(),
+                    Text = mm.Title,
+                    Tag = mm
+                };
+                //node.ContextMenuStrip = (view.Controls["contextMenuStrip1"] as ContextMenuStrip);
                 if (mm.ParentId == 0)
                 {
-                    view.TreeViewControl.Nodes.Add(tn);
+                    view.TreeViewControl.Nodes.Add(node);
                 }
                 else {
-                    view.TreeViewControl.Nodes[mm.ParentId.ToString()].Nodes.Add(tn);
+                    view.TreeViewControl.Nodes[mm.ParentId.ToString()].Nodes.Add(node);
                 }
             }
             setView(view);

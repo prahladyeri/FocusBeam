@@ -29,7 +29,7 @@ namespace focusbeam.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
             this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priority = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,9 +54,10 @@ namespace focusbeam.Controls
             this.total_logged,
             this.timesheet});
             this.dgvTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTasks.EnableHeadersVisualStyles = false;
             this.dgvTasks.Location = new System.Drawing.Point(0, 0);
             this.dgvTasks.Name = "dgvTasks";
-            this.dgvTasks.RowHeadersVisible = false;
+            this.dgvTasks.RowHeadersWidth = 10;
             this.dgvTasks.Size = new System.Drawing.Size(576, 390);
             this.dgvTasks.TabIndex = 1;
             // 
@@ -84,8 +85,8 @@ namespace focusbeam.Controls
             // 
             // total_logged
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.total_logged.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.total_logged.DefaultCellStyle = dataGridViewCellStyle2;
             this.total_logged.HeaderText = "Logged Hours";
             this.total_logged.Name = "total_logged";
             this.total_logged.ReadOnly = true;
