@@ -105,16 +105,21 @@ namespace focusbeam.Controls
             
             if (!string.IsNullOrEmpty(parentId))
                 mm.ParentId = int.Parse( parentId);
-            mm.Save();
+            
+            mm.Save(); // generate id
             TreeNode node = new TreeNode(mm.Title)
             {
                 Name = mm.Id.ToString(),
                 Tag = mm
             };
             if (!string.IsNullOrEmpty(parentId))
-                treeView1.Nodes[parentId].Nodes.Add(node);
-            else
-                treeView1.Nodes.Add(node);
+            {
+                mm.Position = treeView1.Nodes[parentId].Nodes.Add(node);
+            }
+            else {
+                mm.Position = treeView1.Nodes.Add(node);
+            }
+            mm.Save(); // save position
             txtNode.Text = "";
             return node;
         }

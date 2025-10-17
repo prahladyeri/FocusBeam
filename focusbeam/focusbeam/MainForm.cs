@@ -602,6 +602,7 @@ namespace focusbeam
                 if (mm.ParentId == 0)
                 {
                     view.TreeViewControl.Nodes.Add(node);
+                    node.Expand();
                 }
                 else {
                     view.TreeViewControl.Nodes[mm.ParentId.ToString()].Nodes.Add(node);
