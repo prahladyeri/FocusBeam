@@ -94,4 +94,4 @@ You can open and build the solution using any recent version of Visual Studio.
 
 ## 📸 Screenshots
 
-![Dashboard](https://prahladyeri.github.io/uploads/focusbeam/Dashboard.png?)
+![Dashboard](https://prahladyeri.github.io/uploads/focusbeam/Dashboard.png?t=20251017)
