@@ -39,22 +39,6 @@ FocusBeam helps you organize your workflow into **Projects** and **Tasks**, each
 
 It also integrates a **Pomodoro timer**, reminding you to take short breaks every 25 minutes and a long break after every 4 sessions (fully configurable in **Settings** ⚙️).
 
-Example project structure for building FocusBeam itself:
-
-1. **🧠 Analysis**
-   - Study technical feasibility
-
-2. **💻 Development**
-   - Create GitHub repository
-   - Setup Visual C# solution
-   - Code GUI and components
-
-3. **🧪 Testing**
-   - Unit testing using NUnit
-
-4. **🐞 Bug Fixing**
-   - Track issues via GitHub
-
 ---
 
 ## 📦 Installation
