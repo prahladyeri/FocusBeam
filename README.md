@@ -16,8 +16,6 @@
 - ✅ Windows 7 and above
 - ✅ Requires [.NET Framework 4.6+](https://dotnet.microsoft.com/en-us/download/dotnet-framework) (Typically pre-installed on most windows installations)
 
----
-
 ## ✨ Features
 
 - 📁 Project & Task Management
@@ -26,8 +24,6 @@
 - 🍅 Pomodoro Timer with break reminders
 - 🧠 Hierarchical Notes (Mind Maps) - Coming Soon
 - 💡 Brain Teasers / MCQs for mental agility - Coming Soon
-
----
 
 ## 🚀 Usage
 
@@ -39,8 +35,6 @@ FocusBeam helps you organize your workflow into **Projects** and **Tasks**, each
 
 It also integrates a **Pomodoro timer**, reminding you to take short breaks every 25 minutes and a long break after every 4 sessions (fully configurable in **Settings** ⚙️).
 
----
-
 ## 📦 Installation
 
 1. [⬇️ Download the latest release](https://github.com/prahladyeri/focusbeam/releases/latest)  
@@ -48,8 +42,6 @@ It also integrates a **Pomodoro timer**, reminding you to take short breaks ever
 3. ▶️ Run `focusbeam.exe`
 
 🗂️ On first launch, a local database file (`focusbeam.db`) is auto-created in the same folder if it doesn't already exist.
-
----
 
 ## 🛠️ Build Instructions
 
@@ -64,14 +56,10 @@ You can open and build the solution using any recent version of Visual Studio.
 - Via NuGet: `System.Data.SQLite.Core`  
 - Via NuGet: `Newtonsoft.Json`  
 
----
-
 ## 🙋‍♂️ Support
 
 - 🐞 [Report bugs and issues](https://github.com/prahladyeri/focusbeam/issues)  
 - 💼 For professional support or feature customizations, [hire me](https://prahladyeri.github.io/about)
-
----
 
 > FocusBeam is open source and crafted with care for desktop productivity lovers.  
 > Feel free to fork, contribute, or just use it to level up your personal project management game! 🚀
