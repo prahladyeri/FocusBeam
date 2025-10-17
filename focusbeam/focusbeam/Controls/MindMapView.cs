@@ -47,39 +47,12 @@ namespace focusbeam.Controls
             btnSave.Font = new Font(btnSave.Font, FontStyle.Bold);
         }
 
-        private void SaveNodes(TreeNodeCollection nodes) 
-        {
-            List<MindMap> _mindmaps = MindMap.GetAll(_currentProject.Id);
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                TreeNode node = nodes[i];
-                MindMap m;
-                if (node.Name.StartsWith("noname")) //new node
-                {
-                    //m = new MindMap();
-                    //m.Title = node.Text;
-                    //m.Notes = (node.Tag as MindMap).Notes;
-                    //m.ProjectId = _currentProject.Id;
-                    //if (node.Parent != null) // non-root node
-                    //    m.ParentId = int.Parse(node.Parent.Name);
-                    //m.Save();
-                    //node.Name = m.Id.ToString();
-                }
-                else
-                {
-                    m = _mindmaps.Find(mm => mm.Id == Convert.ToInt32(node.Name));
-                    m.Notes = (node.Tag as MindMap).Notes;
-                    m.Save();
-                }
-                SaveNodes(node.Nodes);
-            }
-        }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             //SaveButtonClicked?.Invoke(this, e);
-            SaveNodes(treeView1.Nodes);
-            MessageBox.Show("Node data saved", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //SaveNodes(treeView1.Nodes);
+            //MessageBox.Show("Node data saved", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnAddNodeToRoot_Click(object sender, EventArgs e)
