@@ -48,12 +48,15 @@
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.treeView1.LabelEdit = true;
             this.treeView1.Location = new System.Drawing.Point(0, 34);
             this.treeView1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(263, 346);
             this.treeView1.TabIndex = 0;
+            this.treeView1.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView1_AfterLabelEdit);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.Click += new System.EventHandler(this.treeView1_Click);
             // 
             // txtNotes
@@ -119,12 +122,14 @@
             this.createSubitemToolStripMenuItem.Name = "createSubitemToolStripMenuItem";
             this.createSubitemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createSubitemToolStripMenuItem.Text = "Create Subitem";
+            this.createSubitemToolStripMenuItem.Click += new System.EventHandler(this.createSubitemToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MindMapView
             // 

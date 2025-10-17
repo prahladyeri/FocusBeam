@@ -14,6 +14,7 @@ namespace focusbeam.Controls
 {
     public partial class MindMapView : UserControl
     {
+        private Random rnd = new Random((int)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         private System.Windows.Forms.Timer _saveTimer;
         private Project _currentProject;
         public TreeView TreeViewControl { get { return this.treeView1; } }
@@ -30,7 +31,6 @@ namespace focusbeam.Controls
         }
 
         
-
         private void _saveTimer_Tick(object sender, EventArgs e)
         {
             _saveTimer.Stop(); // prevent multiple triggers
@@ -97,8 +97,12 @@ namespace focusbeam.Controls
 
         private TreeNode CreateNewMindMap(string text, string parentId = "") 
         {
-            MindMap mm = new MindMap();
-            mm.Title = text;
+            MindMap mm = new MindMap
+            {
+                Title = text,
+                ProjectId = _currentProject.Id
+            };
+            
             if (!string.IsNullOrEmpty(parentId))
                 mm.ParentId = int.Parse( parentId);
             mm.Save();
@@ -145,8 +149,72 @@ namespace focusbeam.Controls
                 txtNotes.ReadOnly = false;
 
                 // Optional small delay to ensure focus "sticks"
-                BeginInvoke((Action)(() => txtNotes.Focus()));
+                //BeginInvoke((Action)(() => txtNotes.Focus()));
             }
+        }
+
+        private void createSubitemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeView1.SelectedNode;
+            CreateNewMindMap($"noname{rnd.Next(1, 999999).ToString("D6")}", node.Name).EnsureVisible();
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                treeView1.SelectedNode = e.Node; // select the node under mouse
+            }
+        }
+
+        private void DeleteNodes(TreeNodeCollection nodes)
+        {
+            // iterate backwards when removing nodes from collection
+            for (int i = nodes.Count - 1; i >= 0; i--)
+            {
+                DeleteNodes(nodes[i].Nodes); // delete subnodes first
+                MindMap mm = nodes[i].Tag as MindMap;
+                var sql = "delete from mindmaps where id=?";
+                object[] args = { mm.Id };
+                DBAL.ExecuteNonQuery(sql, args);
+                nodes[i].Remove();
+            }
+        }
+
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeView1.SelectedNode;
+            var result = MessageBox.Show(
+                $"Are you sure you want to delete '{node.Text}'?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes) return;
+
+            //if (node.Nodes.Count > 0)
+            DeleteNodes(node.Nodes); // delete subnodes first
+            MindMap mm = node.Tag as MindMap;
+            var sql = "delete from mindmaps where id=?";
+            object[] args = {mm.Id };
+            DBAL.ExecuteNonQuery(sql, args);
+            node.Remove();
+        }
+
+        private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            if (e.Label == null) return; // user cancelled
+
+            MindMap mm = e.Node.Tag as MindMap;
+            var sql = "UPDATE mindmaps SET title=? WHERE id=?";
+            object[] args = { e.Label, mm.Id };
+            int res = DBAL.ExecuteNonQuery(sql, args);
+            if (res == -1) {
+                e.CancelEdit = true;
+                MessageBox.Show($"Error occurred: {DBAL.LastError}", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            mm.Title = e.Label;
         }
     }
 }
