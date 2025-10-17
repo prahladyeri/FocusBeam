@@ -47,7 +47,7 @@ namespace focusbeam.Models
                 {
                     project.Tags = row.Field<string>("tags").Split(',').ToList();
                 }
-                var items = DBAL.Execute($"select * from tasks where project_id={project.Id}");
+                var items = DBAL.Execute($"select * from tasks where project_id={project.Id} order by priority");
                 foreach (DataRow taskRow in items.Rows)
                 {
                     TaskItem taskItem = new TaskItem

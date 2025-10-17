@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace focusbeam
@@ -35,6 +36,13 @@ namespace focusbeam
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            typeof(Panel).InvokeMember(
+                "DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                tableLayoutPanel1,
+                new object[] { true });
+
             this.Icon = FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png");
             notifyIcon1.Icon = FileHelper.GetEmbeddedIcon("focusbeam.files.logo.png", 16);
             notifyIcon1.Text = AssemblyInfoHelper.Title;
@@ -228,8 +236,11 @@ namespace focusbeam
         private void timer1_Tick(object sender, EventArgs e)
         {
             //🕒 00:00:00
+            //tableLayoutPanel1.SuspendLayout();
             TimeSpan ts = DateTime.Now.Subtract(_trackingStartedAt);
             lblTracker.Text = "🕒" + ts.ToString(@"hh\:mm\:ss");
+            //tableLayoutPanel1.ResumeLayout();
+
         }
 
         private void rpkProject_EditButtonClicked(object sender, EventArgs e)
