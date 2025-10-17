@@ -13,7 +13,7 @@
 
 ## 🖥️ Compatibility
 
-- ✅ Windows 7 and above
+- ✅ Windows 10 and above
 - ✅ Requires [.NET Framework 4.6+](https://dotnet.microsoft.com/en-us/download/dotnet-framework) (Typically pre-installed on most windows installations)
 
 ## ✨ Features
