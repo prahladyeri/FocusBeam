@@ -29,7 +29,7 @@ namespace focusbeam.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
             this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priority = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,7 +67,7 @@ namespace focusbeam.Controls
             this.title.Name = "title";
             this.title.ReadOnly = true;
             this.title.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.title.Width = 200;
+            this.title.Width = 300;
             // 
             // priority
             // 
@@ -85,8 +85,8 @@ namespace focusbeam.Controls
             // 
             // total_logged
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.total_logged.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.total_logged.DefaultCellStyle = dataGridViewCellStyle1;
             this.total_logged.HeaderText = "Logged Hours";
             this.total_logged.Name = "total_logged";
             this.total_logged.ReadOnly = true;
