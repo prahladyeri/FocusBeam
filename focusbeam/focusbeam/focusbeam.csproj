@@ -142,6 +142,8 @@
       <DependentUpon>TimesheetForm.cs</DependentUpon>
     </Compile>
     <Content Include="logo.ico" />
+    <None Include="Resources\x-office-address-book.png" />
+    <None Include="Resources\x-office-document-template.png" />
     <EmbeddedResource Include="Controls\AboutView.resx">
       <DependentUpon>AboutView.cs</DependentUpon>
     </EmbeddedResource>

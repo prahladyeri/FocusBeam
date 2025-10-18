@@ -589,23 +589,33 @@ namespace focusbeam
         {
             List<MindMap> _mindmaps = MindMap.GetAll(_currentProject.Id);
             MindMapView view = new MindMapView(_currentProject);
+            ImageList treeImages = new ImageList();
+            treeImages.Images.Add("folder", Properties.Resources.folder_icon);
+            treeImages.Images.Add("file", Properties.Resources.file_icon);
+            view.TreeViewControl.ImageList = treeImages;
+
             for (int i = 0; i < _mindmaps.Count; i++) 
             {
                 MindMap mm = _mindmaps[i];
                 TreeNode node = new TreeNode 
                 {
-                    Name = mm.Id.ToString(),
+                    Name = $"n{mm.Id}",
                     Text = mm.Title,
                     Tag = mm
                 };
                 //node.ContextMenuStrip = (view.Controls["contextMenuStrip1"] as ContextMenuStrip);
                 if (mm.ParentId == 0)
                 {
+                    node.ImageKey = "folder";
+                    node.SelectedImageKey = "folder";
                     view.TreeViewControl.Nodes.Add(node);
                     node.Expand();
                 }
                 else {
-                    view.TreeViewControl.Nodes[mm.ParentId.ToString()].Nodes.Add(node);
+                    node.ImageKey = "file";
+                    node.SelectedImageKey = "file";
+                    TreeNode[] matches = view.TreeViewControl.Nodes.Find($"n{mm.ParentId}", true);
+                    matches[0].Nodes.Add(node);
                 }
             }
             setView(view);

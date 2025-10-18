@@ -6,8 +6,6 @@
  */
 using focusbeam.Models;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace focusbeam.Controls
@@ -15,7 +13,7 @@ namespace focusbeam.Controls
     public partial class MindMapView : UserControl
     {
         private Random rnd = new Random((int)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-        private System.Windows.Forms.Timer _saveTimer;
+        private Timer _saveTimer;
         private MindMap _editingMindMap;
         private Project _currentProject;
         public TreeView TreeViewControl { get { return this.treeView1; } }
@@ -45,7 +43,6 @@ namespace focusbeam.Controls
 
         private void MindMapView_Load(object sender, EventArgs e)
         {
-            //btnSave.Font = new Font(btnSave.Font, FontStyle.Bold);
         }
 
 
@@ -78,20 +75,25 @@ namespace focusbeam.Controls
             };
             
             if (!string.IsNullOrEmpty(parentId))
-                mm.ParentId = int.Parse( parentId);
+                mm.ParentId = int.Parse( parentId.Substring(1));
             
             mm.Save(); // generate id
             TreeNode node = new TreeNode(mm.Title)
             {
-                Name = mm.Id.ToString(),
+                Name = $"n{mm.Id}",
                 Tag = mm
             };
-            if (!string.IsNullOrEmpty(parentId))
+            if (string.IsNullOrEmpty(parentId))
             {
-                mm.Position = treeView1.Nodes[parentId].Nodes.Add(node);
+                node.ImageKey = "folder";
+                node.SelectedImageKey = "folder";
+                mm.Position = treeView1.Nodes.Add(node);
             }
             else {
-                mm.Position = treeView1.Nodes.Add(node);
+                node.ImageKey = "file";
+                node.SelectedImageKey = "file";
+                TreeNode[] matches = treeView1.Nodes.Find($"{parentId}", true);
+                mm.Position = matches[0].Nodes.Add(node);
             }
             mm.Save(); // save position
             txtNode.Text = "";
