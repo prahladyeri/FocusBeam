@@ -638,7 +638,7 @@ namespace focusbeam
         private void btnTaskNotes_Click(object sender, EventArgs e)
         {
             NoteView view = new NoteView(_currentTask.Notes);
-            view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
+            //view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
             view.SaveButtonClicked += (s, ev) => {
                 _currentTask.Notes = view.Text;
                 _currentTask.Save();
