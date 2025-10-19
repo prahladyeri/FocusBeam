@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.txtNote = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtNote
@@ -45,24 +44,12 @@
             this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtNote.Size = new System.Drawing.Size(551, 305);
             this.txtNote.TabIndex = 0;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(0, 304);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(551, 26);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "💾 Save Notes";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.txtNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNote_KeyUp);
             // 
             // NoteView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtNote);
             this.Name = "NoteView";
             this.Size = new System.Drawing.Size(551, 330);
@@ -75,6 +62,5 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtNote;
-        private System.Windows.Forms.Button btnSave;
     }
 }

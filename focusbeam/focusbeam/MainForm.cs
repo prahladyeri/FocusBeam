@@ -26,6 +26,8 @@ namespace focusbeam
         private bool _isMinimizedTrayWarningShown = false;
         private DateTime _trackingStartedAt;
         private Control _view = new Control(); //current view
+        private Timer _saveTimer;
+        private TaskItem _editingTask;
 
         public MainForm()
         {
@@ -78,9 +80,22 @@ namespace focusbeam
                 var proj = _projects[i];
                 this.rpkProject.Items.Add(proj.Title);
             }
+            _saveTimer = new System.Windows.Forms.Timer();
+            _saveTimer.Interval = 2000; // 2 seconds idle delay
+            _saveTimer.Tick += _saveTimer_Tick;
+
             dashboardToolStripMenuItem_Click_1(this, new EventArgs());
         }
 
+        private void _saveTimer_Tick(object sender, EventArgs e)
+        {
+            _saveTimer.Stop(); // prevent multiple triggers
+            if (_editingTask != null)
+            {
+                _editingTask.Save();
+                this.SetStatus($"{_editingTask.Title} task notes saved.");
+            }
+        }
 
         private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -639,12 +654,20 @@ namespace focusbeam
         {
             NoteView view = new NoteView(_currentTask.Notes);
             //view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
-            view.SaveButtonClicked += (s, ev) => {
-                _currentTask.Notes = view.Text;
-                _currentTask.Save();
-                MessageBox.Show("Notes saved.", ProductName,
-                    MessageBoxButtons.OK,  MessageBoxIcon.Information);
+            view.KeyUp += (s, ev) => {
+                _editingTask = _currentTask;
+                _editingTask.Notes = view.Text;
+
+                _saveTimer.Stop();  
+                _saveTimer.Start(); // debouncing
             };
+            
+            //view.SaveButtonClicked += (s, ev) => {
+            //    _currentTask.Notes = view.Text;
+            //    _currentTask.Save();
+            //    MessageBox.Show("Notes saved.", ProductName,
+            //        MessageBoxButtons.OK,  MessageBoxIcon.Information);
+            //};
             setView(view);
         }
     }
