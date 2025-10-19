@@ -50,6 +50,10 @@ namespace focusbeam
             notifyIcon1.Text = AssemblyInfoHelper.Title;
             notifyIcon1.Visible = true;
             FormHelper.CreateTooltip(btnTaskNotes, "Task Notes");
+            FormHelper.CreateTooltip(btnDashboard, "Dashboard");
+            FormHelper.CreateTooltip(btnMcq, "MCQ");
+            FormHelper.CreateTooltip(btnSettings, "Settings");
+            FormHelper.CreateTooltip(btnMindMaps, "Mind Maps");
             FormHelper.CreateTooltip(btnStart, "Start Tracking");
             bool isnew = DBAL.Init("focusbeam.db",
                 FileHelper.ReadEmbeddedResource(typeof(Program).Namespace + ".files.init.sql"));
@@ -84,7 +88,7 @@ namespace focusbeam
             _saveTimer.Interval = 2000; // 2 seconds idle delay
             _saveTimer.Tick += _saveTimer_Tick;
 
-            dashboardToolStripMenuItem_Click_1(this, new EventArgs());
+            btnDashboard_Click(this, new EventArgs());
         }
 
         private void _saveTimer_Tick(object sender, EventArgs e)
@@ -136,7 +140,7 @@ namespace focusbeam
             //currentProject = projects.FirstOrDefault(p => p.Title == title);
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
             lblStatus.Text = $"Current task set to {_currentProject.Title} => {title}";
-            RefreshView();
+            if (_view.Name != "TimesheetView") RefreshView();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -171,7 +175,8 @@ namespace focusbeam
 
         private void MinimizeToTray() {
             this.Hide();
-            if (!_isMinimizedTrayWarningShown) { 
+            if (!_isMinimizedTrayWarningShown) {
+                //notifyIcon1.BalloonTipIcon = ToolTipIcon.None;
                 notifyIcon1.BalloonTipTitle = AssemblyInfoHelper.Title;
                 notifyIcon1.BalloonTipText = $"{AssemblyInfoHelper.Title} is still running in the background. Right-click the tray icon to exit.";
                 notifyIcon1.ShowBalloonTip(3000); // duration in milliseconds
@@ -511,11 +516,11 @@ namespace focusbeam
                         {"Minimum", 1 },
                     }
                 },
-                new Field {
-                    Name = "Notes",
-                    ControlType = FieldControlType.MultilineTextBox,
-                    Value = task.Notes,
-                },
+                //new Field {
+                //    Name = "Notes",
+                //    ControlType = FieldControlType.MultilineTextBox,
+                //    Value = task.Notes,
+                //},
             }, EditMode.Add);
             builder.RecordValidating += (s, ev) => {
                 TaskItem clone =  Helper.DeepClone(task);
@@ -575,6 +580,44 @@ namespace focusbeam
 
         private void dashboardToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
+        }
+
+        private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+        }
+
+        private void mCQToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void settingsToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnTaskNotes_Click(object sender, EventArgs e)
+        {
+            NoteView view = new NoteView(_currentTask.Notes);
+            //view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
+            view.KeyUp += (s, ev) => {
+                _editingTask = _currentTask;
+                _editingTask.Notes = view.Text;
+
+                _saveTimer.Stop();  
+                _saveTimer.Start(); // debouncing
+            };
+            
+            //view.SaveButtonClicked += (s, ev) => {
+            //    _currentTask.Notes = view.Text;
+            //    _currentTask.Save();
+            //    MessageBox.Show("Notes saved.", ProductName,
+            //        MessageBoxButtons.OK,  MessageBoxIcon.Information);
+            //};
+            setView(view);
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
             TimesheetView view = new TimesheetView();
             view.dgv.CellContentClick += (object s, DataGridViewCellEventArgs ev) => {
                 if (ev.RowIndex >= 0 && view.dgv.Columns[ev.ColumnIndex].Name == "timesheet")
@@ -600,10 +643,11 @@ namespace focusbeam
             setView(view);
             view.dgv.RowHeadersVisible = true;
             view.dgv.RowHeadersWidth = 10;
-            rpkProject.SelectedIndex = 0;
+            if (rpkProject.SelectedIndex < 0) rpkProject.SelectedIndex = 0;
+
         }
 
-        private void mindMapsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void btnMindMaps_Click(object sender, EventArgs e)
         {
             List<MindMap> _mindmaps = MindMap.GetAll(_currentProject.Id);
             MindMapView view = new MindMapView(_currentProject);
@@ -612,10 +656,10 @@ namespace focusbeam
             treeImages.Images.Add("file", Properties.Resources.file_icon);
             view.TreeViewControl.ImageList = treeImages;
 
-            for (int i = 0; i < _mindmaps.Count; i++) 
+            for (int i = 0; i < _mindmaps.Count; i++)
             {
                 MindMap mm = _mindmaps[i];
-                TreeNode node = new TreeNode 
+                TreeNode node = new TreeNode
                 {
                     Name = $"n{mm.Id}",
                     Text = mm.Title,
@@ -629,7 +673,8 @@ namespace focusbeam
                     view.TreeViewControl.Nodes.Add(node);
                     node.Expand();
                 }
-                else {
+                else
+                {
                     node.ImageKey = "file";
                     node.SelectedImageKey = "file";
                     TreeNode[] matches = view.TreeViewControl.Nodes.Find($"n{mm.ParentId}", true);
@@ -637,38 +682,18 @@ namespace focusbeam
                 }
             }
             setView(view);
+
         }
 
-        private void mCQToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnMcq_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Under Construction", Application.ProductName,
                  MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void settingsToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        private void btnSettings_Click(object sender, EventArgs e)
         {
             setView(new SettingsView());
-        }
-
-        private void btnTaskNotes_Click(object sender, EventArgs e)
-        {
-            NoteView view = new NoteView(_currentTask.Notes);
-            //view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
-            view.KeyUp += (s, ev) => {
-                _editingTask = _currentTask;
-                _editingTask.Notes = view.Text;
-
-                _saveTimer.Stop();  
-                _saveTimer.Start(); // debouncing
-            };
-            
-            //view.SaveButtonClicked += (s, ev) => {
-            //    _currentTask.Notes = view.Text;
-            //    _currentTask.Save();
-            //    MessageBox.Show("Notes saved.", ProductName,
-            //        MessageBoxButtons.OK,  MessageBoxIcon.Information);
-            //};
-            setView(view);
         }
     }
 }
