@@ -31,8 +31,10 @@ namespace focusbeam.Models
         public static List<Project> GetAll()
         {
             var projects = new List<Project>();
-            foreach (DataRow row in DBAL.Execute("select * from projects order by id desc;").Rows)
+            DataTable tbl = DBAL.Execute("select * from projects order by lower(title) asc;");
+            for (int i=0; i<tbl.Rows.Count;i++)
             {
+                var row = tbl.Rows[i];
                 var project = new Project
                 {
                     Id = Convert.ToInt32(row["id"]),
@@ -47,7 +49,7 @@ namespace focusbeam.Models
                 {
                     project.Tags = row.Field<string>("tags").Split(',').ToList();
                 }
-                var items = DBAL.Execute($"select * from tasks where project_id={project.Id} order by priority");
+                var items = DBAL.Execute($"select * from tasks where project_id={project.Id} order by priority desc,title");
                 foreach (DataRow taskRow in items.Rows)
                 {
                     TaskItem taskItem = new TaskItem

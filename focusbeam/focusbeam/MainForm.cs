@@ -74,7 +74,8 @@ namespace focusbeam
             }
 
             _projects = Project.GetAll();
-            foreach (Project proj in _projects) {
+            for (int i=0; i< _projects.Count; i++) {
+                var proj = _projects[i];
                 this.rpkProject.Items.Add(proj.Title);
             }
             dashboardToolStripMenuItem_Click_1(this, new EventArgs());
@@ -86,8 +87,9 @@ namespace focusbeam
             string title = rpkProject.SelectedItem.ToString();
             _currentProject = _projects.FirstOrDefault(p => p.Title == title);
             rpkTaskItem.Items.Clear();
-            foreach (TaskItem task in _currentProject.Tasks)
+            for(int i=0; i< _currentProject.Tasks.Count;i++)
             {
+                var task = _currentProject.Tasks[i];
                 rpkTaskItem.Items.Add(task.Title);
             }
             rpkTaskItem.SelectedIndex = 0;
@@ -100,10 +102,11 @@ namespace focusbeam
             switch (_view) {
                 case TimesheetView tv:
                     tv.dgv.Rows.Clear();
-                    _currentProject.Tasks.ForEach(task => {
+                    for (int i = 0; i < _currentProject.Tasks.Count; i++) {
+                        var task = _currentProject.Tasks[i];
                         totLogged += task.GetTotalLogged();
                         addTaskToGrid(task);
-                    });
+                    }
                     lblLoggedHours.Text = (totLogged / 60).ToString("F2") + " hrs logged.";
                     break;
                 case NoteView nv:
@@ -204,14 +207,14 @@ namespace focusbeam
 
         private void addTaskToGrid(TaskItem task) {
             var timesheetView = (TimesheetView)_view;
-            timesheetView.dgv.Rows.Insert(0,
+            int idx = timesheetView.dgv.Rows.Add(
                 task.Title,
                 task.Priority,
                 task.Status,
                 ((double)task.GetTotalLogged() / 60).ToString("0.00")
             );
             //TODO: change color of row-header of added row depending on Priority:
-            var row = timesheetView.dgv.Rows[0];
+            var row = timesheetView.dgv.Rows[idx];
             switch (task.Priority) {
                 case PriorityLevel.Critical:
                     row.HeaderCell.Style.BackColor = Color.Red;
