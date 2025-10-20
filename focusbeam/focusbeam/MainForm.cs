@@ -237,16 +237,16 @@ namespace focusbeam
             var row = timesheetView.dgv.Rows[idx];
             switch (task.Priority) {
                 case PriorityLevel.Critical:
-                    row.HeaderCell.Style.BackColor = Color.Red;
+                    row.HeaderCell.Style.BackColor = Color.LightCoral; // red
                     break;
                 case PriorityLevel.High:
-                    row.HeaderCell.Style.BackColor = Color.Orange;
+                    row.HeaderCell.Style.BackColor = Color.LightSalmon; // orange
                     break;
                 case PriorityLevel.Low:
-                    row.HeaderCell.Style.BackColor = Color.Yellow;
+                    row.HeaderCell.Style.BackColor = Color.PaleGreen;
                     break;
                 case PriorityLevel.Medium:
-                    row.HeaderCell.Style.BackColor = Color.Green;
+                    row.HeaderCell.Style.BackColor = Color.LightYellow;
                     break;
             }
         }
