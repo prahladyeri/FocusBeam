@@ -111,10 +111,39 @@ namespace focusbeam.Controls
             }
             else if (e.KeyCode == Keys.F3)
             {
-                // You could store the last searched text somewhere globally
                 FindText(lastSearchText, matchCase: false);
                 e.Handled = true;
             }
+            else if (!e.Shift && e.KeyCode == Keys.Tab)
+            {
+                txtNote.SelectedText = "\t";  // Inserts without resetting scroll
+                e.SuppressKeyPress = true;    // Prevent focus change
+                e.Handled = true;
+            }
+            else if (e.Shift && e.KeyCode == Keys.Tab)
+            {
+                int selStart = txtNote.SelectionStart;
+
+                // Find start of the current line
+                int lineIndex = txtNote.GetLineFromCharIndex(selStart);
+                int lineStart = txtNote.GetFirstCharIndexFromLine(lineIndex);
+
+                // Check if line starts with a tab
+                if (txtNote.Text.Length > lineStart && txtNote.Text[lineStart] == '\t')
+                {
+                    // Remove the tab without resetting scroll
+                    txtNote.SelectionStart = lineStart;
+                    txtNote.SelectionLength = 1;
+                    txtNote.SelectedText = "";
+
+                    // Restore caret relative to previous position
+                    txtNote.SelectionStart = selStart > lineStart ? selStart - 1 : lineStart;
+                }
+
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+            }
+
         }
     }
 }
