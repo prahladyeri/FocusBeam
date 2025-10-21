@@ -1,24 +1,8 @@
 ﻿## [1.1]
-* feat: Added Task Notes View
-- feat: Mind Maps
-- feat: MCQ
-
-## [1.0]
-* feat: Dashboard and Timesheet view
-* feat: About View
-* feat: Settings View
-* feat: Project creation and editing
-* feat: Task creation and editing
-* feat: Enable "Timesheet" button on dashboard
-* feat: Show Total Hours worked on the project on Dashboard View
-* fix: Restore state of task after attempted duplicate entry in edit followed by cancel
-
-## [Ongoing Fixes]
-+ fix: Minor UI bugs on task list (Ongoing)
-
-## [Ongoing Improvements]
-+ fix: Add grouping of settings in SettingsView
-+ fix: Performance improvements in task loading
-
-## [v0.1.0] - 2024-09-16
-* chore: Initialized the Repo
+fix: Disallow resize of row header for dashboard grid
+feat: Added find feature for task notes
+feat: Added Task Notes View
+chore: UX enhancements
+feat: Mind Maps
+chore: Moved features from main menu to toolbar icons   
+feat: Auto save task notes
