@@ -14,6 +14,9 @@ namespace focusbeam.Controls
     {
         //public event EventHandler SaveButtonClicked;
         public event EventHandler KeyUp;
+        private string lastSearchText = "";
+        private int lastFindIndex = -1;
+
 
         public override string Text
         {
@@ -36,6 +39,9 @@ namespace focusbeam.Controls
         //    SaveButtonClicked?.Invoke(this, e);
         //}
 
+
+
+
         private void NoteView_Load(object sender, EventArgs e)
         {
             //btnSave.Font = new System.Drawing.Font(btnSave.Font, System.Drawing.FontStyle.Bold);
@@ -51,6 +57,65 @@ namespace focusbeam.Controls
         private void txtNote_KeyUp(object sender, KeyEventArgs e)
         {
             KeyUp.Invoke(this, e);
+        }
+
+
+        private void FindText(string search, bool matchCase = false)
+        {
+            string text = txtNote.Text;
+            string searchText = search;
+            lastSearchText = searchText;
+
+            if (!matchCase)
+            {
+                text = text.ToLower();
+                searchText = search.ToLower();
+            }
+
+            int startIndex = txtNote.SelectionStart + txtNote.SelectionLength;
+
+            int index = text.IndexOf(searchText, startIndex);
+            if (index == -1)
+            {
+                // Optional: wrap around
+                index = text.IndexOf(searchText, 0);
+            }
+
+            if (index != -1)
+            {
+                txtNote.Select(index, search.Length);
+                txtNote.ScrollToCaret();
+                txtNote.Focus();
+                lastFindIndex = index;
+            }
+            else
+            {
+                MessageBox.Show("Text not found", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+        private void ShowFindDialog() {
+            NoteViewFind dialog = new NoteViewFind();
+            var result= dialog.ShowDialog();
+            if (result == DialogResult.OK) {
+                FindText((dialog.Controls["txtSearch"] as TextBox).Text, false);
+            }
+        }
+
+        private void txtNote_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                ShowFindDialog(); // Ctrl+F
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F3)
+            {
+                // You could store the last searched text somewhere globally
+                FindText(lastSearchText, matchCase: false);
+                e.Handled = true;
+            }
         }
     }
 }

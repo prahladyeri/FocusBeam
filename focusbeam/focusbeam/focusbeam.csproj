@@ -83,6 +83,12 @@
     <Compile Include="Controls\NoteView.Designer.cs">
       <DependentUpon>NoteView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NoteViewFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\NoteViewFind.Designer.cs">
+      <DependentUpon>NoteViewFind.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TagsPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NoteView.resx">
       <DependentUpon>NoteView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NoteViewFind.resx">
+      <DependentUpon>NoteViewFind.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TagsPicker.resx">
       <DependentUpon>TagsPicker.cs</DependentUpon>
