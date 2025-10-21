@@ -58,6 +58,7 @@ namespace focusbeam.Controls
             this.dgvTasks.Location = new System.Drawing.Point(0, 0);
             this.dgvTasks.Name = "dgvTasks";
             this.dgvTasks.RowHeadersWidth = 10;
+            this.dgvTasks.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvTasks.Size = new System.Drawing.Size(576, 390);
             this.dgvTasks.TabIndex = 1;
             // 
