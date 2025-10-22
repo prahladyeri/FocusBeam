@@ -27,5 +27,11 @@ namespace focusbeam.Controls
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void NoteViewFind_Load(object sender, EventArgs e)
+        {
+            //txtSearch.Focus();
+            //txtSearch.SelectAll(); // optional: selects all text
+        }
     }
 }

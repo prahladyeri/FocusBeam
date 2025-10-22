@@ -47,6 +47,7 @@
             this.txtNote.Size = new System.Drawing.Size(551, 305);
             this.txtNote.TabIndex = 0;
             this.txtNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNote_KeyDown);
+            this.txtNote.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNote_KeyPress);
             this.txtNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNote_KeyUp);
             // 
             // NoteView

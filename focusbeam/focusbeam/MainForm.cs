@@ -599,10 +599,9 @@ namespace focusbeam
         {
             NoteView view = new NoteView(_currentTask.Notes);
             //view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
-            view.KeyUp += (s, ev) => {
+            view.KeyUp += (object s, EventArgs ev) => {
                 _editingTask = _currentTask;
                 _editingTask.Notes = view.Text;
-
                 _saveTimer.Stop();  
                 _saveTimer.Start(); // debouncing
             };

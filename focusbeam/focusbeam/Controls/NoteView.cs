@@ -15,6 +15,7 @@ namespace focusbeam.Controls
         public event EventHandler KeyUp;
         private string lastSearchText = "";
         private int lastFindIndex = -1;
+        private bool _suppressKey = false;
 
 
         public override string Text
@@ -55,6 +56,11 @@ namespace focusbeam.Controls
 
         private void txtNote_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.Control && e.KeyCode == Keys.F) {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                return;
+            }
             KeyUp.Invoke(this, e);
         }
 
@@ -96,7 +102,7 @@ namespace focusbeam.Controls
 
         private void ShowFindDialog() {
             NoteViewFind dialog = new NoteViewFind();
-            var result= dialog.ShowDialog();
+            var result= dialog.ShowDialog(this.FindForm());
             if (result == DialogResult.OK) {
                 FindText((dialog.Controls["txtSearch"] as TextBox).Text, false);
             }
@@ -106,8 +112,10 @@ namespace focusbeam.Controls
         {
             if (e.Control && e.KeyCode == Keys.F)
             {
-                ShowFindDialog(); // Ctrl+F
+                e.SuppressKeyPress = true;
                 e.Handled = true;
+                _suppressKey = true;
+                ShowFindDialog(); // Ctrl+F
             }
             else if (e.KeyCode == Keys.F3)
             {
@@ -142,6 +150,16 @@ namespace focusbeam.Controls
 
                 e.SuppressKeyPress = true;
                 e.Handled = true;
+            }
+
+        }
+
+        private void txtNote_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (_suppressKey)
+            {
+                e.Handled = true;
+                _suppressKey = false;
             }
 
         }

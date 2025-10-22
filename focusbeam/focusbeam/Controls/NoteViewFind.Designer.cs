@@ -36,15 +36,16 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(12, 12);
+            this.txtSearch.Location = new System.Drawing.Point(4, 2);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(339, 23);
             this.txtSearch.TabIndex = 0;
             // 
             // btnFind
             // 
+            this.btnFind.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnFind.Image = ((System.Drawing.Image)(resources.GetObject("btnFind.Image")));
-            this.btnFind.Location = new System.Drawing.Point(195, 41);
+            this.btnFind.Location = new System.Drawing.Point(186, 37);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(75, 23);
             this.btnFind.TabIndex = 1;
@@ -55,8 +56,9 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
-            this.btnCancel.Location = new System.Drawing.Point(276, 41);
+            this.btnCancel.Location = new System.Drawing.Point(267, 37);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -71,7 +73,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(363, 72);
+            this.ClientSize = new System.Drawing.Size(346, 64);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnFind);
             this.Controls.Add(this.txtSearch);
@@ -83,6 +85,7 @@
             this.Name = "NoteViewFind";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NoteViewFind";
+            this.Load += new System.EventHandler(this.NoteViewFind_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
