@@ -623,6 +623,7 @@ namespace focusbeam
                 {
                     string taskTitle = view.dgv.Rows[ev.RowIndex].Cells["Title"].Value?.ToString();
                     TimesheetForm dialog = new TimesheetForm();
+                    dialog.Text = $"Timesheet for {taskTitle}";
                     DataGridView dgv = dialog.Controls["dgvEntries"] as DataGridView;
                     List<TimeEntry> entries = _currentProject.Tasks.Find(t => t.Title == taskTitle).TimeEntries;
                     if (entries.Count == 0)
