@@ -625,7 +625,8 @@ namespace focusbeam
                     TimesheetForm dialog = new TimesheetForm();
                     dialog.Text = $"Timesheet for {taskTitle}";
                     DataGridView dgv = dialog.Controls["dgvEntries"] as DataGridView;
-                    List<TimeEntry> entries = _currentProject.Tasks.Find(t => t.Title == taskTitle).TimeEntries;
+                    TaskItem task = _currentProject.Tasks.Find(t => t.Title == taskTitle);
+                    List<TimeEntry> entries = task.TimeEntries;
                     if (entries.Count == 0)
                     {
                         MessageBox.Show($"No entries found.", ProductName,
@@ -634,9 +635,17 @@ namespace focusbeam
                     }
                     entries.ForEach(te =>
                     {
-                        dgv.Rows.Add(te.StartTime.ToString(), te.EndTime.ToString(),
+                        int idx = dgv.Rows.Add(te.StartTime.ToString(), te.EndTime.ToString(),
                             te.Status.ToString(), te.Duration, te.Notes);
+                        dgv.Rows[idx].Tag = te.Id;
                     });
+                    dgv.CellValueChanged += (object ss, DataGridViewCellEventArgs ee) =>
+                    {
+                        int id = (int)dgv.Rows[ee.RowIndex].Tag;
+                        TimeEntry entry = task.TimeEntries.Find(te => te.Id == id);
+                        entry.Notes = dgv.Rows[ee.RowIndex].Cells[ee.ColumnIndex].Value.ToString();
+                        entry.Save();
+                    };
                     dialog.ShowDialog();
                 }
             };
@@ -646,6 +655,8 @@ namespace focusbeam
             if (rpkProject.SelectedIndex < 0) rpkProject.SelectedIndex = 0;
 
         }
+
+
 
         private void btnMindMaps_Click(object sender, EventArgs e)
         {

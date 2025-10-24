@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvEntries = new System.Windows.Forms.DataGridView();
             this.start_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.end_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,7 +65,7 @@
             this.start_time.HeaderText = "Start Time";
             this.start_time.Name = "start_time";
             this.start_time.ReadOnly = true;
-            this.start_time.Width = 79;
+            this.start_time.Width = 92;
             // 
             // end_time
             // 
@@ -73,7 +73,7 @@
             this.end_time.HeaderText = "End Time";
             this.end_time.Name = "end_time";
             this.end_time.ReadOnly = true;
-            this.end_time.Width = 75;
+            this.end_time.Width = 87;
             // 
             // status
             // 
@@ -83,8 +83,8 @@
             // 
             // duration
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.duration.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.duration.DefaultCellStyle = dataGridViewCellStyle1;
             this.duration.HeaderText = "Duration (Mins)";
             this.duration.Name = "duration";
             this.duration.ReadOnly = true;
@@ -94,7 +94,6 @@
             // 
             this.notes.HeaderText = "Notes";
             this.notes.Name = "notes";
-            this.notes.ReadOnly = true;
             this.notes.Width = 200;
             // 
             // TimesheetForm
