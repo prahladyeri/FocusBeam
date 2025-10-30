@@ -33,10 +33,10 @@ namespace focusbeam
             if (!File.Exists(dbPath)) isnew = true;
             conn = new SQLiteConnection($"Data Source={dbPath};Version=3;");
             conn.Open();
-            using (var cmd = new SQLiteCommand("PRAGMA journal_mode=WAL;", conn))
-            {
-                result = (string)cmd.ExecuteScalar();
-            }
+            //using (var cmd = new SQLiteCommand("PRAGMA journal_mode=WAL;", conn))
+            //{
+            //    result = (string)cmd.ExecuteScalar();
+            //}
             if (!string.Equals(result, "wal", StringComparison.OrdinalIgnoreCase))
             {
                 throw new InvalidOperationException("Failed to set WAL mode on SQLite database.");
