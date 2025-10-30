@@ -37,10 +37,10 @@ namespace focusbeam
             //{
             //    result = (string)cmd.ExecuteScalar();
             //}
-            if (!string.Equals(result, "wal", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new InvalidOperationException("Failed to set WAL mode on SQLite database.");
-            }
+            //if (!string.Equals(result, "wal", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    throw new InvalidOperationException("Failed to set WAL mode on SQLite database.");
+            //}
             if (DateTime.Now.Date.Day == 1) {
                 using (var cmd = new SQLiteCommand("vacuum;", conn))
                 {
