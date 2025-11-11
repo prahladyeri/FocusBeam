@@ -65,13 +65,14 @@ namespace focusbeam
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip1.Font = new System.Drawing.Font("Cascadia Mono", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem1,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(946, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1081, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -101,18 +102,18 @@ namespace focusbeam
             // 
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
             this.tableLayoutPanel1.ColumnCount = 12;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.00267F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.99733F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 298F));
             this.tableLayoutPanel1.Controls.Add(this.btnSettings, 9, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnMcq, 8, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnMindMaps, 7, 0);
@@ -130,17 +131,17 @@ namespace focusbeam
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(946, 31);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1081, 31);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // btnSettings
             // 
             this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSettings.Location = new System.Drawing.Point(621, 2);
+            this.btnSettings.Location = new System.Drawing.Point(704, 2);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(0);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(32, 27);
+            this.btnSettings.Size = new System.Drawing.Size(37, 27);
             this.btnSettings.TabIndex = 20;
             this.btnSettings.Text = "⚙️";
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -150,10 +151,10 @@ namespace focusbeam
             // 
             this.btnMcq.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMcq.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMcq.Location = new System.Drawing.Point(590, 2);
+            this.btnMcq.Location = new System.Drawing.Point(669, 2);
             this.btnMcq.Margin = new System.Windows.Forms.Padding(0);
             this.btnMcq.Name = "btnMcq";
-            this.btnMcq.Size = new System.Drawing.Size(29, 27);
+            this.btnMcq.Size = new System.Drawing.Size(33, 27);
             this.btnMcq.TabIndex = 19;
             this.btnMcq.Text = "💡";
             this.btnMcq.UseVisualStyleBackColor = true;
@@ -163,10 +164,10 @@ namespace focusbeam
             // 
             this.btnMindMaps.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMindMaps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMindMaps.Location = new System.Drawing.Point(556, 2);
+            this.btnMindMaps.Location = new System.Drawing.Point(630, 2);
             this.btnMindMaps.Margin = new System.Windows.Forms.Padding(0);
             this.btnMindMaps.Name = "btnMindMaps";
-            this.btnMindMaps.Size = new System.Drawing.Size(32, 27);
+            this.btnMindMaps.Size = new System.Drawing.Size(37, 27);
             this.btnMindMaps.TabIndex = 18;
             this.btnMindMaps.Text = "🧠";
             this.btnMindMaps.UseVisualStyleBackColor = true;
@@ -175,9 +176,9 @@ namespace focusbeam
             // label2
             // 
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(228, 2);
+            this.label2.Location = new System.Drawing.Point(258, 2);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 27);
+            this.label2.Size = new System.Drawing.Size(49, 27);
             this.label2.TabIndex = 15;
             this.label2.Text = "Task:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -186,10 +187,10 @@ namespace focusbeam
             // 
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(655, 2);
+            this.btnStart.Location = new System.Drawing.Point(743, 2);
             this.btnStart.Margin = new System.Windows.Forms.Padding(0);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(31, 27);
+            this.btnStart.Size = new System.Drawing.Size(35, 27);
             this.btnStart.TabIndex = 6;
             this.btnStart.Text = "▶️";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -199,10 +200,10 @@ namespace focusbeam
             // 
             this.lblTracker.AutoSize = true;
             this.lblTracker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTracker.Location = new System.Drawing.Point(688, 2);
+            this.lblTracker.Location = new System.Drawing.Point(780, 2);
             this.lblTracker.Margin = new System.Windows.Forms.Padding(0);
             this.lblTracker.Name = "lblTracker";
-            this.lblTracker.Size = new System.Drawing.Size(256, 27);
+            this.lblTracker.Size = new System.Drawing.Size(299, 27);
             this.lblTracker.TabIndex = 11;
             this.lblTracker.Text = "🕒 00:00:00";
             this.lblTracker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -210,13 +211,13 @@ namespace focusbeam
             // rpkProject
             // 
             this.rpkProject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkProject.Location = new System.Drawing.Point(65, 2);
+            this.rpkProject.Location = new System.Drawing.Point(74, 2);
             this.rpkProject.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkProject.MaximumSize = new System.Drawing.Size(583, 40);
+            this.rpkProject.MaximumSize = new System.Drawing.Size(666, 40);
             this.rpkProject.Name = "rpkProject";
             this.rpkProject.SelectedIndex = -1;
             this.rpkProject.SelectedItem = null;
-            this.rpkProject.Size = new System.Drawing.Size(158, 27);
+            this.rpkProject.Size = new System.Drawing.Size(179, 27);
             this.rpkProject.TabIndex = 12;
             this.rpkProject.SelectedIndexChanged += new System.EventHandler(this.rpkProject_SelectedIndexChanged);
             this.rpkProject.AddButtonClicked += new System.EventHandler(this.rpkProject_AddButtonClicked);
@@ -225,13 +226,13 @@ namespace focusbeam
             // rpkTaskItem
             // 
             this.rpkTaskItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rpkTaskItem.Location = new System.Drawing.Point(275, 2);
+            this.rpkTaskItem.Location = new System.Drawing.Point(312, 2);
             this.rpkTaskItem.Margin = new System.Windows.Forms.Padding(0);
-            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(583, 40);
+            this.rpkTaskItem.MaximumSize = new System.Drawing.Size(666, 40);
             this.rpkTaskItem.Name = "rpkTaskItem";
             this.rpkTaskItem.SelectedIndex = -1;
             this.rpkTaskItem.SelectedItem = null;
-            this.rpkTaskItem.Size = new System.Drawing.Size(186, 27);
+            this.rpkTaskItem.Size = new System.Drawing.Size(211, 27);
             this.rpkTaskItem.TabIndex = 13;
             this.rpkTaskItem.SelectedIndexChanged += new System.EventHandler(this.rpkTaskItem_SelectedIndexChanged);
             this.rpkTaskItem.AddButtonClicked += new System.EventHandler(this.rpkTaskItem_AddButtonClicked);
@@ -242,7 +243,7 @@ namespace focusbeam
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(5, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 27);
+            this.label1.Size = new System.Drawing.Size(64, 27);
             this.label1.TabIndex = 14;
             this.label1.Text = "Project:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -251,10 +252,10 @@ namespace focusbeam
             // 
             this.btnTaskNotes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTaskNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnTaskNotes.Location = new System.Drawing.Point(521, 2);
+            this.btnTaskNotes.Location = new System.Drawing.Point(590, 2);
             this.btnTaskNotes.Margin = new System.Windows.Forms.Padding(0);
             this.btnTaskNotes.Name = "btnTaskNotes";
-            this.btnTaskNotes.Size = new System.Drawing.Size(33, 27);
+            this.btnTaskNotes.Size = new System.Drawing.Size(38, 27);
             this.btnTaskNotes.TabIndex = 16;
             this.btnTaskNotes.Text = "📝";
             this.btnTaskNotes.UseVisualStyleBackColor = true;
@@ -264,10 +265,10 @@ namespace focusbeam
             // 
             this.btnDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDashboard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDashboard.Location = new System.Drawing.Point(488, 2);
+            this.btnDashboard.Location = new System.Drawing.Point(553, 2);
             this.btnDashboard.Margin = new System.Windows.Forms.Padding(0);
             this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(31, 27);
+            this.btnDashboard.Size = new System.Drawing.Size(35, 27);
             this.btnDashboard.TabIndex = 17;
             this.btnDashboard.Text = "🚀";
             this.btnDashboard.UseVisualStyleBackColor = true;
@@ -282,8 +283,7 @@ namespace focusbeam
             this.progressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 665);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(946, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(1081, 26);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -303,13 +303,13 @@ namespace focusbeam
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(680, 21);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(796, 21);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // progressBar1
             // 
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(117, 20);
+            this.progressBar1.Size = new System.Drawing.Size(134, 20);
             // 
             // notifyIcon1
             // 
@@ -340,9 +340,9 @@ namespace focusbeam
             // 
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 55);
-            this.panelMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.panelMain.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(946, 610);
+            this.panelMain.Size = new System.Drawing.Size(1081, 610);
             this.panelMain.TabIndex = 2;
             // 
             // toolStripStatusLabel2
@@ -352,17 +352,17 @@ namespace focusbeam
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(946, 691);
+            this.ClientSize = new System.Drawing.Size(1081, 691);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Cascadia Code", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(942, 680);
+            this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.MinimumSize = new System.Drawing.Size(1074, 680);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Focus Beam";
