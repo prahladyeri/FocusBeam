@@ -17,7 +17,6 @@ namespace focusbeam.Controls
         private int lastFindIndex = -1;
         private bool _suppressKey = false;
 
-
         public override string Text
         {
             get => txtNote.Text;
@@ -33,14 +32,6 @@ namespace focusbeam.Controls
         {
             txtNote.Text = initialText;
         }
-
-        //private void btnSave_Click(object sender, EventArgs e)
-        //{
-        //    SaveButtonClicked?.Invoke(this, e);
-        //}
-
-
-
 
         private void NoteView_Load(object sender, EventArgs e)
         {

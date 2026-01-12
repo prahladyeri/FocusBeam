@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace focusbeam
@@ -91,14 +92,19 @@ namespace focusbeam
             btnDashboard_Click(this, new EventArgs());
         }
 
-        private void _saveTimer_Tick(object sender, EventArgs e)
+        private async void _saveTimer_Tick(object sender, EventArgs e)
         {
             _saveTimer.Stop(); // prevent multiple triggers
-            if (_editingTask != null)
+            if (_editingTask == null) return;
+            var view = (NoteView)_view;
+            string snapshot = view.Text;
+            await Task.Run(() =>
             {
+                _editingTask.Notes = snapshot;
                 _editingTask.Save();
-                this.SetStatus($"{_editingTask.Title} task notes saved.");
-            }
+            });
+            this.SetStatus($"{_editingTask.Title} task notes saved.");
+            
         }
 
         private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -556,6 +562,17 @@ namespace focusbeam
         }
 
         private void setView(Control theView) {
+            // flush current view if needed
+            if (_view is NoteView && _editingTask != null) {
+                NoteView noteView = (NoteView)_view;
+                string snapshot = noteView.Text;
+                Task.Run(() =>
+                {
+                    _editingTask.Notes = snapshot;
+                    _editingTask.Save();
+                });
+            }
+
             this.panelMain.Controls.Clear();
             theView.Dock = DockStyle.Fill;
             this.panelMain.Controls.Add(theView);
@@ -598,20 +615,12 @@ namespace focusbeam
         private void btnTaskNotes_Click(object sender, EventArgs e)
         {
             NoteView view = new NoteView(_currentTask.Notes);
-            //view.Controls["txtNote"].Font = new Font(this.Font.FontFamily, 11f);
             view.KeyUp += (object s, EventArgs ev) => {
                 _editingTask = _currentTask;
-                _editingTask.Notes = view.Text;
+                //_editingTask.Notes = view.Text;
                 _saveTimer.Stop();  
                 _saveTimer.Start(); // debouncing
             };
-            
-            //view.SaveButtonClicked += (s, ev) => {
-            //    _currentTask.Notes = view.Text;
-            //    _currentTask.Save();
-            //    MessageBox.Show("Notes saved.", ProductName,
-            //        MessageBoxButtons.OK,  MessageBoxIcon.Information);
-            //};
             setView(view);
         }
 
