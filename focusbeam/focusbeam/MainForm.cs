@@ -96,20 +96,20 @@ namespace focusbeam
         {
             _saveTimer.Stop(); // prevent multiple triggers
             if (_editingTask == null) return;
-            var view = (NoteView)_view;
-            string snapshot = view.Text;
-            await Task.Run(() =>
-            {
-                _editingTask.Notes = snapshot;
-                _editingTask.Save();
-            });
+            FlushCurrentViewIfNeeded();
+            //var view = (NoteView)_view;
+            //string snapshot = view.Text;
+            //await Task.Run(() =>
+            //{
+            //    _editingTask.Notes = snapshot;
+            //    _editingTask.Save();
+            //});
             this.SetStatus($"{_editingTask.Title} task notes saved.");
             
         }
 
         private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FlushCurrentViewIfNeeded();
             string title = rpkProject.SelectedItem.ToString();
             _currentProject = _projects.FirstOrDefault(p => p.Title == title);
             rpkTaskItem.Items.Clear();
@@ -153,6 +153,7 @@ namespace focusbeam
                     task.Notes = snapshot;
                     task.SaveNotesOnly();
                 });
+                _editingTask = null;
             }
         }
 
