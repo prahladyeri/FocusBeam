@@ -38,13 +38,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNote.Font = new System.Drawing.Font("Cascadia Code", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNote.ForeColor = System.Drawing.Color.Navy;
             this.txtNote.Location = new System.Drawing.Point(0, 0);
             this.txtNote.MaxLength = 0;
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtNote.Size = new System.Drawing.Size(551, 305);
+            this.txtNote.Size = new System.Drawing.Size(551, 314);
             this.txtNote.TabIndex = 0;
             this.txtNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNote_KeyDown);
             this.txtNote.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNote_KeyPress);

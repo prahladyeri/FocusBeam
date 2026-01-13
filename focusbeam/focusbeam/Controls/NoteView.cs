@@ -5,6 +5,7 @@
  * @license MIT
  */
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -52,6 +53,7 @@ namespace focusbeam.Controls
             //txtNote.Focus();
             var handle = txtNote.Handle; // forces handle creation
             SetTabWidth(txtNote, 4);
+            txtNote.ForeColor = Color.FromArgb(48, 48, 48);
             this.BeginInvoke((MethodInvoker)(() =>
             {
                 txtNote.Focus();
