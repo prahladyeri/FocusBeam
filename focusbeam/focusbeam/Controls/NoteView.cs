@@ -5,6 +5,7 @@
  * @license MIT
  */
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace focusbeam.Controls
@@ -16,6 +17,18 @@ namespace focusbeam.Controls
         private string lastSearchText = "";
         private int lastFindIndex = -1;
         private bool _suppressKey = false;
+        private const int EM_SETTABSTOPS = 0x00CB; // 4 chars
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
+
+        public static void SetTabWidth(TextBox textbox, int tabWidth)
+        {
+            // tabWidth = character columns, not pixels
+            // Assumes Win32 default of 4 DLUs per char
+            if (!textbox.IsHandleCreated) return;
+            SendMessage(textbox.Handle, EM_SETTABSTOPS, 1, new int[] { tabWidth * 4 });
+        }
 
         public override string Text
         {
@@ -37,6 +50,8 @@ namespace focusbeam.Controls
         {
             //btnSave.Font = new System.Drawing.Font(btnSave.Font, System.Drawing.FontStyle.Bold);
             //txtNote.Focus();
+            var handle = txtNote.Handle; // forces handle creation
+            SetTabWidth(txtNote, 4);
             this.BeginInvoke((MethodInvoker)(() =>
             {
                 txtNote.Focus();
