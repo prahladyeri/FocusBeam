@@ -38,11 +38,24 @@ namespace focusbeam.Models
             return this.TimeEntries.Sum(te => te.Duration);
         }
 
+        public bool SaveNotesOnly() {
+            int cnt = 0;
+            if (Id > 0)
+            {
+                var sql = @"UPDATE tasks SET notes = ? WHERE id = ?";
+                object[] args = { Notes, Id };
+                cnt = DBAL.ExecuteNonQuery(sql, args);
+            }
+            return (cnt > 0);
+        }
+
         public bool Save()
         {
-            int cnt;
+            int cnt = 0;
             var tags = string.Join(",", Tags);
-            if (Id == 0) //new
+            bool isNew = (Id == 0);
+
+            if (isNew) //new
             {
                 var sql = @"insert into tasks (project_id, title, priority,
 status, start_date, end_date, tags, planned_hours, notes) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -63,7 +76,7 @@ tags= ?, planned_hours = ?, notes = ? WHERE id = ?";
                 if (DBAL.LastError.Length > 0)
                     MessageBox.Show(DBAL.LastError, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            if (cnt > 0) {
+            if (cnt > 0 && isNew) {
                 TimeEntries.ForEach(te => {
                     te.TaskId = this.Id;
                     te.Save();
@@ -71,6 +84,5 @@ tags= ?, planned_hours = ?, notes = ? WHERE id = ?";
             }
             return (cnt > 0);
         }
-
     }
 }

@@ -109,6 +109,7 @@ namespace focusbeam
 
         private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FlushCurrentViewIfNeeded();
             string title = rpkProject.SelectedItem.ToString();
             _currentProject = _projects.FirstOrDefault(p => p.Title == title);
             rpkTaskItem.Items.Clear();
@@ -140,8 +141,25 @@ namespace focusbeam
             }
         }
 
+        private void FlushCurrentViewIfNeeded()
+        {
+            if (_view is NoteView noteView && _editingTask != null)
+            {
+                var task = _editingTask;     // capture
+                string snapshot = noteView.Text;
+                if (snapshot == task.Notes) return;
+                Task.Run(() =>
+                {
+                    task.Notes = snapshot;
+                    task.SaveNotesOnly();
+                });
+            }
+        }
+
+
         private void rpkTaskItem_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FlushCurrentViewIfNeeded();
             string title = rpkTaskItem.SelectedItem.ToString();
             //currentProject = projects.FirstOrDefault(p => p.Title == title);
             _currentTask = _currentProject.Tasks.FirstOrDefault(t => t.Title == title);
@@ -562,16 +580,7 @@ namespace focusbeam
         }
 
         private void setView(Control theView) {
-            // flush current view if needed
-            if (_view is NoteView && _editingTask != null) {
-                NoteView noteView = (NoteView)_view;
-                string snapshot = noteView.Text;
-                Task.Run(() =>
-                {
-                    _editingTask.Notes = snapshot;
-                    _editingTask.Save();
-                });
-            }
+            FlushCurrentViewIfNeeded();
 
             this.panelMain.Controls.Clear();
             theView.Dock = DockStyle.Fill;
