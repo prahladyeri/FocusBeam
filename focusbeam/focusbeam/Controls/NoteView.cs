@@ -4,21 +4,28 @@
  * @author Prahlad Yeri <prahladyeri@yahoo.com>
  * @license MIT
  */
+using focusbeam.Models;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace focusbeam.Controls
 {
     public partial class NoteView : UserControl
     {
         //public event EventHandler SaveButtonClicked;
-        public event EventHandler KeyUp;
+        public event EventHandler OnTextSaved;
         private string lastSearchText = "";
         private int lastFindIndex = -1;
         private bool _suppressKey = false;
         private const int EM_SETTABSTOPS = 0x00CB; // 4 chars
+        private bool _isInitializing = true;
+        private TaskItem TheTask;
+        private int _editVersion;
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
@@ -42,9 +49,11 @@ namespace focusbeam.Controls
             InitializeComponent();
         }
 
-        public NoteView(string initialText) : this()
+        public NoteView(TaskItem task) : this()
         {
-            txtNote.Text = initialText;
+            txtNote.Text = task.Notes;
+            this.TheTask = task;
+            _isInitializing = false;
         }
 
         private void NoteView_Load(object sender, EventArgs e)
@@ -62,15 +71,15 @@ namespace focusbeam.Controls
             }));
         }
 
-        private void txtNote_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.F) {
-                e.SuppressKeyPress = true;
-                e.Handled = true;
-                return;
-            }
-            KeyUp.Invoke(this, e);
-        }
+        //private void txtNote_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Control && e.KeyCode == Keys.F) {
+        //        e.SuppressKeyPress = true;
+        //        e.Handled = true;
+        //        return;
+        //    }
+        //    KeyUp.Invoke(this, e);
+        //}
 
 
         private void FindText(string search, bool matchCase = false)
@@ -106,7 +115,6 @@ namespace focusbeam.Controls
                 MessageBox.Show("Text not found", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
 
         private void ShowFindDialog() {
             NoteViewFind dialog = new NoteViewFind();
@@ -170,6 +178,28 @@ namespace focusbeam.Controls
                 _suppressKey = false;
             }
 
+        }
+
+        public void SwitchTask(TaskItem newTask) {
+            txtNote.Text = newTask.Notes;
+            this.TheTask = newTask;
+        }
+
+        private async void txtNote_TextChanged(object sender, EventArgs e)
+        {
+            if (_isInitializing) return;
+            int version = Interlocked.Increment(ref _editVersion);
+            string snapshot = Text;
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(150);
+                if (version != _editVersion) return;
+
+                TheTask.Notes = snapshot;
+                TheTask.SaveNotesOnly();
+                OnTextSaved.Invoke(this, new EventArgs());
+            });
         }
     }
 }

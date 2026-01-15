@@ -27,8 +27,6 @@ namespace focusbeam
         private bool _isMinimizedTrayWarningShown = false;
         private DateTime _trackingStartedAt;
         private Control _view = new Control(); //current view
-        private Timer _saveTimer;
-        private TaskItem _editingTask;
 
         public MainForm()
         {
@@ -85,28 +83,15 @@ namespace focusbeam
                 var proj = _projects[i];
                 this.rpkProject.Items.Add(proj.Title);
             }
-            _saveTimer = new System.Windows.Forms.Timer();
-            _saveTimer.Interval = 2000; // 2 seconds idle delay
-            _saveTimer.Tick += _saveTimer_Tick;
-
             btnDashboard_Click(this, new EventArgs());
         }
 
-        private async void _saveTimer_Tick(object sender, EventArgs e)
-        {
-            _saveTimer.Stop(); // prevent multiple triggers
-            if (_editingTask == null) return;
-            FlushCurrentViewIfNeeded();
-            //var view = (NoteView)_view;
-            //string snapshot = view.Text;
-            //await Task.Run(() =>
-            //{
-            //    _editingTask.Notes = snapshot;
-            //    _editingTask.Save();
-            //});
-            this.SetStatus($"{_editingTask.Title} task notes saved.");
-            
-        }
+        //private async void _saveTimer_Tick(object sender, EventArgs e)
+        //{
+        //    if (_editingTask == null) return;
+        //    FlushCurrentViewIfNeeded();
+        //    this.SetStatus($"{_editingTask.Title} task notes saved.");
+        //}
 
         private void rpkProject_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -136,25 +121,25 @@ namespace focusbeam
                     lblLoggedHours.Text = (totLogged / 60).ToString("F2") + " hrs logged.";
                     break;
                 case NoteView nv:
-                    nv.Text = _currentTask.Notes;
+                    nv.SwitchTask(_currentTask);
                     break;
             }
         }
 
         private void FlushCurrentViewIfNeeded()
         {
-            if (_view is NoteView noteView && _editingTask != null)
-            {
-                var task = _editingTask;     // capture
-                string snapshot = noteView.Text;
-                if (snapshot == task.Notes) return;
-                Task.Run(() =>
-                {
-                    task.Notes = snapshot;
-                    task.SaveNotesOnly();
-                });
-                _editingTask = null;
-            }
+            //if (_view is NoteView noteView && _editingTask != null)
+            //{
+            //    var task = _editingTask;     // capture
+            //    string snapshot = noteView.Text;
+            //    if (snapshot == task.Notes) return;
+            //    Task.Run(() =>
+            //    {
+            //        task.Notes = snapshot;
+            //        task.SaveNotesOnly();
+            //    });
+            //    _editingTask = null;
+            //}
         }
 
 
@@ -624,15 +609,28 @@ namespace focusbeam
 
         private void btnTaskNotes_Click(object sender, EventArgs e)
         {
-            NoteView view = new NoteView(_currentTask.Notes);
-            view.KeyUp += (object s, EventArgs ev) => {
-                _editingTask = _currentTask;
-                //_editingTask.Notes = view.Text;
-                _saveTimer.Stop();  
-                _saveTimer.Start(); // debouncing
+            NoteView view = new NoteView(_currentTask);
+            view.OnTextSaved += (object s, EventArgs ev) =>
+            {
+                this.SetStatus($"{_currentTask.Title} task notes saved.");
             };
+            //view.KeyUp += (object s, EventArgs ev) => {
+                //_editingTask = _currentTask;
+                //_saveTimer.Stop();  
+                //_saveTimer.Start(); // debouncing
+            //};
+            //view.KeyPress += (object s, KeyPressEventArgs ev) => {
+                //_editingTask = _currentTask;
+                //_editingTask.Notes = view.Text;
+                //_saveTimer.Stop();
+                //_saveTimer.Start(); // debouncing
+                //_isDirty = true;
+                //_currentTask.Notes = view.Text;
+                //_currentTask.SaveNotesOnly();
+            //};
             setView(view);
         }
+
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {

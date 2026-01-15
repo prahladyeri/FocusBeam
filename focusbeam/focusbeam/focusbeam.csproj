@@ -43,8 +43,7 @@
     <AssemblyOriginatorKeyFile>dotnet-signing-key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -148,6 +147,7 @@
     <Compile Include="TimesheetForm.Designer.cs">
       <DependentUpon>TimesheetForm.cs</DependentUpon>
     </Compile>
+    <Content Include="logo.ico" />
     <None Include="Resources\x-office-address-book.png" />
     <None Include="Resources\x-office-document-template.png" />
     <EmbeddedResource Include="Controls\AboutView.resx">
