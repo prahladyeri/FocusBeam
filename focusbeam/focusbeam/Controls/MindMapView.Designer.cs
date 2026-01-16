@@ -17,8 +17,6 @@
             {
                 components.Dispose();
             }
-            if (disposing)
-                _saveTimer?.Dispose();
             base.Dispose(disposing);
         }
 

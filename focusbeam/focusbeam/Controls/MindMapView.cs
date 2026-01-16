@@ -6,6 +6,8 @@
  */
 using focusbeam.Models;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace focusbeam.Controls
@@ -13,44 +15,30 @@ namespace focusbeam.Controls
     public partial class MindMapView : UserControl
     {
         private Random rnd = new Random((int)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-        private Timer _saveTimer;
+        //private Timer _saveTimer;
+        private bool _isInitializing = true;
         private MindMap _editingMindMap;
+        private MainForm _mainForm;
         private Project _currentProject;
         public TreeView TreeViewControl { get { return this.treeView1; } }
         public TextBox NotesControl { get { return this.txtNotes; } }
+        private int _editVersion;
 
         public MindMapView(Project currentProject)
         {
             this._currentProject = currentProject;
             InitializeComponent();
-
-            _saveTimer = new System.Windows.Forms.Timer();
-            _saveTimer.Interval = 2000; // 2 seconds idle delay
-            _saveTimer.Tick += _saveTimer_Tick;
-        }
-
-        
-        private void _saveTimer_Tick(object sender, EventArgs e)
-        {
-            _saveTimer.Stop(); // prevent multiple triggers
-            if (_editingMindMap != null)
-            {
-                _editingMindMap.Save();
-                var mainForm = this.FindForm() as MainForm;
-                mainForm.SetStatus($"{_editingMindMap.Title} notes saved.");
-            }
         }
 
         private void MindMapView_Load(object sender, EventArgs e)
         {
+            _mainForm = this.FindForm() as MainForm;
+            _mainForm.SetStatus($"Editing mindmaps for project {_currentProject.Title}");
         }
 
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //SaveButtonClicked?.Invoke(this, e);
-            //SaveNodes(treeView1.Nodes);
-            //MessageBox.Show("Node data saved", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnAddNodeToRoot_Click(object sender, EventArgs e)
@@ -108,25 +96,50 @@ namespace focusbeam.Controls
         {
         }
 
-        private void txtNotes_TextChanged(object sender, EventArgs e)
+        private async void txtNotes_TextChanged(object sender, EventArgs e)
         {
+            if (_isInitializing) return;
+            if (treeView1.SelectedNode == null) return;
+
+            int version = Interlocked.Increment(ref _editVersion);
+            MindMap mm = treeView1.SelectedNode.Tag as MindMap;
+            string snapshot = txtNotes.Text;
+            await Task.Run(() =>
+            {
+                Thread.Sleep(150);
+                if (version != _editVersion) return;
+
+                mm.Notes = snapshot;
+                var sql = "UPDATE mindmaps SET notes=? WHERE id=?";
+                object[] args = { mm.Notes, mm.Id };
+                int res = DBAL.ExecuteNonQuery(sql, args);
+                if (res == -1)
+                {
+                    //_mainForm.SetStatus($"Error occurred: {DBAL.LastError}");
+                    return;
+                }
+                //_mainForm.SetStatus($"Saved notes for {mm.Title}");
+                _mainForm.BeginInvoke((Action)(() =>
+                {
+                    _mainForm.SetStatus($"Saved notes for {mm.Title}");
+                }));
+
+            });
         }
 
         private void txtNotes_KeyUp(object sender, KeyEventArgs e)
         {
-            if (treeView1.SelectedNode == null) return;
-            _editingMindMap = (treeView1.SelectedNode.Tag as MindMap);
-            _editingMindMap.Notes = txtNotes.Text;
-
-            _saveTimer.Stop();  // reset timer
-            _saveTimer.Start(); // start countdown again
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag is MindMap mm)
             {
-                txtNotes.Text = mm.Notes;
+                txtNotes.ReadOnly = true;
+                _isInitializing = true;
+                Interlocked.Increment(ref _editVersion); // invalidate first
+                txtNotes.Text = mm.Notes;// then mutate text
+                _isInitializing = false;
                 txtNotes.ReadOnly = false;
 
                 // Optional small delay to ensure focus "sticks"
