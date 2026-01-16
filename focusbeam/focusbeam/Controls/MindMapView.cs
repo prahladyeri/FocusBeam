@@ -17,7 +17,6 @@ namespace focusbeam.Controls
         private Random rnd = new Random((int)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         //private Timer _saveTimer;
         private bool _isInitializing = true;
-        private MindMap _editingMindMap;
         private MainForm _mainForm;
         private Project _currentProject;
         public TreeView TreeViewControl { get { return this.treeView1; } }
