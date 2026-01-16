@@ -15,7 +15,6 @@ namespace focusbeam.Controls
     public partial class MindMapView : UserControl
     {
         private Random rnd = new Random((int)DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-        //private Timer _saveTimer;
         private bool _isInitializing = true;
         private MainForm _mainForm;
         private Project _currentProject;
@@ -70,6 +69,7 @@ namespace focusbeam.Controls
                 Name = $"n{mm.Id}",
                 Tag = mm
             };
+            
             if (string.IsNullOrEmpty(parentId))
             {
                 node.ImageKey = "folder";

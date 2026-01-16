@@ -45,6 +45,7 @@
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.treeView1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treeView1.HideSelection = false;
             this.treeView1.LabelEdit = true;
             this.treeView1.Location = new System.Drawing.Point(0, 34);
@@ -84,11 +85,13 @@
             this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNotes.Font = new System.Drawing.Font("Cascadia Code", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNotes.Location = new System.Drawing.Point(271, 3);
             this.txtNotes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.ReadOnly = true;
+            this.txtNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtNotes.Size = new System.Drawing.Size(543, 348);
             this.txtNotes.TabIndex = 2;
             this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
