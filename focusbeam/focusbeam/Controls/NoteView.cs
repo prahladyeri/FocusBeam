@@ -181,8 +181,10 @@ namespace focusbeam.Controls
         }
 
         public void SwitchTask(TaskItem newTask) {
+            _isInitializing = true;
             txtNote.Text = newTask.Notes;
             this.TheTask = newTask;
+            _isInitializing = false;
         }
 
         private async void txtNote_TextChanged(object sender, EventArgs e)
