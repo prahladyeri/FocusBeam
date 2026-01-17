@@ -99,7 +99,7 @@ namespace focusbeam.Controls
             this.timesheet.HeaderText = "Timesheet";
             this.timesheet.Name = "timesheet";
             this.timesheet.ReadOnly = true;
-            this.timesheet.Text = "Timesheet";
+            this.timesheet.Text = "📋 Timesheet";
             this.timesheet.UseColumnTextForButtonValue = true;
             // 
             // TimesheetView

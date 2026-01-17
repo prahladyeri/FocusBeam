@@ -245,6 +245,7 @@ namespace focusbeam
             );
             //TODO: change color of row-header of added row depending on Priority:
             var row = timesheetView.dgv.Rows[idx];
+            //(row.Cells[4] as DataGridViewButtonCell).Value = "with emoji";
             switch (task.Priority) {
                 case PriorityLevel.Critical:
                     row.HeaderCell.Style.BackColor = Color.LightCoral; // red
